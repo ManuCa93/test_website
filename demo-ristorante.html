@@ -8,46 +8,140 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- COLORI E VARIABILI --- */
+        /* --- TAVOLOZZA COLORI (MODIFICA SOLO QUI PER CAMBIARE TUTTO) --- */
         :root {
-            --primary-red: #c0392b; /* Un rosso caldo, non troppo acceso */
-            --secondary-gold: #d4ac0d; /* Color oro per i dettagli */
-            --text-dark: #2c3e50;
-            --text-light: #ecf0f1;
-            --bg-light: #f8f9fa;
-            --whatsapp-green: #25D366;
+            /* 1. IL BIANCO (Sfondo pagina) */
+            --colore-1-sfondo:   #f8f9fa; 
+
+            /* 2. IL ROSSO (Colore principale: Menu, Footer, Bottoni) */
+            --colore-2-primario: #c0392b; 
+
+            /* 3. IL BLU (Colore Testi e Titoli) */
+            --colore-3-testo:    #2c3e50; 
+
+            /* 4. IL GIALLO (Dettagli, linee, stelline) */
+            --colore-4-dettagli: #d4ac0d; 
+
+            /* --- Variabili Tecniche (Non toccare) --- */
+            --white-pure: #ffffff; /* Bianco puro per le card e il testo su fondi scuri */
+            --nav-height: 60px;
         }
 
-        /* --- RESET DI BASE --- */
+        /* --- RESET TOTALE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-dark); background-color: var(--bg-light); padding-bottom: 70px; /* Spazio per il footer fisso */ }
-        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--text-dark); }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-height); 
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding-top: var(--nav-height);
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--colore-3-testo);       /* USA COLORE 3 */
+            background-color: var(--colore-1-sfondo); /* USA COLORE 1 */
+        }
+
+        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--colore-3-testo); /* USA COLORE 3 */ }
         a { text-decoration: none; }
         section { padding: 60px 20px; }
 
-        /* --- BOTTONE INDIETRO (Per la tua demo) --- */
-        .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.9rem; }
+        /* --- NAVIGATION BAR --- */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: var(--colore-2-primario); /* USA COLORE 2 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 3000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-brand {
+            color: var(--white-pure);
+            font-family: 'Merriweather', serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links li a {
+            color: var(--white-pure);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links li a:hover { color: var(--colore-4-dettagli); /* USA COLORE 4 */ }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white-pure);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--colore-2-primario); /* USA COLORE 2 */
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease-out;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+            .nav-links.show { max-height: 350px; }
+            .nav-links li { width: 100%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+            .nav-links li a { display: block; padding: 15px; }
+        }
+
+        /* --- BOTTONE INDIETRO --- */
+        .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
         .nav-back a { color: #666; font-weight: 600; }
 
-        /* --- HERO SECTION (La copertina) --- */
+        /* --- HERO SECTION --- */
         .hero {
-            /* Immagine di sfondo ad alta qualità */
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
-            color: var(--text-light);
+            color: var(--white-pure);
             text-align: center;
-            padding: 120px 20px;
+            padding: 100px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        .hero h1 { font-size: 2.8rem; color: var(--text-light); margin-bottom: 10px; }
+        .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
         .btn-hero {
-            background: var(--primary-red);
-            color: white;
+            background: var(--colore-2-primario); /* USA COLORE 2 */
+            color: var(--white-pure);
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: bold;
@@ -55,108 +149,22 @@
             letter-spacing: 1px;
             transition: background 0.3s;
         }
-        .btn-hero:hover { background: #a93226; }
+        .btn-hero:hover { filter: brightness(90%); } /* Scurisce leggermente all'hover */
 
         /* --- INTRO --- */
-        .intro { text-align: center; background: white; }
-        .intro h2 { color: var(--primary-red); margin-bottom: 20px; }
-        .accent-text { color: var(--secondary-gold); font-weight: 600; }
+        .intro { text-align: center; background: var(--white-pure); }
+        .intro h2 { color: var(--colore-2-primario); /* USA COLORE 2 */ margin-bottom: 20px; }
 
-        /* --- GALLERIA FOTO --- */
-        .gallery { padding: 20px; background: var(--bg-light); }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Griglia responsive */
-            gap: 10px;
-        }
-        .gallery-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* --- IL MENÙ --- */
-        .menu-section { background: white; }
-        .menu-section h2 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
-        .menu-category { margin-bottom: 40px; }
-        .menu-category h3 { color: var(--primary-red); margin-bottom: 20px; border-bottom: 2px solid var(--secondary-gold); display: inline-block; }
-        
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 15px;
-            border-bottom: 1px dotted #ccc;
-            padding-bottom: 10px;
-        }
-        .item-name { font-weight: 600; font-size: 1.1rem; }
-        .item-desc { display: block; font-size: 0.9rem; color: #666; margin-top: 5px; }
-        .item-price {
-            font-weight: bold;
-            color: var(--primary-red);
-            font-size: 1.1rem;
-            
-            /* --- AGGIUNGI QUESTE RIGHE --- */
-            white-space: nowrap;    /* Impedisce al simbolo € e al numero di separarsi */
-            flex-shrink: 0;         /* Impedisce al prezzo di rimpicciolirsi o deformarsi */
-            margin-left: 15px;      /* Crea uno spazio minimo vitale tra il testo e il prezzo */
-            text-align: right;
-        }
-
-        /* --- INFO & ORARI --- */
-        .info-section { background: var(--text-dark); color: var(--text-light); text-align: center; }
-        .info-section h2 { color: var(--text-light); margin-bottom: 30px; }
-        .info-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 30px;
-        }
-        .info-box h3 { color: var(--secondary-gold); font-size: 1.2rem; margin-bottom: 15px; }
-        .info-box p { margin-bottom: 5px; }
-
-        /* --- STICKY FOOTER (La parte più importante per vendere) --- */
-        .sticky-actions {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            z-index: 999;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
-        }
-        .btn-action {
-            flex: 1; /* Occupano lo stesso spazio */
-            text-align: center;
-            padding: 15px;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .btn-call { background: var(--primary-red); }
-        .btn-wa { background: var(--whatsapp-green); }
-        /* Icone simulate con testo */
-        .icon-txt { margin-right: 8px; font-size: 1.2rem; }
-
-        /* --- RESPONSIVE --- */
-        @media (min-width: 768px) {
-            .hero h1 { font-size: 4rem; }
-            .menu-section { padding: 80px 10%; }
-            .gallery-img { height: 300px; }
-        }
         /* --- CHI SIAMO --- */
-        .about { background: white; display: flex; flex-wrap: wrap; align-items: center; gap: 40px; }
-        .about-content { flex: 1; min-width: 300px; }
-        .about-image { flex: 1; min-width: 300px; }
-        .about-image img { width: 100%; border-radius: 15px; box-shadow: 15px 15px 0 var(--secondary-gold); }
+        .about { 
+            background: var(--white-pure); 
+            display: flex; flex-wrap: wrap; align-items: center; 
+            gap: 40px; text-align: center; justify-content: center;
+        }
+        .about-content { flex: 1; min-width: 300px; max-width: 800px; }
 
         /* --- STAFF --- */
-        .staff { background: var(--bg-light); text-align: center; }
+        .staff { background: var(--colore-1-sfondo); /* USA COLORE 1 */ text-align: center; }
         .staff h2 { margin-bottom: 40px; }
         .staff-grid { 
             display: grid; 
@@ -164,309 +172,267 @@
             gap: 30px; 
         }
         .staff-card { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            background: var(--white-pure); padding: 20px; border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
         }
         .staff-card:hover { transform: translateY(-10px); }
         .staff-img { 
-            width: 120px; 
-            height: 120px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            margin-bottom: 15px;
-            border: 3px solid var(--secondary-gold);
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
+            margin-bottom: 15px; 
+            border: 3px solid var(--colore-4-dettagli); /* USA COLORE 4 */
         }
         .staff-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
-        .staff-card p { color: var(--primary-red); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
-        /* --- CAROUSEL LOCALE (SLIDER) --- */
-        .venue-carousel-section {
-            padding: 60px 0;
-            background: white;
-            text-align: center;
+        .staff-card p { 
+            color: var(--colore-2-primario); /* USA COLORE 2 */ 
+            font-weight: 600; font-size: 0.9rem; text-transform: uppercase; 
         }
-        .venue-carousel-section h2 { margin-bottom: 30px; }
-        
-        /* Contenitore principale dello slider */
+
+        /* --- CAROUSEL --- */
+        .venue-carousel-section { padding: 60px 0; background: var(--white-pure); text-align: center; }
         .carousel-container {
             max-width: 1000px;
             position: relative;
             margin: auto;
-            overflow: hidden; /* Nasconde le immagini che escono dai bordi */
-            border-radius: 15px; /* Arrotonda gli angoli */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-radius: 15px;
+            
+            /* Bordi */
+            border: 5px solid var(--white-pure);    
+            outline: 1px solid #ddd;   
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-
-        /* Le immagini dello slider */
-        .carousel-slide {
-            display: none; /* Di base sono nascoste */
-            height: 400px; /* Altezza fissa per uniformità */
-        }
-        /* L'animazione di dissolvenza */
+        .carousel-slide { display: none; height: 400px; }
         .fade { animation-name: fade; animation-duration: 1.5s; }
         @keyframes fade { from {opacity: .4} to {opacity: 1} }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Taglia l'immagine per riempire lo spazio senza deformarla */
-        }
-
-        /* Frecce Avanti/Indietro */
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
         .prev-btn, .next-btn {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.6s ease;
-            background-color: rgba(0,0,0,0.3); /* Sfondo semitrasparente */
-            border: none;
-            user-select: none;
+            cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px;
+            color: var(--white-pure); font-weight: bold; font-size: 18px; transition: 0.6s ease;
+            background-color: rgba(0,0,0,0.3); border: none; user-select: none;
         }
         .next-btn { right: 0; border-radius: 3px 0 0 3px; }
         .prev-btn { left: 0; border-radius: 0 3px 3px 0; }
         .prev-btn:hover, .next-btn:hover { background-color: rgba(0,0,0,0.8); }
-
-        /* I pallini in basso (dots) */
         .carousel-dots-container { text-align: center; padding-top: 15px; }
         .dot {
-            cursor: pointer;
-            height: 12px;
-            width: 12px;
-            margin: 0 4px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
+            cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb;
+            border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
         }
-        .dot.active, .dot:hover { background-color: var(--primary-red); }
+        .dot.active, .dot:hover { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
+        @media (max-width: 768px) { .carousel-slide { height: 250px; } }
 
-        /* Adattamento mobile per l'altezza */
-        @media (max-width: 768px) {
-            .carousel-slide { height: 250px; }
+        /* --- MENÙ --- */
+        .menu-section { background: var(--white-pure); }
+        .menu-section h2 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
+        .menu-category { margin-bottom: 40px; }
+        .menu-category h3 { 
+            color: var(--colore-2-primario); /* USA COLORE 2 */
+            margin-bottom: 20px; 
+            border-bottom: 2px solid var(--colore-4-dettagli); /* USA COLORE 4 */
+            display: inline-block; 
         }
-        /* --- PULSANTI FLOTTANTI (PALLINE) --- */
+        
+        .menu-item {
+            display: flex; justify-content: space-between; align-items: baseline;
+            margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;
+        }
+        .item-name { font-weight: 600; font-size: 1.1rem; }
+        .item-desc { display: block; font-size: 0.9rem; color: #666; margin-top: 5px; }
+        .item-price {
+            font-weight: bold; 
+            color: var(--colore-2-primario); /* USA COLORE 2 */
+            font-size: 1.1rem;
+            white-space: nowrap; flex-shrink: 0; margin-left: 15px; text-align: right;
+        }
+
+        /* --- PULSANTI FLOTTANTI --- */
         .floating-actions {
-            position: fixed;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 25px;
-            z-index: 1000;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Animazione fluida */
+            position: fixed; bottom: 30px; left: 0; right: 0; display: flex;
+            justify-content: space-between; padding: 0 25px; z-index: 2000;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        /* Stato quando l'utente scorre verso il basso */
-        .floating-actions.is-hidden {
-            opacity: 0;
-            transform: translateY(100px); /* Scivola fuori verso il basso */
-            pointer-events: none; /* Impedisce di cliccarli se invisibili */
-        }
-
+        .floating-actions.is-hidden { opacity: 0; transform: translateY(100px); pointer-events: none; }
         .float-circle {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            text-align: center;
+            width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: var(--white-pure); font-size: 0.7rem;
+            font-weight: bold; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center;
+            animation: pulse 2s infinite;
         }
+        .float-circle span { font-size: 1.6rem; margin-bottom: 2px; }
+        
+        .bg-delivery { background-color: var(--colore-4-dettagli); /* USA COLORE 4 */ }
+        .bg-call { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        .float-circle span {
-            font-size: 1.6rem;
-            margin-bottom: 2px;
-        }
-
-        .bg-delivery { background-color: var(--secondary-gold); }
-        .bg-call { background-color: var(--primary-red); }
-
-        /* Effetto pulsazione per attirare l'attenzione all'inizio */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        .float-circle { animation: pulse 2s infinite; }
         #backToTop {
-            display: none; /* Nascosto di default */
-            position: fixed;
-            bottom: 40px; /* Più in alto rispetto alle palline per non sovrapporsi */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 99;
-            border: none;
-            outline: none;
-            background-color: var(--text-dark);
-            color: white;
-            cursor: pointer;
-            padding: 10px 15px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: opacity 0.3s;
+            display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 2500; border: none; outline: none; background-color: var(--colore-3-testo); /* USA COLORE 3 */
+            color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px;
+            font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s;
         }
+        #backToTop:hover { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
 
-        #backToTop:hover {
-            background-color: var(--primary-red);
+        /* --- DOVE SIAMO --- */
+        .location-section { background-color: var(--colore-1-sfondo); /* USA COLORE 1 */ text-align: center; }
+        .location-section h2 { margin-bottom: 40px; }
+        .location-container {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
+            max-width: 1200px; margin: 0 auto; align-items: stretch;
+        }
+        .location-info {
+            flex: 1; min-width: 300px; background: var(--white-pure); padding: 40px;
+            border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+        .location-info h3 { 
+            color: var(--colore-2-primario); /* USA COLORE 2 */ 
+            margin-bottom: 15px; 
+            border-bottom: 2px solid var(--colore-4-dettagli); /* USA COLORE 4 */ 
+            display: inline-block; 
+        }
+        .location-info p { margin-bottom: 10px; font-size: 1.1rem; }
+        .btn-maps {
+            display: inline-block; margin-top: 20px; padding: 10px 20px;
+            background-color: var(--colore-3-testo); /* USA COLORE 3 */
+            color: var(--white-pure); border-radius: 8px;
+            font-weight: bold; transition: background 0.3s; text-align: center;
+        }
+        .btn-maps:hover { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
+        .location-map {
+            flex: 1; min-width: 300px; height: 400px; border-radius: 15px;
+            overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .location-map iframe { width: 100%; height: 100%; border: 0; }
+
+        /* --- FOOTER --- */
+        .main-footer {
+            background-color: var(--colore-2-primario); /* USA COLORE 2 */
+            color: var(--white-pure); width: 100%;
+            margin: 0; padding: 60px 20px 120px 20px; position: relative;
+        }
+        .footer-grid {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 60px;
+            max-width: 1200px; margin: 0 auto; text-align: center;
+        }
+        .footer-col { flex: 1; min-width: 280px; max-width: 400px; }
+        .footer-col h3 {
+            color: var(--colore-4-dettagli); /* USA COLORE 4 */
+            font-size: 1.3rem; margin-bottom: 20px;
+            text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+        }
+        .footer-col p { margin-bottom: 10px; font-size: 1rem; line-height: 1.8; }
+        .footer-col a { color: var(--white-pure); text-decoration: none; transition: opacity 0.3s; }
+        .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
+        .footer-legal {
+            margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem; text-align: center; opacity: 0.8; max-width: 1200px;
+            margin-left: auto; margin-right: auto;
         }
     </style>
 </head>
-<script>
-        let slideIndex = 1;
-        let slideInterval; // Variabile per gestire il timer automatico
+<body>
 
-        // Avvia lo slider appena la pagina è pronta
+    <nav class="top-navbar">
+        <div class="nav-brand">Ristorante Al Lago</div>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <ul id="nav-links" class="nav-links">
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#chi-siamo" onclick="toggleMenu()">Chi Siamo</a></li>
+            <li><a href="#menu" onclick="toggleMenu()">Menù</a></li>
+            <li><a href="#dove-siamo" onclick="toggleMenu()">Dove Siamo</a></li>
+            <li><a href="#contatti" onclick="toggleMenu()">Contatti</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById("nav-links");
+            navLinks.classList.toggle("show");
+        }
+
+        let slideIndex = 1;
+        let slideInterval;
+
         document.addEventListener("DOMContentLoaded", function() {
             showSlides(slideIndex);
-            startAutoSlide(); // Avvia lo scorrimento automatico
+            startAutoSlide();
         });
 
-        // Funzione per le frecce avanti/indietro
         function plusSlides(n) {
-            clearInterval(slideInterval); // Ferma l'automatico se l'utente clicca
+            clearInterval(slideInterval);
             showSlides(slideIndex += n);
-            startAutoSlide(); // Riavvia l'automatico
+            startAutoSlide();
         }
 
-        // Funzione per i pallini (dots)
         function currentSlide(n) {
-            clearInterval(slideInterval); // Ferma l'automatico se l'utente clicca
+            clearInterval(slideInterval);
             showSlides(slideIndex = n);
-            startAutoSlide(); // Riavvia l'automatico
+            startAutoSlide();
         }
 
-        // La funzione principale che mostra l'immagine giusta
         function showSlides(n) {
             let i;
             let slides = document.getElementsByClassName("carousel-slide");
             let dots = document.getElementsByClassName("dot");
             if (n > slides.length) {slideIndex = 1}
             if (n < 1) {slideIndex = slides.length}
-            // Nascondi tutte le slide
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
-            // Rimuovi la classe "active" da tutti i pallini
             for (i = 0; i < dots.length; i++) {
                 dots[i].className = dots[i].className.replace(" active", "");
             }
-            // Mostra la slide corrente e attiva il pallino corrispondente
             slides[slideIndex-1].style.display = "block";
             dots[slideIndex-1].classList.add("active");
         }
 
-        // Funzione per far scorrere automaticamente ogni 4 secondi
         function startAutoSlide() {
             slideInterval = setInterval(function() {
                 showSlides(slideIndex += 1);
-            }, 4000); // 4000 millisecondi = 4 secondi
-        }
-        // Gestione visibilità pulsanti allo scorrimento
-        window.addEventListener('scroll', function() {
-            const buttons = document.getElementById('action-buttons');
-            if (window.scrollY > 100) {
-                buttons.classList.add('is-hidden');
-            } else {
-                buttons.classList.remove('is-hidden');
-            }
-        });
-        // Mostra il tasto quando l'utente scende di 300px
-        window.onscroll = function() {scrollFunction()};
-
-        function scrollFunction() {
-            const btn = document.getElementById("backToTop");
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                btn.style.display = "block";
-            } else {
-                btn.style.display = "none";
-            }
+            }, 4000);
         }
 
-        // Funzione per tornare su in modo fluido
-        function topFunction() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth' // Questo rende lo scorrimento morbido, non uno scatto secco
-            });
-        }
-        let lastScrollTop = 0; // Variabile per tracciare l'ultima posizione dello scroll
-
+        let lastScrollTop = 0;
         window.addEventListener("scroll", function() {
             let st = window.pageYOffset || document.documentElement.scrollTop;
             const btnTop = document.getElementById("backToTop");
             const btnActions = document.getElementById("action-buttons");
 
-            // Rileviamo se l'utente sta scrollando verso l'ALTO
-            if (st < lastScrollTop) {
-                // --- L'UTENTE SCORRE SU ---
-                
-                // Facciamo apparire i tasti Chiama e Ordina
-                btnActions.classList.remove('is-hidden');
-                
-                // Facciamo apparire il tasto "Torna su" solo se non siamo già in cima
-                if (st > 150) {
-                    btnTop.style.display = "block";
-                }
-            } else {
-                // --- L'UTENTE SCORRE GIÙ ---
-                
-                // Nascondiamo tutto per lasciare spazio alla lettura del menù
+            if (st > 100 && st > lastScrollTop) {
                 btnActions.classList.add('is-hidden');
-                btnTop.style.display = "none";
-            }
-
-            // Caso speciale: se siamo proprio all'inizio della pagina, 
-            // mostriamo i tasti principali ma nascondiamo il "Torna su"
-            if (st <= 5) {
+            } else {
                 btnActions.classList.remove('is-hidden');
-                btnTop.style.display = "none";
             }
 
-            // Aggiorniamo la posizione dell'ultimo scroll
+            if (st > 300) {
+                btnTop.style.display = "block";
+            } else {
+                btnTop.style.display = "none";
+            }
             lastScrollTop = st <= 0 ? 0 : st; 
         }, false);
 
-        // La funzione per tornare su rimane la stessa
         function topFunction() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
-</body>
-</html>
-    <div id="action-buttons" class="floating-actions">
-    <a href="delivery.html" class="float-circle bg-delivery">
-        <span>🛵</span>
-    </a>
 
-    <a href="tel:+390332000000" class="float-circle bg-call">
-        <span>📞</span>
-    </a>
-</div>
+    <div id="action-buttons" class="floating-actions">
+        <a href="delivery.html" class="float-circle bg-delivery">
+            <span>🛵</span>
+        </a>
+        <a href="tel:+390332000000" class="float-circle bg-call">
+            <span>📞</span>
+        </a>
+    </div>
+
     <div class="nav-back">
         <a href="index.html">⬅ Torna ai miei esempi</a>
     </div>
 
-    <header class="hero">
+    <header class="hero" id="home">
         <h1>Ristorante "Al Lago"</h1>
         <p>Sapori autentici della tradizione tra il lago e le prealpi varesine.</p>
         <a href="#menu" class="btn-hero">Guarda il Menù</a>
@@ -474,30 +440,20 @@
 
     <section class="intro">
         <h2>Benvenuti a Casa</h2>
-        <p>Dal 1985 portiamo in tavola solo ingredienti freschi e locali. La nostra passione è l'ospitalità, la nostra specialità è farvi sentire bene
+        <p>Dal 1985 portiamo in tavola solo ingredienti freschi e locali. La nostra passione è l'ospitalità, la nostra specialità è farvi sentire bene.</p>
+    </section>
     
     <section class="venue-carousel-section">
         <h2>L'Atmosfera</h2>
         <p style="margin-bottom: 20px; color: #666;">Un ambiente caldo e accogliente per le tue serate speciali.</p>
-        
         <div class="carousel-container">
-            <div class="carousel-slide fade">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno Ristorante 1">
-            </div>
-            <div class="carousel-slide fade">
-                <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno Ristorante 2">
-            </div>
-            <div class="carousel-slide fade">
-                <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Dettaglio Tavolo">
-            </div>
-            <div class="carousel-slide fade">
-                <img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Atmosfera serale">
-            </div>
-
-            <button class="prev-btn" onclick="plusSlides(-1)">&#10094;</button>
-            <button class="next-btn" onclick="plusSlides(1)">&#10095;</button>
+            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno 1"></div>
+            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno 2"></div>
+            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tavolo"></div>
+            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Serale"></div>
+            <button class="prev-btn" onclick="plusSlides(-1)">❮</button>
+            <button class="next-btn" onclick="plusSlides(1)">❯</button>
         </div>
-        
         <div class="carousel-dots-container">
             <span class="dot" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
@@ -513,28 +469,24 @@
             <br>
             <p>Oggi, dopo oltre 30 anni, la famiglia Rossi continua a selezionare personalmente ogni ingrediente dai produttori locali della zona, garantendo una filiera corta e un gusto inimitabile.</p>
         </div>
-        <!-- <div class="about-image">
-            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="La nostra cucina">
-        </div> -->
     </section>
 
     <section class="staff">
         <h2>Le Mani in Pasta</h2>
         <div class="staff-grid">
             <div class="staff-card">
-                <img src="https://images.unsplash.com/photo-1583394293214-28dea15ee548?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Chef" class="staff-img">
-                <h3>Marco Rossi</h3>
-                <p>Executive Chef</p>
+                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Chef" class="staff-img">
+                <h3>Marco Rossi</h3><p>Executive Chef</p>
             </div>
+            
             <div class="staff-card">
-                <img src="https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Maître" class="staff-img">
-                <h3>Sara Bianchi</h3>
-                <p>Responsabile Sala</p>
+                <img src="https://shop.divisalavoro.com/WebRoot/epagesIT/Shops/54770/68F5/BE9B/4FEC/F294/66C2/0A0C/05B6/2EE6/Giacca_vestito_per_Cameriera_e_Maitre_di_Sala.jpg" alt="Maître" class="staff-img">
+                <h3>Sara Bianchi</h3><p>Responsabile Sala</p>
             </div>
+            
             <div class="staff-card">
-                <img src="https://images.unsplash.com/photo-1622023459113-9b195477d9c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Pizzaiolo" class="staff-img">
-                <h3>Luca Verga</h3>
-                <p>Mastro Pizzaiolo</p>
+                <img src="https://www.bresciaatavola.it/wp-content/uploads/bresciaatavola.it/2023/02/Il-mastro-pizaiolo-Antonio-Pappalardo.jpg" alt="Pizzaiolo" class="staff-img">
+                <h3>Luca Verga</h3><p>Mastro Pizzaiolo</p>
             </div>
         </div>
     </section>
@@ -556,14 +508,6 @@
                 <div><span class="item-name">Sciatt Valtellinesi</span><span class="item-desc">Frittelle di grano saraceno con cuore di formaggio fuso.</span></div>
                 <span class="item-price">€ 11.00</span>
             </div>
-            <div class="menu-item">
-                <div><span class="item-name">Polpettine della Nonna</span><span class="item-desc">Al sugo di pomodoro S.Marzano e scaglie di grana.</span></div>
-                <span class="item-price">€ 9.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Bruschette del Contadino</span><span class="item-desc">Pane casereccio con pomodorini, aglio e olio EVO.</span></div>
-                <span class="item-price">€ 8.00</span>
-            </div>
         </div>
 
         <div class="menu-category">
@@ -576,18 +520,6 @@
                 <div><span class="item-name">Tagliatelle ai Funghi Porcini</span><span class="item-desc">Pasta fresca all'uovo con funghi freschi dei nostri boschi.</span></div>
                 <span class="item-price">€ 16.00</span>
             </div>
-            <div class="menu-item">
-                <div><span class="item-name">Gnocchi alla Toma di Varese</span><span class="item-desc">Gnocchi di patate fatti in casa con fonduta di toma locale.</span></div>
-                <span class="item-price">€ 14.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Lasagna Tradizionale</span><span class="item-desc">Sfoglia gialla, ragù di manzo 24h e besciamella artigianale.</span></div>
-                <span class="item-price">€ 13.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Spaghetti alle Vongole</span><span class="item-desc">Vongole veraci, prezzemolo, aglio e un pizzico di peperoncino.</span></div>
-                <span class="item-price">€ 17.00</span>
-            </div>
         </div>
 
         <div class="menu-category">
@@ -599,18 +531,6 @@
             <div class="menu-item">
                 <div><span class="item-name">Frittura Mista di Lago</span><span class="item-desc">Alborelle, agoni e filetti di persico fritti dorati.</span></div>
                 <span class="item-price">€ 19.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Grigliata Mista di Carne</span><span class="item-desc">Costine, salamella, pollo e manzo con verdure grigliate.</span></div>
-                <span class="item-price">€ 20.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Scaloppine al Limone</span><span class="item-desc">Sottili fette di vitello sfumate al limone di Sorrento.</span></div>
-                <span class="item-price">€ 15.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Parmigiana di Melanzane</span><span class="item-desc">Ricetta classica con melanzane fritte e tanto basilico.</span></div>
-                <span class="item-price">€ 12.00</span>
             </div>
         </div>
 
@@ -628,34 +548,6 @@
                 <div><span class="item-name">Diavola</span><span class="item-desc">Pomodoro, mozzarella, spianata calabra piccante.</span></div>
                 <span class="item-price">€ 10.00</span>
             </div>
-            <div class="menu-item">
-                <div><span class="item-name">Regina</span><span class="item-desc">Pomodoro, mozzarella, prosciutto cotto, funghi.</span></div>
-                <span class="item-price">€ 10.50</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">4 Formaggi</span><span class="item-desc">Mozzarella, zola, fontina, grana.</span></div>
-                <span class="item-price">€ 11.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Vegetariana</span><span class="item-desc">Verdure grigliate di stagione.</span></div>
-                <span class="item-price">€ 10.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Capricciosa</span><span class="item-desc">Prosciutto, funghi, carciofi, olive.</span></div>
-                <span class="item-price">€ 11.50</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Salsiccia e Friarielli</span><span class="item-desc">Mozzarella, salsiccia fresca, friarielli campani.</span></div>
-                <span class="item-price">€ 12.50</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Bresaola e Rucola</span><span class="item-desc">Pomodoro, bresaola della Valtellina, rucola, grana.</span></div>
-                <span class="item-price">€ 13.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Calzone Classico</span><span class="item-desc">Cotto, mozzarella, pomodoro.</span></div>
-                <span class="item-price">€ 10.00</span>
-            </div>
         </div>
 
         <div class="menu-category">
@@ -667,18 +559,6 @@
             <div class="menu-item">
                 <div><span class="item-name">Panna Cotta</span><span class="item-desc">Ai frutti di bosco o caramello.</span></div>
                 <span class="item-price">€ 6.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Sorbetto al Limone</span><span class="item-desc">Fresco e digestivo.</span></div>
-                <span class="item-price">€ 5.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Torta di Mele Calda</span><span class="item-desc">Servita con una pallina di gelato alla vaniglia.</span></div>
-                <span class="item-price">€ 7.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Meringata al Cioccolato</span><span class="item-desc">Cuore di meringa e colata di cioccolato fondente.</span></div>
-                <span class="item-price">€ 7.00</span>
             </div>
         </div>
 
@@ -697,15 +577,64 @@
                 <span class="item-price">€ 8.00</span>
             </div>
             <div class="menu-item">
-                <div><span class="item-name">Bibite in lattina</span><span class="item-desc">Coca, Fanta, Sprite, Thè.</span></div>
-                <span class="item-price">€ 3.50</span>
-            </div>
-            <div class="menu-item">
                 <div><span class="item-name">Caffè Espresso</span><span class="item-desc">Torrefazione locale.</span></div>
                 <span class="item-price">€ 1.50</span>
             </div>
-            <button onclick="topFunction()" id="backToTop" title="Torna su">
-                ↑
-            </button>
         </div>
     </section>
+
+    <section class="location-section" id="dove-siamo">
+        <h2>Vienici a trovare</h2>
+        <div class="location-container">
+            <div class="location-info">
+                <h3>Dove Siamo</h3>
+                <p><strong>Ristorante "Al Lago"</strong></p>
+                <p>📍 Via Lungolago di Schiranna, 42</p>
+                <p>21100 Varese (VA)</p>
+                <br>
+                <p>🚗 Ampio parcheggio gratuito di fronte al locale.</p>
+                <p>🚌 Fermata bus Linea N a 50 metri.</p>
+                
+                <a href="https://maps.google.com" target="_blank" class="btn-maps">Avvia Navigatore ↗</a>
+            </div>
+
+            <div class="location-map">
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    marginheight="0" 
+                    marginwidth="0" 
+                    src="https://maps.google.com/maps?q=Via+Lungolago+di+Schiranna+42+Varese&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer" id="contatti">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Contatti Rapidi</h3>
+                <p>📞 Telefono: <a href="tel:+390332000000" style="color: white;">0332 00.00.00</a></p>
+                <p>📱 WhatsApp: <a href="https://wa.me/393330000000" style="color: white;">333 00.00.000</a></p>
+                <p>📧 Email: info@ristoranteallago.demo</p>
+            </div>
+            <div class="footer-col">
+                <h3>Orari di Apertura</h3>
+                <p>Lun - Ven: 12:00-14:30 / 19:00-23:00</p>
+                <p>Sab - Dom: 12:00-15:00 / 18:30-23:30</p>
+                <p><em>Chiuso il Martedì</em></p>
+            </div>
+        </div>
+        <div class="footer-legal">
+            <p>© 2024 Ristorante Al Lago S.r.l. - Tutti i diritti riservati</p>
+            <p>Partita IVA: 01234567890 | Rea: VA-123456</p>
+            <p><a href="#" style="color: white;">Privacy Policy</a> | <a href="#" style="color: white;">Cookie Policy</a></p>
+        </div>
+    </footer>
+
+    <button onclick="topFunction()" id="backToTop" title="Torna su">↑</button>
+
+</body>
+</html>
