@@ -8,26 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- TAVOLOZZA COLORI (MODIFICA SOLO QUI PER CAMBIARE TUTTO) --- */
+        /* --- TAVOLOZZA COLORI --- */
         :root {
-            /* 1. IL BIANCO (Sfondo pagina) */
             --colore-1-sfondo:   #f8f9fa; 
-
-            /* 2. IL ROSSO (Colore principale: Menu, Footer, Bottoni) */
             --colore-2-primario: #c0392b; 
-
-            /* 3. IL BLU (Colore Testi e Titoli) */
             --colore-3-testo:    #2c3e50; 
-
-            /* 4. IL GIALLO (Dettagli, linee, stelline) */
             --colore-4-dettagli: #d4ac0d; 
-
-            /* --- Variabili Tecniche (Non toccare) --- */
-            --white-pure: #ffffff; /* Bianco puro per le card e il testo su fondi scuri */
+            --white-pure: #ffffff;
             --nav-height: 60px;
         }
 
-        /* --- RESET TOTALE --- */
+        /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         html {
@@ -36,35 +27,34 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             padding-top: var(--nav-height);
             width: 100%;
             overflow-x: hidden;
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: var(--colore-3-testo);       /* USA COLORE 3 */
-            background-color: var(--colore-1-sfondo); /* USA COLORE 1 */
+            color: var(--colore-3-testo);
+            background-color: var(--colore-1-sfondo);
         }
 
-        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--colore-3-testo); /* USA COLORE 3 */ }
+        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--colore-3-testo); }
         a { text-decoration: none; }
         section { padding: 60px 20px; }
 
         /* --- NAVIGATION BAR --- */
         .top-navbar {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             height: var(--nav-height);
-            background-color: var(--colore-2-primario); /* USA COLORE 2 */
+            background-color: var(--colore-2-primario);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
             z-index: 3000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
         }
 
         .nav-brand {
@@ -72,12 +62,18 @@
             font-family: 'Merriweather', serif;
             font-weight: bold;
             font-size: 1.2rem;
+            z-index: 4001; /* Sempre visibile */
         }
 
+        /* =========================================
+           STILE DESKTOP (Default per schermi grandi) 
+           ========================================= */
         .nav-links {
             list-style: none;
-            display: flex;
+            display: flex; /* Flex orizzontale */
             gap: 25px;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links li a {
@@ -88,43 +84,88 @@
             text-transform: uppercase;
         }
 
-        .nav-links li a:hover { color: var(--colore-4-dettagli); /* USA COLORE 4 */ }
+        .nav-links li a:hover { color: var(--colore-4-dettagli); }
+        
+        /* Nascondiamo Hamburger e X su Desktop */
+        .hamburger, .close-x { display: none; }
 
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--white-pure);
-            font-size: 1.8rem;
-            cursor: pointer;
-        }
-
+        /* =========================================
+           STILE MOBILE (Schermi < 768px)
+           ========================================= */
         @media (max-width: 768px) {
-            .hamburger { display: block; }
+            
+            /* Mostra Hamburger */
+            .hamburger {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 1.8rem;
+                cursor: pointer;
+            }
+
+            /* Trasforma la lista in un cassetto laterale */
             .nav-links {
-                position: absolute;
-                top: var(--nav-height);
-                left: 0;
-                width: 100%;
-                background-color: var(--colore-2-primario); /* USA COLORE 2 */
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 85%; /* Larghezza menu mobile */
+                background-color: var(--colore-2-primario);
+                
+                display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.4s ease-out;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                justify-content: center;
+                gap: 30px;
+                
+                transform: translateX(100%); /* Nascosto a destra */
+                transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+                z-index: 4000; /* Sopra tutto */
             }
-            .nav-links.show { max-height: 350px; }
-            .nav-links li { width: 100%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
-            .nav-links li a { display: block; padding: 15px; }
+
+            .nav-links.show {
+                transform: translateX(0); /* Mostra */
+            }
+
+            .nav-links li a {
+                font-size: 1.5rem; /* Link più grandi su mobile */
+            }
+
+            /* Mostra la X di chiusura dentro il menu */
+            .close-x {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 2.5rem;
+                line-height: 1;
+                cursor: pointer;
+            }
         }
 
-        /* --- BOTTONE INDIETRO --- */
+        /* --- OVERLAY SCURO --- */
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 3500; 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(3px);
+        }
+        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        /* --- ALTRI STILI --- */
         .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
         .nav-back a { color: #666; font-weight: 600; }
 
-        /* --- HERO SECTION --- */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
@@ -132,15 +173,13 @@
             color: var(--white-pure);
             text-align: center;
             padding: 100px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
         }
         .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
         .btn-hero {
-            background: var(--colore-2-primario); /* USA COLORE 2 */
+            background: var(--colore-2-primario);
             color: var(--white-pure);
             padding: 15px 30px;
             border-radius: 50px;
@@ -149,13 +188,11 @@
             letter-spacing: 1px;
             transition: background 0.3s;
         }
-        .btn-hero:hover { filter: brightness(90%); } /* Scurisce leggermente all'hover */
+        .btn-hero:hover { filter: brightness(90%); }
 
-        /* --- INTRO --- */
         .intro { text-align: center; background: var(--white-pure); }
-        .intro h2 { color: var(--colore-2-primario); /* USA COLORE 2 */ margin-bottom: 20px; }
+        .intro h2 { color: var(--colore-2-primario); margin-bottom: 20px; }
 
-        /* --- CHI SIAMO --- */
         .about { 
             background: var(--white-pure); 
             display: flex; flex-wrap: wrap; align-items: center; 
@@ -163,14 +200,9 @@
         }
         .about-content { flex: 1; min-width: 300px; max-width: 800px; }
 
-        /* --- STAFF --- */
-        .staff { background: var(--colore-1-sfondo); /* USA COLORE 1 */ text-align: center; }
+        .staff { background: var(--colore-1-sfondo); text-align: center; }
         .staff h2 { margin-bottom: 40px; }
-        .staff-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 30px; 
-        }
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
         .staff-card { 
             background: var(--white-pure); padding: 20px; border-radius: 15px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
@@ -178,28 +210,17 @@
         .staff-card:hover { transform: translateY(-10px); }
         .staff-img { 
             width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
-            margin-bottom: 15px; 
-            border: 3px solid var(--colore-4-dettagli); /* USA COLORE 4 */
+            margin-bottom: 15px; border: 3px solid var(--colore-4-dettagli);
         }
         .staff-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
-        .staff-card p { 
-            color: var(--colore-2-primario); /* USA COLORE 2 */ 
-            font-weight: 600; font-size: 0.9rem; text-transform: uppercase; 
-        }
+        .staff-card p { color: var(--colore-2-primario); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
 
-        /* --- CAROUSEL --- */
+        /* Carousel */
         .venue-carousel-section { padding: 60px 0; background: var(--white-pure); text-align: center; }
         .carousel-container {
-            max-width: 1000px;
-            position: relative;
-            margin: auto;
-            overflow: hidden;
-            border-radius: 15px;
-            
-            /* Bordi */
-            border: 5px solid var(--white-pure);    
-            outline: 1px solid #ddd;   
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            max-width: 1000px; position: relative; margin: auto; overflow: hidden;
+            border-radius: 15px; border: 5px solid var(--white-pure);
+            outline: 1px solid #ddd; box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
         .carousel-slide { display: none; height: 400px; }
         .fade { animation-name: fade; animation-duration: 1.5s; }
@@ -218,34 +239,29 @@
             cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb;
             border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
         }
-        .dot.active, .dot:hover { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
+        .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
         @media (max-width: 768px) { .carousel-slide { height: 250px; } }
 
-        /* --- MENÙ --- */
+        /* Menu Ristorante */
         .menu-section { background: var(--white-pure); }
         .menu-section h2 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
-        .menu-category { margin-bottom: 40px; }
-        .menu-category h3 { 
-            color: var(--colore-2-primario); /* USA COLORE 2 */
-            margin-bottom: 20px; 
-            border-bottom: 2px solid var(--colore-4-dettagli); /* USA COLORE 4 */
-            display: inline-block; 
+        .menu-category {
+            background: var(--white-pure); padding: 25px; border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px;
         }
-        
+        .menu-category h3 { 
+            color: var(--colore-2-primario); margin-bottom: 20px; 
+            border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; 
+        }
         .menu-item {
             display: flex; justify-content: space-between; align-items: baseline;
             margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;
         }
         .item-name { font-weight: 600; font-size: 1.1rem; }
         .item-desc { display: block; font-size: 0.9rem; color: #666; margin-top: 5px; }
-        .item-price {
-            font-weight: bold; 
-            color: var(--colore-2-primario); /* USA COLORE 2 */
-            font-size: 1.1rem;
-            white-space: nowrap; flex-shrink: 0; margin-left: 15px; text-align: right;
-        }
+        .item-price { font-weight: bold; color: var(--colore-2-primario); font-size: 1.1rem; margin-left: 15px; white-space: nowrap; flex-shrink: 0; text-align: right; }
 
-        /* --- PULSANTI FLOTTANTI --- */
+        /* Floating Actions */
         .floating-actions {
             position: fixed; bottom: 30px; left: 0; right: 0; display: flex;
             justify-content: space-between; padding: 0 25px; z-index: 2000;
@@ -259,174 +275,157 @@
             animation: pulse 2s infinite;
         }
         .float-circle span { font-size: 1.6rem; margin-bottom: 2px; }
-        
-        .bg-delivery { background-color: var(--colore-4-dettagli); /* USA COLORE 4 */ }
-        .bg-call { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
-        
+        .bg-delivery { background-color: var(--colore-4-dettagli); }
+        .bg-call { background-color: var(--colore-2-primario); }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        #backToTop {
-            display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            z-index: 2500; border: none; outline: none; background-color: var(--colore-3-testo); /* USA COLORE 3 */
-            color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px;
-            font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s;
-        }
-        #backToTop:hover { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
-
-        /* --- DOVE SIAMO --- */
-        .location-section { background-color: var(--colore-1-sfondo); /* USA COLORE 1 */ text-align: center; }
+        /* Dove Siamo */
+        .location-section { background-color: var(--colore-1-sfondo); text-align: center; }
         .location-section h2 { margin-bottom: 40px; }
-        .location-container {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;
-            max-width: 1200px; margin: 0 auto; align-items: stretch;
-        }
-        .location-info {
-            flex: 1; min-width: 300px; background: var(--white-pure); padding: 40px;
-            border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-        }
-        .location-info h3 { 
-            color: var(--colore-2-primario); /* USA COLORE 2 */ 
-            margin-bottom: 15px; 
-            border-bottom: 2px solid var(--colore-4-dettagli); /* USA COLORE 4 */ 
-            display: inline-block; 
-        }
+        .location-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; align-items: stretch; }
+        .location-info { flex: 1; min-width: 300px; background: var(--white-pure); padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .location-info h3 { color: var(--colore-2-primario); margin-bottom: 15px; border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; }
         .location-info p { margin-bottom: 10px; font-size: 1.1rem; }
         .btn-maps {
             display: inline-block; margin-top: 20px; padding: 10px 20px;
-            background-color: var(--colore-3-testo); /* USA COLORE 3 */
-            color: var(--white-pure); border-radius: 8px;
-            font-weight: bold; transition: background 0.3s; text-align: center;
+            background-color: var(--colore-3-testo); color: var(--white-pure); border-radius: 8px; font-weight: bold; transition: background 0.3s; text-align: center;
         }
-        .btn-maps:hover { background-color: var(--colore-2-primario); /* USA COLORE 2 */ }
-        .location-map {
-            flex: 1; min-width: 300px; height: 400px; border-radius: 15px;
-            overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        .btn-maps:hover { background-color: var(--colore-2-primario); }
+        .location-map { flex: 1; min-width: 300px; height: 400px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .location-map iframe { width: 100%; height: 100%; border: 0; }
 
-        /* --- FOOTER --- */
-        .main-footer {
-            background-color: var(--colore-2-primario); /* USA COLORE 2 */
-            color: var(--white-pure); width: 100%;
-            margin: 0; padding: 60px 20px 120px 20px; position: relative;
-        }
-        .footer-grid {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 60px;
-            max-width: 1200px; margin: 0 auto; text-align: center;
-        }
+        /* Footer */
+        .main-footer { background-color: var(--colore-2-primario); color: var(--white-pure); width: 100%; margin: 0; padding: 60px 20px 120px 20px; position: relative; }
+        .footer-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; text-align: center; }
         .footer-col { flex: 1; min-width: 280px; max-width: 400px; }
-        .footer-col h3 {
-            color: var(--colore-4-dettagli); /* USA COLORE 4 */
-            font-size: 1.3rem; margin-bottom: 20px;
-            text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
-        }
+        .footer-col h3 { color: var(--colore-4-dettagli); font-size: 1.3rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
         .footer-col p { margin-bottom: 10px; font-size: 1rem; line-height: 1.8; }
         .footer-col a { color: var(--white-pure); text-decoration: none; transition: opacity 0.3s; }
         .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
-        .footer-legal {
-            margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.85rem; text-align: center; opacity: 0.8; max-width: 1200px;
-            margin-left: auto; margin-right: auto;
+        .footer-legal { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; text-align: center; opacity: 0.8; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+        #backToTop {
+            display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 2500; border: none; outline: none; background-color: var(--colore-3-testo);
+            color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px;
+            font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s;
         }
+        #backToTop:hover { background-color: var(--colore-2-primario); }
     </style>
 </head>
 <body>
 
     <nav class="top-navbar">
         <div class="nav-brand">Ristorante Al Lago</div>
+        
         <button class="hamburger" onclick="toggleMenu()">☰</button>
+        
         <ul id="nav-links" class="nav-links">
-            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
-            <li><a href="#chi-siamo" onclick="toggleMenu()">Chi Siamo</a></li>
-            <li><a href="#menu" onclick="toggleMenu()">Menù</a></li>
-            <li><a href="#dove-siamo" onclick="toggleMenu()">Dove Siamo</a></li>
-            <li><a href="#contatti" onclick="toggleMenu()">Contatti</a></li>
+            <button class="close-x" onclick="chiudiMenu()">✕</button>
+            
+            <li><a href="#home" onclick="chiudiMenu()">Home</a></li>
+            <li><a href="#chi-siamo" onclick="chiudiMenu()">Chi Siamo</a></li>
+            <li><a href="#menu" onclick="chiudiMenu()">Menù</a></li>
+            <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
+            <li><a href="#contatti" onclick="chiudiMenu()">Contatti</a></li>
         </ul>
     </nav>
 
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById("nav-links");
-            navLinks.classList.toggle("show");
+    <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+<script>
+    // 1. Funzione BASE: Apre o Chiude il menu (usata dall'Hamburger e dall'Overlay)
+    function toggleMenu() {
+        const navLinks = document.getElementById("nav-links");
+        const overlay = document.getElementById("menu-overlay");
+        
+        navLinks.classList.toggle("show");
+        if (overlay) overlay.classList.toggle("active");
+    }
+
+    // 2. Funzione INTELLIGENTE: Chiude il menu SOLO se siamo su cellulare
+    // Usata dai Link e dalla X. Su desktop viene ignorata (così non diventa scuro).
+    function chiudiMenu() {
+        if (window.innerWidth <= 768) {
+            toggleMenu(); // Chiude il menu se lo schermo è piccolo
+        }
+    }
+
+    /* --- IL RESTO DEL CODICE (Slider, Scroll, ecc) NON CAMBIA --- */
+    let slideIndex = 1;
+    let slideInterval;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        showSlides(slideIndex);
+        startAutoSlide();
+    });
+
+    function plusSlides(n) {
+        clearInterval(slideInterval);
+        showSlides(slideIndex += n);
+        startAutoSlide();
+    }
+
+    function currentSlide(n) {
+        clearInterval(slideInterval);
+        showSlides(slideIndex = n);
+        startAutoSlide();
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("carousel-slide");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].classList.add("active");
+    }
+
+    function startAutoSlide() {
+        slideInterval = setInterval(function() {
+            showSlides(slideIndex += 1);
+        }, 4000);
+    }
+
+    let lastScrollTop = 0;
+    window.addEventListener("scroll", function() {
+        let st = window.pageYOffset || document.documentElement.scrollTop;
+        const btnTop = document.getElementById("backToTop");
+        const btnActions = document.getElementById("action-buttons");
+
+        if (st > 100 && st > lastScrollTop) {
+            btnActions.classList.add('is-hidden');
+        } else {
+            btnActions.classList.remove('is-hidden');
         }
 
-        let slideIndex = 1;
-        let slideInterval;
-
-        document.addEventListener("DOMContentLoaded", function() {
-            showSlides(slideIndex);
-            startAutoSlide();
-        });
-
-        function plusSlides(n) {
-            clearInterval(slideInterval);
-            showSlides(slideIndex += n);
-            startAutoSlide();
+        if (st > 300) {
+            btnTop.style.display = "block";
+        } else {
+            btnTop.style.display = "none";
         }
+        lastScrollTop = st <= 0 ? 0 : st; 
+    }, false);
 
-        function currentSlide(n) {
-            clearInterval(slideInterval);
-            showSlides(slideIndex = n);
-            startAutoSlide();
-        }
+    function topFunction() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
 
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("carousel-slide");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";
-            dots[slideIndex-1].classList.add("active");
-        }
-
-        function startAutoSlide() {
-            slideInterval = setInterval(function() {
-                showSlides(slideIndex += 1);
-            }, 4000);
-        }
-
-        let lastScrollTop = 0;
-        window.addEventListener("scroll", function() {
-            let st = window.pageYOffset || document.documentElement.scrollTop;
-            const btnTop = document.getElementById("backToTop");
-            const btnActions = document.getElementById("action-buttons");
-
-            if (st > 100 && st > lastScrollTop) {
-                btnActions.classList.add('is-hidden');
-            } else {
-                btnActions.classList.remove('is-hidden');
-            }
-
-            if (st > 300) {
-                btnTop.style.display = "block";
-            } else {
-                btnTop.style.display = "none";
-            }
-            lastScrollTop = st <= 0 ? 0 : st; 
-        }, false);
-
-        function topFunction() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-
-    <div id="action-buttons" class="floating-actions">
-        <a href="delivery.html" class="float-circle bg-delivery">
-            <span>🛵</span>
-        </a>
-        <a href="tel:+390332000000" class="float-circle bg-call">
-            <span>📞</span>
-        </a>
-    </div>
+<div id="action-buttons" class="floating-actions">
+    <a href="delivery.html" class="float-circle bg-delivery">
+        <span>🛵</span>
+    </a>
+    <a href="tel:+390332000000" class="float-circle bg-call">
+        <span>📞</span>
+    </a>
+</div>
 
     <div class="nav-back">
         <a href="index.html">⬅ Torna ai miei esempi</a>
@@ -462,7 +461,7 @@
         </div>
     </section>
 
-     <section class="about" id="chi-siamo">
+    <section class="about" id="chi-siamo">
         <div class="about-content">
             <h2>La Nostra Storia</h2>
             <p>Tutto è iniziato in una piccola cucina a <strong>Varese</strong>, con un sogno semplice: portare in tavola i sapori delle nostre prealpi e la freschezza del lago.</p>
@@ -635,6 +634,7 @@
     </footer>
 
     <button onclick="topFunction()" id="backToTop" title="Torna su">↑</button>
-
+</div>
+<div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
 </body>
 </html>
