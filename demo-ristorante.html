@@ -62,7 +62,6 @@
             font-family: 'Merriweather', serif;
             font-weight: bold;
             font-size: 1.2rem;
-            z-index: 4001; /* Sempre visibile */
         }
 
         /* =========================================
@@ -110,7 +109,7 @@
                 top: 0;
                 right: 0;
                 height: 100vh;
-                width: 85%; /* Larghezza menu mobile */
+                width: 80%; /* Larghezza menu mobile */
                 background-color: var(--colore-2-primario);
                 
                 display: flex;
@@ -128,6 +127,19 @@
             .nav-links.show {
                 transform: translateX(0); /* Mostra */
             }
+
+            /* ↓↓↓ AGGIUNGI QUESTO (NUOVO) ↓↓↓ */
+            .nav-links li {
+                width: 80%; /* Larghezza della linea */
+                text-align: center;
+                padding: 15px 0; /* Spaziatura sopra/sotto */
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Linea di separazione */
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none; /* Rimuovi linea dall'ultima voce */
+            }
+            /* ↑↑↑ FINE CODICE NUOVO ↑↑↑ */
 
             .nav-links li a {
                 font-size: 1.5rem; /* Link più grandi su mobile */
@@ -148,19 +160,25 @@
             }
         }
 
+
         /* --- OVERLAY SCURO --- */
         .menu-overlay {
             position: fixed;
             top: 0; left: 0;
-            width: 100%; height: 100%;
+            width: 20%; height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: 3500; 
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s;  /* ← Delay di 0.1s */
             backdrop-filter: blur(3px);
         }
-        .menu-overlay.active { opacity: 1; visibility: visible; }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease 0.1s, visibility 0s 0s;  /* ← Appare progressivamente */
+        }
 
         /* --- ALTRI STILI --- */
         .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
@@ -240,7 +258,7 @@
             border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
         }
         .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
-        @media (max-width: 768px) { .carousel-slide { height: 250px; } }
+        /* @media (max-width: 768px) { .carousel-slide { height: 250px; } } */
 
         /* Menu Ristorante */
         .menu-section { background: var(--white-pure); }
@@ -316,7 +334,7 @@
 <body>
 
     <nav class="top-navbar">
-        <div class="nav-brand">Ristorante Al Lago</div>
+        <a href="#home" class="nav-brand">Ristorante Al Lago</a>
         
         <button class="hamburger" onclick="toggleMenu()">☰</button>
         
