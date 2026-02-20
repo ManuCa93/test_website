@@ -3,37 +3,600 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Officina - Varese</title>
+    <meta name="description" content="Autofficina Varesina - Riparazioni, tagliandi e cambio gomme a Varese. Affidabilità e competenza.">
+    <title>Autofficina Varesina | Varese</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --mechanic-blue: #0056b3; --gray: #333; }
-        body { font-family: 'Arial', sans-serif; margin: 0; color: var(--gray); }
-        .back-nav { background: #333; padding: 10px; text-align: center; }
-        .back-nav a { color: white; text-decoration: none; font-size: 0.9rem; }
-        .header { padding: 40px 20px; background: #f8f9fa; border-bottom: 5px solid var(--mechanic-blue); }
-        .service-list { padding: 30px 20px; }
-        .service-card { background: #eee; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-        .contact-bar { background: var(--mechanic-blue); color: white; text-align: center; padding: 20px; 
-                       position: fixed; bottom: 0; width: 100%; }
-        .contact-bar a { color: white; text-decoration: none; font-weight: bold; font-size: 1.2rem; }
+        /* --- TAVOLOZZA COLORI (Adattata per Meccanico) --- */
+        :root {
+            --colore-1-sfondo:   #f4f6f8; /* Grigio chiarissimo, quasi bianco, tecnico */
+            --colore-2-primario: #1e3a8a; /* Blu scuro aziendale (affidabilità) */
+            --colore-3-testo:    #1f2937; /* Grigio scuro per i testi */
+            --colore-4-dettagli: #f59e0b; /* Arancione/Ambra (motori, sicurezza, attenzione) */
+            --white-pure: #ffffff;
+            --nav-height: 60px;
+        }
+
+        /* --- RESET E BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--nav-height); 
+        }
+
+        body {
+            margin: 0; padding: 0;
+            padding-top: var(--nav-height);
+            width: 100%;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--colore-3-testo);
+            background-color: var(--colore-1-sfondo);
+        }
+
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--colore-3-testo); }
+        a { text-decoration: none; }
+        section { padding: 60px 20px; }
+
+        /* --- NAVIGATION BAR --- */
+        .top-navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: var(--colore-2-primario);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 3000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .nav-brand {
+            color: var(--white-pure);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        /* =========================================
+           STILE DESKTOP (Default per schermi grandi) 
+           ========================================= */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: var(--white-pure);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links li a:hover { color: var(--colore-4-dettagli); }
+        
+        .hamburger, .close-x { display: none; }
+
+        /* =========================================
+           STILE MOBILE (Schermi < 768px)
+           ========================================= */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 1.8rem;
+                cursor: pointer;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 80%;
+                background-color: var(--colore-2-primario);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+                z-index: 4000;
+            }
+
+            .nav-links.show { transform: translateX(0); }
+
+            .nav-links li {
+                width: 80%;
+                text-align: center;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.5rem; }
+
+            .close-x {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 2.5rem;
+                line-height: 1;
+                cursor: pointer;
+            }
+        }
+
+        /* --- OVERLAY SCURO --- */
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 3500; 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s;
+            backdrop-filter: blur(3px);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease 0.1s, visibility 0s 0s;
+        }
+
+        /* --- ALTRI STILI --- */
+        .nav-back { background: #e5e7eb; padding: 10px; text-align: center; font-size: 0.8rem; }
+        .nav-back a { color: #4b5563; font-weight: 600; }
+
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white-pure);
+            text-align: center;
+            padding: 100px 20px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+        .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px;}
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
+        .btn-hero {
+            background: var(--colore-4-dettagli);
+            color: var(--white-pure);
+            padding: 15px 30px;
+            border-radius: 5px; /* Angoli più squadrati per un look meccanico */
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn-hero:hover { filter: brightness(90%); transform: scale(1.05); }
+
+        .intro { text-align: center; background: var(--white-pure); }
+        .intro h2 { color: var(--colore-2-primario); margin-bottom: 20px; }
+
+        .about { 
+            background: var(--white-pure); 
+            display: flex; flex-wrap: wrap; align-items: center; 
+            gap: 40px; text-align: center; justify-content: center;
+        }
+        .about-content { flex: 1; min-width: 300px; max-width: 800px; }
+
+        .staff { background: var(--colore-1-sfondo); text-align: center; }
+        .staff h2 { margin-bottom: 40px; }
+        .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+        .staff-card { 
+            background: var(--white-pure); padding: 20px; border-radius: 10px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
+        }
+        .staff-card:hover { transform: translateY(-10px); }
+        .staff-img { 
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
+            margin-bottom: 15px; border: 4px solid var(--colore-2-primario);
+        }
+        .staff-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .staff-card p { color: var(--colore-4-dettagli); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* Carousel */
+        .venue-carousel-section { padding: 60px 0; background: var(--white-pure); text-align: center; }
+        .carousel-container {
+            max-width: 1000px; position: relative; margin: auto; overflow: hidden;
+            border-radius: 10px; border: 5px solid var(--colore-1-sfondo);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .carousel-slide { display: none; height: 400px; }
+        .fade { animation-name: fade; animation-duration: 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .prev-btn, .next-btn {
+            cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px;
+            color: var(--white-pure); font-weight: bold; font-size: 18px; transition: 0.6s ease;
+            background-color: rgba(0,0,0,0.5); border: none; user-select: none;
+        }
+        .next-btn { right: 0; border-radius: 3px 0 0 3px; }
+        .prev-btn { left: 0; border-radius: 0 3px 3px 0; }
+        .prev-btn:hover, .next-btn:hover { background-color: rgba(0,0,0,0.9); }
+        .carousel-dots-container { text-align: center; padding-top: 15px; }
+        .dot {
+            cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb;
+            border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
+        }
+        .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
+
+        /* Servizi Meccanico */
+        .menu-section { background: var(--white-pure); }
+        .menu-section h2 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
+        .menu-category {
+            background: var(--white-pure); padding: 25px; border-radius: 10px; border-left: 5px solid var(--colore-2-primario);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px;
+        }
+        .menu-category h3 { 
+            color: var(--colore-2-primario); margin-bottom: 20px; 
+            border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; 
+        }
+        .menu-item {
+            display: flex; justify-content: space-between; align-items: baseline;
+            margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;
+        }
+        .item-name { font-weight: 600; font-size: 1.1rem; }
+        .item-desc { display: block; font-size: 0.9rem; color: #666; margin-top: 5px; }
+        .item-price { font-weight: bold; color: var(--colore-4-dettagli); font-size: 1.1rem; margin-left: 15px; white-space: nowrap; flex-shrink: 0; text-align: right; }
+
+        /* Floating Actions */
+        .floating-actions {
+            position: fixed; bottom: 30px; left: 0; right: 0; display: flex;
+            justify-content: space-between; padding: 0 25px; z-index: 2000;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .floating-actions.is-hidden { opacity: 0; transform: translateY(100px); pointer-events: none; }
+        .float-circle {
+            width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: var(--white-pure); font-size: 0.7rem;
+            font-weight: bold; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center;
+            animation: pulse 2s infinite;
+        }
+        .float-circle span { font-size: 1.8rem; margin-bottom: 0px; }
+        .bg-whatsapp { background-color: #25D366; } /* Verde WhatsApp */
+        .bg-call { background-color: var(--colore-2-primario); }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Dove Siamo */
+        .location-section { background-color: var(--colore-1-sfondo); text-align: center; }
+        .location-section h2 { margin-bottom: 40px; }
+        .location-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; margin: 0 auto; align-items: stretch; }
+        .location-info { flex: 1; min-width: 300px; background: var(--white-pure); padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .location-info h3 { color: var(--colore-2-primario); margin-bottom: 15px; border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; }
+        .location-info p { margin-bottom: 10px; font-size: 1.1rem; }
+        .btn-maps {
+            display: inline-block; margin-top: 20px; padding: 10px 20px;
+            background-color: var(--colore-3-testo); color: var(--white-pure); border-radius: 5px; font-weight: bold; transition: background 0.3s; text-align: center;
+        }
+        .btn-maps:hover { background-color: var(--colore-2-primario); }
+        .location-map { flex: 1; min-width: 300px; height: 400px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .location-map iframe { width: 100%; height: 100%; border: 0; }
+
+        /* Footer */
+        .main-footer { background-color: var(--colore-3-testo); color: var(--white-pure); width: 100%; margin: 0; padding: 60px 20px 120px 20px; position: relative; border-top: 5px solid var(--colore-4-dettagli); }
+        .footer-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .footer-col { flex: 1; min-width: 280px; max-width: 400px; }
+        .footer-col h3 { color: var(--colore-4-dettagli); font-size: 1.3rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .footer-col p { margin-bottom: 10px; font-size: 1rem; line-height: 1.8; color: #d1d5db; }
+        .footer-col a { color: var(--white-pure); text-decoration: none; transition: opacity 0.3s; }
+        .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
+        .footer-legal { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; text-align: center; opacity: 0.6; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+        #backToTop {
+            display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            z-index: 2500; border: none; outline: none; background-color: var(--colore-4-dettagli);
+            color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px;
+            font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: background-color 0.3s;
+        }
+        #backToTop:hover { background-color: var(--colore-2-primario); }
     </style>
 </head>
 <body>
-    <div class="back-nav"><a href="index.html">← Torna al mio Portfolio</a></div>
 
-    <header class="header">
-        <h1>Officina Meccanica Rossi</h1>
-        <p>Specialisti in riparazioni rapide e revisioni a Varese Nord.</p>
+    <nav class="top-navbar">
+        <a href="#home" class="nav-brand">Autofficina Varesina</a>
+        
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        
+        <ul id="nav-links" class="nav-links">
+            <button class="close-x" onclick="chiudiMenu()">✕</button>
+            
+            <li><a href="#home" onclick="chiudiMenu()">Home</a></li>
+            <li><a href="#chi-siamo" onclick="chiudiMenu()">Chi Siamo</a></li>
+            <li><a href="#servizi" onclick="chiudiMenu()">Servizi</a></li>
+            <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
+            <li><a href="#contatti" onclick="chiudiMenu()">Contatti</a></li>
+        </ul>
+    </nav>
+
+    <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
+<script>
+    function toggleMenu() {
+        const navLinks = document.getElementById("nav-links");
+        const overlay = document.getElementById("menu-overlay");
+        
+        navLinks.classList.toggle("show");
+        if (overlay) overlay.classList.toggle("active");
+    }
+
+    function chiudiMenu() {
+        if (window.innerWidth <= 768) {
+            toggleMenu(); 
+        }
+    }
+
+    let slideIndex = 1;
+    let slideInterval;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        showSlides(slideIndex);
+        startAutoSlide();
+    });
+
+    function plusSlides(n) {
+        clearInterval(slideInterval);
+        showSlides(slideIndex += n);
+        startAutoSlide();
+    }
+
+    function currentSlide(n) {
+        clearInterval(slideInterval);
+        showSlides(slideIndex = n);
+        startAutoSlide();
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("carousel-slide");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].classList.add("active");
+    }
+
+    function startAutoSlide() {
+        slideInterval = setInterval(function() {
+            showSlides(slideIndex += 1);
+        }, 4000);
+    }
+
+    let lastScrollTop = 0;
+    window.addEventListener("scroll", function() {
+        let st = window.pageYOffset || document.documentElement.scrollTop;
+        const btnTop = document.getElementById("backToTop");
+        const btnActions = document.getElementById("action-buttons");
+
+        if (st > 100 && st > lastScrollTop) {
+            btnActions.classList.add('is-hidden');
+        } else {
+            btnActions.classList.remove('is-hidden');
+        }
+
+        if (st > 300) {
+            btnTop.style.display = "block";
+        } else {
+            btnTop.style.display = "none";
+        }
+        lastScrollTop = st <= 0 ? 0 : st; 
+    }, false);
+
+    function topFunction() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+<div id="action-buttons" class="floating-actions">
+    <a href="https://wa.me/393330000000" class="float-circle bg-whatsapp" target="_blank">
+        <span>💬</span>
+    </a>
+    <a href="tel:+390332000000" class="float-circle bg-call">
+        <span>📞</span>
+    </a>
+</div>
+
+    <div class="nav-back">
+        <a href="index.html">⬅ Torna ai miei esempi</a>
+    </div>
+
+    <header class="hero" id="home">
+        <h1>Autofficina Varesina</h1>
+        <p>La cura della tua auto, la nostra passione. Affidabilità e sicurezza su strada dal 1995.</p>
+        <a href="#servizi" class="btn-hero">Scopri i Servizi</a>
     </header>
 
-    <section class="service-list">
-        <h2>I Nostri Servizi</h2>
-        <div class="service-card">✅ Cambio Olio e Filtri</div>
-        <div class="service-card">✅ Diagnosi Elettronica</div>
-        <div class="service-card">✅ Gommista e Convergenza</div>
+    <section class="intro">
+        <h2>La Tua Auto In Buone Mani</h2>
+        <p>Garantiamo interventi rapidi, trasparenti e con ricambi di altissima qualità. Mettiamo la tua sicurezza al primo posto, con strumenti all'avanguardia per ogni tipo di veicolo.</p>
+    </section>
+    
+    <section class="venue-carousel-section">
+        <h2>La Nostra Officina</h2>
+        <p style="margin-bottom: 20px; color: #666;">Tecnologia moderna e spazi organizzati per la massima efficienza.</p>
+        <div class="carousel-container">
+            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Officina 1"></div>
+            <div class="carousel-slide fade"><img src="https://www.autoo.it/ufiles/medium/il%20motore%20a%20scoppio%20approfondiamolo%20il%20suo%20suo%20funzionamento%20.jpg?t=14072021" alt="Diagnosi Motore"></div>
+            <div class="carousel-slide fade"><img src="https://motorerigeneratocertificato.it/wp-content/uploads/2023/12/FIR-blog-copertina-1.jpg" alt="Pneumatici"></div>
+            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Ponte sollevatore"></div>
+            <button class="prev-btn" onclick="plusSlides(-1)">❮</button>
+            <button class="next-btn" onclick="plusSlides(1)">❯</button>
+        </div>
+        <div class="carousel-dots-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+        </div>
     </section>
 
-    <div class="contact-bar">
-        <a href="https://wa.me/39123456789">Manda un WhatsApp per Preventivo</a>
-    </div>
+    <section class="about" id="chi-siamo">
+        <div class="about-content">
+            <h2>La Nostra Storia</h2>
+            <p>Siamo partiti da un piccolo garage a <strong>Varese</strong>, guidati dall'amore per i motori e dalla voglia di risolvere i problemi delle persone.</p>
+            <br>
+            <p>Oggi, la nostra autofficina è un punto di riferimento in città. Ci aggiorniamo costantemente sulle nuove tecnologie (incluse auto ibride ed elettriche) per offrirti sempre il miglior servizio possibile, mantenendo però il rapporto di fiducia del "meccanico di fiducia".</p>
+        </div>
+    </section>
+
+    <section class="staff">
+        <h2>Il Nostro Team</h2>
+        <div class="staff-grid">
+            <div class="staff-card">
+                <img src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Meccanico Capo" class="staff-img">
+                <h3>Roberto Ferri</h3><p>Capo Officina</p>
+            </div>
+            
+            <div class="staff-card">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Elettrauto" class="staff-img">
+                <h3>Elena Conti</h3><p>Diagnosi & Elettronica</p>
+            </div>
+            
+            <div class="staff-card">
+                <img src="https://images.unsplash.com/photo-1504222490345-c075b6008014?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Gommista" class="staff-img">
+                <h3>Davide Russo</h3><p>Mastro Gommista</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="servizi" class="menu-section">
+        <h2>I Nostri Servizi</h2>
+
+        <div class="menu-category">
+            <h3>Manutenzione Ordinaria</h3>
+            <div class="menu-item">
+                <div><span class="item-name">Tagliando Completo</span><span class="item-desc">Cambio olio, filtro olio, aria, abitacolo e controlli livelli.</span></div>
+                <span class="item-price">da € 120</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Revisione Auto (Pre-Collaudo)</span><span class="item-desc">Controllo generale vettura e gestione pratica revisione ministeriale.</span></div>
+                <span class="item-price">€ 85</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Ricarica Aria Condizionata</span><span class="item-desc">Controllo perdite, igienizzazione impianto e ricarica gas.</span></div>
+                <span class="item-price">€ 70</span>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Riparazioni Meccaniche</h3>
+            <div class="menu-item">
+                <div><span class="item-name">Sostituzione Pastiglie Freni</span><span class="item-desc">Pastiglie anteriori/posteriori con ricambi originali o equivalenti.</span></div>
+                <span class="item-price">da € 80</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Distribuzione (Cinghia)</span><span class="item-desc">Kit distribuzione completo inclusa pompa dell'acqua.</span></div>
+                <span class="item-price">Prev. in sede</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Rifacimento Frizione</span><span class="item-desc">Sostituzione disco, spingidisco e cuscinetto.</span></div>
+                <span class="item-price">Prev. in sede</span>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Servizio Gomme</h3>
+            <div class="menu-item">
+                <div><span class="item-name">Cambio Gomme (Stagionale)</span><span class="item-desc">Smontaggio, montaggio, valvole nuove ed equilibratura.</span></div>
+                <span class="item-price">€ 40</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Convergenza ed Equilibratura</span><span class="item-desc">Assetto ruote con strumentazione laser 3D.</span></div>
+                <span class="item-price">€ 35</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Riparazione Foratura</span><span class="item-desc">Riparazione rapida pneumatico con toppa interna.</span></div>
+                <span class="item-price">€ 20</span>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Elettronica e Diagnosi</h3>
+            <div class="menu-item">
+                <div><span class="item-name">Diagnosi Computerizzata</span><span class="item-desc">Lettura e azzeramento errori centralina (OBD-II).</span></div>
+                <span class="item-price">€ 30</span>
+            </div>
+            <div class="menu-item">
+                <div><span class="item-name">Sostituzione Batteria</span><span class="item-desc">Verifica assorbimento, smaltimento vecchia e batteria nuova.</span></div>
+                <span class="item-price">da € 65</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="location-section" id="dove-siamo">
+        <h2>Passa in Officina</h2>
+        <div class="location-container">
+            <div class="location-info">
+                <h3>Dove Siamo</h3>
+                <p><strong>Autofficina Varesina S.r.l.</strong></p>
+                <p>📍 Via dei Motori, 42</p>
+                <p>21100 Varese (VA)</p>
+                <br>
+                <p>🚗 Ampio parcheggio interno e cortile dedicato ai clienti.</p>
+                <p>☕ Area d'attesa con macchina del caffè e Wi-Fi gratuito.</p>
+                
+                <a href="https://maps.google.com" target="_blank" class="btn-maps">Avvia Navigatore ↗</a>
+            </div>
+
+            <div class="location-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1165.439028920153!2d8.789465269725168!3d45.83767349819265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47867fa98b4f8d5b%3A0xdfa551a2b902c128!2sVia%20Astico%2C%2039%2C%2021100%20Varese%20VA!5e1!3m2!1sen!2sit!4v1771613089853!5m2!1sen!2sit" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer" id="contatti">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Contatti Rapidi</h3>
+                <p>📞 Telefono: <a href="tel:+390332000000">0332 00.00.00</a></p>
+                <p>📱 WhatsApp (Preventivi): <a href="https://wa.me/393330000000">333 00.00.000</a></p>
+                <p>📧 Email: info@autofficinavaresina.demo</p>
+            </div>
+            <div class="footer-col">
+                <h3>Orari di Apertura</h3>
+                <p>Lun - Ven: 08:00-12:30 / 14:00-18:30</p>
+                <p>Sabato: 08:30-12:30 (Solo ritiro/urgenze)</p>
+                <p><em>Domenica Chiuso</em></p>
+            </div>
+        </div>
+        <div class="footer-legal">
+            <p>© 2024 Autofficina Varesina S.r.l. - Tutti i diritti riservati</p>
+            <p>Partita IVA: 01234567890 | Rea: VA-123456</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Cookie Policy</a></p>
+        </div>
+    </footer>
+
+    <button onclick="topFunction()" id="backToTop" title="Torna su">↑</button>
+
 </body>
 </html>
