@@ -11,9 +11,9 @@
         /* --- TAVOLOZZA COLORI --- */
         :root {
             --colore-1-sfondo:   #f8f9fa; 
-            --colore-2-primario: #c0392b; 
-            --colore-3-testo:    #2c3e50; 
-            --colore-4-dettagli: #d4ac0d; 
+            --colore-2-primario: #c0392b; /* Rosso */
+            --colore-3-testo:    #2c3e50; /* Blu scuro/Grigio */
+            --colore-4-dettagli: #d4ac0d; /* Oro/Giallo */
             --white-pure: #ffffff;
             --nav-height: 60px;
         }
@@ -82,6 +82,7 @@
         .nav-links {
             list-style: none;
             display: flex;
+            align-items: center; /* Allinea verticalmente */
             gap: 25px;
             margin: 0;
             padding: 0;
@@ -96,6 +97,27 @@
         }
 
         .nav-links li a:hover { color: var(--colore-4-dettagli); }
+
+        /* --- BOTTONE PRENOTA (Identico tra Navbar e Hero) --- */
+        .nav-book-btn {
+            background-color: var(--colore-4-dettagli) !important; /* Oro */
+            color: var(--colore-3-testo) !important; /* Scuro */
+            padding: 10px 24px;
+            border-radius: 50px; /* Arrotondato come l'altro */
+            font-weight: 700 !important;
+            font-size: 0.85rem !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid transparent;
+        }
+        .nav-book-btn:hover {
+            background-color: var(--white-pure) !important;
+            color: var(--colore-4-dettagli) !important;
+            border-color: var(--white-pure) !important;
+            transform: translateY(-2px);
+        }
         
         .hamburger, .close-x { display: none; }
 
@@ -191,17 +213,47 @@
         }
         .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
+        
+        /* Contenitore pulsanti Hero per affiancarli */
+        .hero-btn-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         .btn-hero {
-            background: var(--colore-2-primario);
-            color: var(--white-pure);
             padding: 15px 30px;
             border-radius: 50px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid transparent; /* Aggiunto bordo invisibile per evitare "salti" all'hover */
         }
-        .btn-hero:hover { filter: brightness(90%); }
+
+        /* Stile Standard (Rosso) */
+        .btn-primary {
+            background: var(--colore-2-primario);
+            color: var(--white-pure);
+        }
+        .btn-primary:hover { 
+            background: transparent;
+            border-color: var(--colore-2-primario);
+            color: var(--white-pure); 
+        }
+
+        /* Stile Opposto (Oro/Giallo) */
+        .btn-contrast {
+            background: var(--colore-4-dettagli);
+            color: var(--colore-3-testo);
+        }
+        .btn-contrast:hover { 
+            background: var(--white-pure); 
+            color: var(--colore-4-dettagli); /* Cambiato il colore del testo all'hover */
+            border-color: var(--white-pure);
+        }
 
         .intro { text-align: center; background: var(--white-pure); }
         .intro h2 { color: var(--colore-2-primario); margin-bottom: 20px; }
@@ -270,30 +322,24 @@
                 box-shadow: none;
                 border: none;
                 outline: none;
-                overflow: visible; /* Permette l'effetto zoom senza tagliare la foto */
+                overflow: visible;
             }
             .menu-carousel .carousel-slide {
-                display: block !important; /* Sovrascrive il JavaScript */
+                display: block !important;
                 flex: 1;
-                height: 220px; /* Più eleganti e basse */
+                height: 220px; 
                 border-radius: 12px;
                 box-shadow: 0 4px 10px rgba(0,0,0,0.08);
                 transition: transform 0.4s ease;
-                opacity: 1 !important; /* Disabilita il fade */
+                opacity: 1 !important; 
                 animation: none !important;
             }
-            .menu-carousel .carousel-slide img {
-                border-radius: 12px;
-            }
-            .menu-carousel .carousel-slide:hover {
-                transform: scale(1.03); /* Effetto zoom al passaggio del mouse */
-            }
-            /* Nascondiamo freccette e pallini su PC perché vediamo già tutto */
+            .menu-carousel .carousel-slide img { border-radius: 12px; }
+            .menu-carousel .carousel-slide:hover { transform: scale(1.03); }
+            
             .menu-carousel .prev-btn, 
             .menu-carousel .next-btn, 
-            .menu-carousel .carousel-dots-container {
-                display: none !important;
-            }
+            .menu-carousel .carousel-dots-container { display: none !important; }
         }
 
         /* Menu Ristorante */
@@ -381,7 +427,10 @@
             <li><a href="#chi-siamo" onclick="chiudiMenu()">Chi Siamo</a></li>
             <li><a href="#menu" onclick="chiudiMenu()">Menù</a></li>
             <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
-            <li><a href="#contatti" onclick="chiudiMenu()">Contatti</a></li>
+            
+            <li>
+                <a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a>
+            </li>
         </ul>
     </nav>
 
@@ -517,13 +566,17 @@
 </div>
 
     <div class="nav-back">
-        <a href="index.html">⬅ Torna ai miei esempi</a>
+        <a href="../index.html">⬅ Torna ai miei esempi</a>
     </div>
 
     <header class="hero reveal-section" id="home">
         <h1>Ristorante "Al Lago"</h1>
         <p>Sapori autentici della tradizione tra il lago e le prealpi varesine.</p>
-        <a href="#menu" class="btn-hero">Guarda il Menù</a>
+        
+        <div class="hero-btn-container">
+            <a href="#menu" class="btn-hero btn-primary">Guarda il Menù</a>
+            <a href="https://www.thefork.it/" target="_blank" class="btn-hero btn-contrast">Prenota Tavolo</a>
+        </div>
     </header>
 
     <section class="intro reveal-section">
