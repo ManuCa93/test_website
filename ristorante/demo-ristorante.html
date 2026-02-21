@@ -41,6 +41,18 @@
         a { text-decoration: none; }
         section { padding: 60px 20px; }
 
+        /* --- ANIMAZIONE EFFETTO "REVEAL" ELEGANTE --- */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1); 
+        }
+
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* --- NAVIGATION BAR --- */
         .top-navbar {
             position: fixed;
@@ -65,11 +77,11 @@
         }
 
         /* =========================================
-           STILE DESKTOP (Default per schermi grandi) 
+           STILE DESKTOP
            ========================================= */
         .nav-links {
             list-style: none;
-            display: flex; /* Flex orizzontale */
+            display: flex;
             gap: 25px;
             margin: 0;
             padding: 0;
@@ -85,15 +97,12 @@
 
         .nav-links li a:hover { color: var(--colore-4-dettagli); }
         
-        /* Nascondiamo Hamburger e X su Desktop */
         .hamburger, .close-x { display: none; }
 
         /* =========================================
-           STILE MOBILE (Schermi < 768px)
+           STILE MOBILE
            ========================================= */
         @media (max-width: 768px) {
-            
-            /* Mostra Hamburger */
             .hamburger {
                 display: block;
                 background: none;
@@ -103,49 +112,36 @@
                 cursor: pointer;
             }
 
-            /* Trasforma la lista in un cassetto laterale */
             .nav-links {
                 position: fixed;
                 top: 0;
                 right: 0;
                 height: 100vh;
-                width: 80%; /* Larghezza menu mobile */
+                width: 80%;
                 background-color: var(--colore-2-primario);
-                
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 gap: 30px;
-                
-                transform: translateX(100%); /* Nascosto a destra */
+                transform: translateX(100%);
                 transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
                 box-shadow: -5px 0 25px rgba(0,0,0,0.3);
-                z-index: 4000; /* Sopra tutto */
+                z-index: 4000;
             }
 
-            .nav-links.show {
-                transform: translateX(0); /* Mostra */
-            }
+            .nav-links.show { transform: translateX(0); }
 
-            /* ↓↓↓ AGGIUNGI QUESTO (NUOVO) ↓↓↓ */
             .nav-links li {
-                width: 80%; /* Larghezza della linea */
+                width: 80%;
                 text-align: center;
-                padding: 15px 0; /* Spaziatura sopra/sotto */
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Linea di separazione */
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             }
 
-            .nav-links li:last-child {
-                border-bottom: none; /* Rimuovi linea dall'ultima voce */
-            }
-            /* ↑↑↑ FINE CODICE NUOVO ↑↑↑ */
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.5rem; }
 
-            .nav-links li a {
-                font-size: 1.5rem; /* Link più grandi su mobile */
-            }
-
-            /* Mostra la X di chiusura dentro il menu */
             .close-x {
                 display: block;
                 position: absolute;
@@ -160,7 +156,6 @@
             }
         }
 
-
         /* --- OVERLAY SCURO --- */
         .menu-overlay {
             position: fixed;
@@ -170,14 +165,14 @@
             z-index: 3500; 
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s;  /* ← Delay di 0.1s */
+            transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s;
             backdrop-filter: blur(3px);
         }
 
         .menu-overlay.active {
             opacity: 1;
             visibility: visible;
-            transition: opacity 0.5s ease 0.1s, visibility 0s 0s;  /* ← Appare progressivamente */
+            transition: opacity 0.5s ease 0.1s, visibility 0s 0s;
         }
 
         /* --- ALTRI STILI --- */
@@ -233,8 +228,8 @@
         .staff-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
         .staff-card p { color: var(--colore-2-primario); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
 
-        /* Carousel */
-        .venue-carousel-section { padding: 60px 0; background: var(--white-pure); text-align: center; }
+        /* --- STILE CAROSELLO PRINCIPALE --- */
+        .carousel-wrapper { position: relative; width: 100%; margin: auto; }
         .carousel-container {
             max-width: 1000px; position: relative; margin: auto; overflow: hidden;
             border-radius: 15px; border: 5px solid var(--white-pure);
@@ -258,7 +253,48 @@
             border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
         }
         .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
-        /* @media (max-width: 768px) { .carousel-slide { height: 250px; } } */
+
+        /* --- CAROSELLO MENU IBRIDO (Mobile: Slider, Desktop: Affiancate) --- */
+        .menu-carousel { margin-top: 25px; }
+        
+        @media (max-width: 768px) {
+            .menu-carousel .carousel-container { border: none; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border-radius: 15px;}
+            .menu-carousel .carousel-slide { height: 250px; }
+            .menu-carousel .prev-btn, .menu-carousel .next-btn { padding: 10px; font-size: 14px; }
+        }
+
+        @media (min-width: 769px) {
+            .menu-carousel .carousel-container {
+                display: flex;
+                gap: 20px;
+                box-shadow: none;
+                border: none;
+                outline: none;
+                overflow: visible; /* Permette l'effetto zoom senza tagliare la foto */
+            }
+            .menu-carousel .carousel-slide {
+                display: block !important; /* Sovrascrive il JavaScript */
+                flex: 1;
+                height: 220px; /* Più eleganti e basse */
+                border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+                transition: transform 0.4s ease;
+                opacity: 1 !important; /* Disabilita il fade */
+                animation: none !important;
+            }
+            .menu-carousel .carousel-slide img {
+                border-radius: 12px;
+            }
+            .menu-carousel .carousel-slide:hover {
+                transform: scale(1.03); /* Effetto zoom al passaggio del mouse */
+            }
+            /* Nascondiamo freccette e pallini su PC perché vediamo già tutto */
+            .menu-carousel .prev-btn, 
+            .menu-carousel .next-btn, 
+            .menu-carousel .carousel-dots-container {
+                display: none !important;
+            }
+        }
 
         /* Menu Ristorante */
         .menu-section { background: var(--white-pure); }
@@ -350,8 +386,8 @@
     </nav>
 
     <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
 <script>
-    // 1. Funzione BASE: Apre o Chiude il menu (usata dall'Hamburger e dall'Overlay)
     function toggleMenu() {
         const navLinks = document.getElementById("nav-links");
         const overlay = document.getElementById("menu-overlay");
@@ -360,57 +396,92 @@
         if (overlay) overlay.classList.toggle("active");
     }
 
-    // 2. Funzione INTELLIGENTE: Chiude il menu SOLO se siamo su cellulare
-    // Usata dai Link e dalla X. Su desktop viene ignorata (così non diventa scuro).
     function chiudiMenu() {
         if (window.innerWidth <= 768) {
-            toggleMenu(); // Chiude il menu se lo schermo è piccolo
+            toggleMenu();
         }
     }
-
-    /* --- IL RESTO DEL CODICE (Slider, Scroll, ecc) NON CAMBIA --- */
-    let slideIndex = 1;
-    let slideInterval;
 
     document.addEventListener("DOMContentLoaded", function() {
-        showSlides(slideIndex);
-        startAutoSlide();
+        
+        /* --- 1. LOGICA MULTI-CAROSELLO --- */
+        const carousels = document.querySelectorAll('.carousel-wrapper');
+
+        carousels.forEach(wrapper => {
+            let slideIndex = 1;
+            let slideInterval;
+            const slides = wrapper.querySelectorAll('.carousel-slide');
+            const dots = wrapper.querySelectorAll('.dot');
+            const prevBtn = wrapper.querySelector('.prev-btn');
+            const nextBtn = wrapper.querySelector('.next-btn');
+
+            function showSlides(n) {
+                if (n > slides.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = slides.length}
+                slides.forEach(s => s.style.display = "none");
+                dots.forEach(d => d.classList.remove("active"));
+                
+                if(slides.length > 0) {
+                    slides[slideIndex-1].style.display = "block";
+                    if(dots.length > 0) dots[slideIndex-1].classList.add("active");
+                }
+            }
+
+            function plusSlides(n) {
+                clearInterval(slideInterval);
+                showSlides(slideIndex += n);
+                startAutoSlide();
+            }
+
+            function currentSlide(n) {
+                clearInterval(slideInterval);
+                showSlides(slideIndex = n);
+                startAutoSlide();
+            }
+
+            function startAutoSlide() {
+                if(slides.length > 1) {
+                    slideInterval = setInterval(() => {
+                        showSlides(slideIndex += 1);
+                    }, 4000);
+                }
+            }
+
+            if(prevBtn) prevBtn.addEventListener('click', () => plusSlides(-1));
+            if(nextBtn) nextBtn.addEventListener('click', () => plusSlides(1));
+            
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => currentSlide(idx + 1));
+            });
+
+            showSlides(slideIndex);
+            startAutoSlide();
+        });
+
+
+        /* --- 2. LOGICA DEL REVEAL (Svelamento morbido) --- */
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        const revealSections = document.querySelectorAll('.reveal-section');
+        revealSections.forEach(sec => {
+            observer.observe(sec);
+        });
     });
 
-    function plusSlides(n) {
-        clearInterval(slideInterval);
-        showSlides(slideIndex += n);
-        startAutoSlide();
-    }
-
-    function currentSlide(n) {
-        clearInterval(slideInterval);
-        showSlides(slideIndex = n);
-        startAutoSlide();
-    }
-
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("carousel-slide");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].classList.add("active");
-    }
-
-    function startAutoSlide() {
-        slideInterval = setInterval(function() {
-            showSlides(slideIndex += 1);
-        }, 4000);
-    }
-
+    /* --- 3. LOGICA SCROLL & BOTTONE TOP --- */
     let lastScrollTop = 0;
     window.addEventListener("scroll", function() {
         let st = window.pageYOffset || document.documentElement.scrollTop;
@@ -449,37 +520,41 @@
         <a href="index.html">⬅ Torna ai miei esempi</a>
     </div>
 
-    <header class="hero" id="home">
+    <header class="hero reveal-section" id="home">
         <h1>Ristorante "Al Lago"</h1>
         <p>Sapori autentici della tradizione tra il lago e le prealpi varesine.</p>
         <a href="#menu" class="btn-hero">Guarda il Menù</a>
     </header>
 
-    <section class="intro">
+    <section class="intro reveal-section">
         <h2>Benvenuti a Casa</h2>
         <p>Dal 1985 portiamo in tavola solo ingredienti freschi e locali. La nostra passione è l'ospitalità, la nostra specialità è farvi sentire bene.</p>
     </section>
     
-    <section class="venue-carousel-section">
+    <section class="venue-carousel-section reveal-section">
         <h2>L'Atmosfera</h2>
         <p style="margin-bottom: 20px; color: #666;">Un ambiente caldo e accogliente per le tue serate speciali.</p>
-        <div class="carousel-container">
-            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno 1"></div>
-            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno 2"></div>
-            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tavolo"></div>
-            <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Serale"></div>
-            <button class="prev-btn" onclick="plusSlides(-1)">❮</button>
-            <button class="next-btn" onclick="plusSlides(1)">❯</button>
-        </div>
-        <div class="carousel-dots-container">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
+        
+        <div class="carousel-wrapper">
+            <div class="carousel-container">
+                <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno 1"></div>
+                <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Interno 2"></div>
+                <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tavolo"></div>
+                <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Serale"></div>
+                
+                <button class="prev-btn">❮</button>
+                <button class="next-btn">❯</button>
+            </div>
+            <div class="carousel-dots-container">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
         </div>
     </section>
 
-    <section class="about" id="chi-siamo">
+    <section class="about reveal-section" id="chi-siamo">
         <div class="about-content">
             <h2>La Nostra Storia</h2>
             <p>Tutto è iniziato in una piccola cucina a <strong>Varese</strong>, con un sogno semplice: portare in tavola i sapori delle nostre prealpi e la freschezza del lago.</p>
@@ -489,19 +564,19 @@
     </section>
 
     <section class="staff">
-        <h2>Le Mani in Pasta</h2>
+        <h2 class="reveal-section">Le Mani in Pasta</h2>
         <div class="staff-grid">
-            <div class="staff-card">
+            <div class="staff-card reveal-section">
                 <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Chef" class="staff-img">
                 <h3>Marco Rossi</h3><p>Executive Chef</p>
             </div>
             
-            <div class="staff-card">
+            <div class="staff-card reveal-section">
                 <img src="https://shop.divisalavoro.com/WebRoot/epagesIT/Shops/54770/68F5/BE9B/4FEC/F294/66C2/0A0C/05B6/2EE6/Giacca_vestito_per_Cameriera_e_Maitre_di_Sala.jpg" alt="Maître" class="staff-img">
                 <h3>Sara Bianchi</h3><p>Responsabile Sala</p>
             </div>
             
-            <div class="staff-card">
+            <div class="staff-card reveal-section">
                 <img src="https://www.bresciaatavola.it/wp-content/uploads/bresciaatavola.it/2023/02/Il-mastro-pizaiolo-Antonio-Pappalardo.jpg" alt="Pizzaiolo" class="staff-img">
                 <h3>Luca Verga</h3><p>Mastro Pizzaiolo</p>
             </div>
@@ -509,9 +584,9 @@
     </section>
 
     <section id="menu" class="menu-section">
-        <h2>Il Nostro Menù</h2>
+        <h2 class="reveal-section">Il Nostro Menù</h2>
 
-        <div class="menu-category">
+        <div class="menu-category reveal-section">
             <h3>Antipasti</h3>
             <div class="menu-item">
                 <div><span class="item-name">Tagliere Varesino</span><span class="item-desc">Salumi locali, Formaggella del Luinese e miele varesino.</span></div>
@@ -525,9 +600,22 @@
                 <div><span class="item-name">Sciatt Valtellinesi</span><span class="item-desc">Frittelle di grano saraceno con cuore di formaggio fuso.</span></div>
                 <span class="item-price">€ 11.00</span>
             </div>
+            
+            <div class="carousel-wrapper menu-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1541529086526-db283c563270?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tagliere Salumi"></div>
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Carpaccio"></div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="carousel-dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category reveal-section">
             <h3>I Primi</h3>
             <div class="menu-item">
                 <div><span class="item-name">Risotto al Pesce Persico</span><span class="item-desc">Il re del lago, mantecato al burro e salvia croccante.</span></div>
@@ -537,9 +625,22 @@
                 <div><span class="item-name">Tagliatelle ai Funghi Porcini</span><span class="item-desc">Pasta fresca all'uovo con funghi freschi dei nostri boschi.</span></div>
                 <span class="item-price">€ 16.00</span>
             </div>
+
+            <div class="carousel-wrapper menu-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide fade"><img src="https://www.salepepe.it/files/2023/05/AA220457_alta-1140x636.jpg" alt="Risotto"></div>
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pasta Funghi"></div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="carousel-dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category reveal-section">
             <h3>I Secondi</h3>
             <div class="menu-item">
                 <div><span class="item-name">Filetto al Pepe Verde</span><span class="item-desc">Manzo selezionato con salsa cremosa al pepe verde.</span></div>
@@ -549,9 +650,22 @@
                 <div><span class="item-name">Frittura Mista di Lago</span><span class="item-desc">Alborelle, agoni e filetti di persico fritti dorati.</span></div>
                 <span class="item-price">€ 19.00</span>
             </div>
+
+            <div class="carousel-wrapper menu-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Filetto Carne"></div>
+                    <div class="carousel-slide fade"><img src="https://www.giallozafferano.it/images/282-28243/Fritto-misto-di-pesce-e-verdure_650x433_wm.jpg" alt="Frittura Pesce"></div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="carousel-dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category reveal-section">
             <h3>Le Pizze</h3>
             <div class="menu-item">
                 <div><span class="item-name">Margherita</span><span class="item-desc">Pomodoro, mozzarella, basilico.</span></div>
@@ -565,9 +679,22 @@
                 <div><span class="item-name">Diavola</span><span class="item-desc">Pomodoro, mozzarella, spianata calabra piccante.</span></div>
                 <span class="item-price">€ 10.00</span>
             </div>
+
+            <div class="carousel-wrapper menu-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza Margherita"></div>
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza Diavola"></div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="carousel-dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category reveal-section">
             <h3>Dolci</h3>
             <div class="menu-item">
                 <div><span class="item-name">Tiramisù Artigianale</span><span class="item-desc">Fatto in casa secondo la ricetta originale.</span></div>
@@ -577,9 +704,22 @@
                 <div><span class="item-name">Panna Cotta</span><span class="item-desc">Ai frutti di bosco o caramello.</span></div>
                 <span class="item-price">€ 6.00</span>
             </div>
+
+            <div class="carousel-wrapper menu-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide fade"><img src="https://ricetta.it/Uploads/Imgs/tiramisu-classico.jpg.webp" alt="Tiramisù"></div>
+                    <div class="carousel-slide fade"><img src="https://www.cucchiaio.it/content/dam/cucchiaio/it/ricette/2009/11/ricetta-panna-cotta/panna%20cotta-1.jpg" alt="Panna Cotta"></div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="carousel-dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category reveal-section">
             <h3>Bevande</h3>
             <div class="menu-item">
                 <div><span class="item-name">Acqua Minerale 0.75l</span><span class="item-desc">Naturale o Frizzante.</span></div>
@@ -597,10 +737,23 @@
                 <div><span class="item-name">Caffè Espresso</span><span class="item-desc">Torrefazione locale.</span></div>
                 <span class="item-price">€ 1.50</span>
             </div>
+
+            <div class="carousel-wrapper menu-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vino Rosso"></div>
+                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Birra Artigianale"></div>
+                    <button class="prev-btn">❮</button>
+                    <button class="next-btn">❯</button>
+                </div>
+                <div class="carousel-dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="location-section" id="dove-siamo">
+    <section class="location-section reveal-section" id="dove-siamo">
         <h2>Vienici a trovare</h2>
         <div class="location-container">
             <div class="location-info">
@@ -629,7 +782,7 @@
         </div>
     </section>
 
-    <footer class="main-footer" id="contatti">
+    <footer class="main-footer reveal-section" id="contatti">
         <div class="footer-grid">
             <div class="footer-col">
                 <h3>Contatti Rapidi</h3>
@@ -652,7 +805,6 @@
     </footer>
 
     <button onclick="topFunction()" id="backToTop" title="Torna su">↑</button>
-</div>
-<div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
 </body>
 </html>

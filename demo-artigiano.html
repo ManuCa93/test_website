@@ -10,10 +10,10 @@
     <style>
         /* --- TAVOLOZZA COLORI (Adattata per Meccanico) --- */
         :root {
-            --colore-1-sfondo:   #f4f6f8; /* Grigio chiarissimo, quasi bianco, tecnico */
-            --colore-2-primario: #1e3a8a; /* Blu scuro aziendale (affidabilità) */
-            --colore-3-testo:    #1f2937; /* Grigio scuro per i testi */
-            --colore-4-dettagli: #f59e0b; /* Arancione/Ambra (motori, sicurezza, attenzione) */
+            --colore-1-sfondo:   #f4f6f8;
+            --colore-2-primario: #1e3a8a;
+            --colore-3-testo:    #1f2937;
+            --colore-4-dettagli: #f59e0b;
             --white-pure: #ffffff;
             --nav-height: 60px;
         }
@@ -41,6 +41,18 @@
         a { text-decoration: none; }
         section { padding: 60px 20px; }
 
+        /* --- ANIMAZIONE EFFETTO "BOLLA" --- */
+        .bubble-section {
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+
+        .bubble-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
         /* --- NAVIGATION BAR --- */
         .top-navbar {
             position: fixed;
@@ -65,9 +77,6 @@
             text-transform: uppercase;
         }
 
-        /* =========================================
-           STILE DESKTOP (Default per schermi grandi) 
-           ========================================= */
         .nav-links {
             list-style: none;
             display: flex;
@@ -88,9 +97,6 @@
         
         .hamburger, .close-x { display: none; }
 
-        /* =========================================
-           STILE MOBILE (Schermi < 768px)
-           ========================================= */
         @media (max-width: 768px) {
             .hamburger {
                 display: block;
@@ -145,7 +151,6 @@
             }
         }
 
-        /* --- OVERLAY SCURO --- */
         .menu-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -164,7 +169,6 @@
             transition: opacity 0.5s ease 0.1s, visibility 0s 0s;
         }
 
-        /* --- ALTRI STILI --- */
         .nav-back { background: #e5e7eb; padding: 10px; text-align: center; font-size: 0.8rem; }
         .nav-back a { color: #4b5563; font-weight: 600; }
 
@@ -184,7 +188,7 @@
             background: var(--colore-4-dettagli);
             color: var(--white-pure);
             padding: 15px 30px;
-            border-radius: 5px; /* Angoli più squadrati per un look meccanico */
+            border-radius: 5px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -276,7 +280,7 @@
             animation: pulse 2s infinite;
         }
         .float-circle span { font-size: 1.8rem; margin-bottom: 0px; }
-        .bg-whatsapp { background-color: #25D366; } /* Verde WhatsApp */
+        .bg-whatsapp { background-color: #25D366; } 
         .bg-call { background-color: var(--colore-2-primario); }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
@@ -355,6 +359,28 @@
     document.addEventListener("DOMContentLoaded", function() {
         showSlides(slideIndex);
         startAutoSlide();
+
+        /* --- LOGICA DELLE BOLLE (Intersection Observer) --- */
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 // L'animazione parte quando il 15% della sezione è visibile
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('bubble-visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        // Seleziona tutte le sezioni con la classe bubble-section
+        const bubbleSections = document.querySelectorAll('.bubble-section');
+        bubbleSections.forEach(sec => {
+            observer.observe(sec);
+        });
     });
 
     function plusSlides(n) {
@@ -429,18 +455,18 @@
         <a href="index.html">⬅ Torna ai miei esempi</a>
     </div>
 
-    <header class="hero" id="home">
+    <header class="hero bubble-section" id="home">
         <h1>Autofficina Varesina</h1>
         <p>La cura della tua auto, la nostra passione. Affidabilità e sicurezza su strada dal 1995.</p>
         <a href="#servizi" class="btn-hero">Scopri i Servizi</a>
     </header>
 
-    <section class="intro">
+    <section class="intro bubble-section">
         <h2>La Tua Auto In Buone Mani</h2>
         <p>Garantiamo interventi rapidi, trasparenti e con ricambi di altissima qualità. Mettiamo la tua sicurezza al primo posto, con strumenti all'avanguardia per ogni tipo di veicolo.</p>
     </section>
     
-    <section class="venue-carousel-section">
+    <section class="venue-carousel-section bubble-section">
         <h2>La Nostra Officina</h2>
         <p style="margin-bottom: 20px; color: #666;">Tecnologia moderna e spazi organizzati per la massima efficienza.</p>
         <div class="carousel-container">
@@ -459,7 +485,7 @@
         </div>
     </section>
 
-    <section class="about" id="chi-siamo">
+    <section class="about bubble-section" id="chi-siamo">
         <div class="about-content">
             <h2>La Nostra Storia</h2>
             <p>Siamo partiti da un piccolo garage a <strong>Varese</strong>, guidati dall'amore per i motori e dalla voglia di risolvere i problemi delle persone.</p>
@@ -468,7 +494,7 @@
         </div>
     </section>
 
-    <section class="staff">
+    <section class="staff bubble-section">
         <h2>Il Nostro Team</h2>
         <div class="staff-grid">
             <div class="staff-card">
@@ -489,9 +515,10 @@
     </section>
 
     <section id="servizi" class="menu-section">
-        <h2>I Nostri Servizi</h2>
+        
+        <h2 class="bubble-section">I Nostri Servizi</h2>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Manutenzione Ordinaria</h3>
             <div class="menu-item">
                 <div><span class="item-name">Tagliando Completo</span><span class="item-desc">Cambio olio, filtro olio, aria, abitacolo e controlli livelli.</span></div>
@@ -507,7 +534,7 @@
             </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Riparazioni Meccaniche</h3>
             <div class="menu-item">
                 <div><span class="item-name">Sostituzione Pastiglie Freni</span><span class="item-desc">Pastiglie anteriori/posteriori con ricambi originali o equivalenti.</span></div>
@@ -523,7 +550,7 @@
             </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Servizio Gomme</h3>
             <div class="menu-item">
                 <div><span class="item-name">Cambio Gomme (Stagionale)</span><span class="item-desc">Smontaggio, montaggio, valvole nuove ed equilibratura.</span></div>
@@ -539,7 +566,7 @@
             </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Elettronica e Diagnosi</h3>
             <div class="menu-item">
                 <div><span class="item-name">Diagnosi Computerizzata</span><span class="item-desc">Lettura e azzeramento errori centralina (OBD-II).</span></div>
@@ -552,7 +579,7 @@
         </div>
     </section>
 
-    <section class="location-section" id="dove-siamo">
+    <section class="location-section bubble-section" id="dove-siamo">
         <h2>Passa in Officina</h2>
         <div class="location-container">
             <div class="location-info">
@@ -574,7 +601,7 @@
         </div>
     </section>
 
-    <footer class="main-footer" id="contatti">
+    <footer class="main-footer bubble-section" id="contatti">
         <div class="footer-grid">
             <div class="footer-col">
                 <h3>Contatti Rapidi</h3>

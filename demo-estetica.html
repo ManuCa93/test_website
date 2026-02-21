@@ -42,6 +42,20 @@
         a { text-decoration: none; }
         section { padding: 80px 20px; }
 
+        /* --- ANIMAZIONE EFFETTO "BOLLA" --- */
+        .bubble-section {
+            opacity: 0;
+            /* Parte dal basso e leggermente rimpicciolita */
+            transform: translateY(60px) scale(0.95);
+            /* Transizione morbida ed elastica */
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+
+        .bubble-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
         /* --- NAVIGATION BAR --- */
         .top-navbar {
             position: fixed;
@@ -362,6 +376,27 @@
     document.addEventListener("DOMContentLoaded", function() {
         showSlides(slideIndex);
         startAutoSlide();
+
+        /* --- LOGICA DELLE BOLLE --- */
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('bubble-visible');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        const bubbleSections = document.querySelectorAll('.bubble-section');
+        bubbleSections.forEach(sec => {
+            observer.observe(sec);
+        });
     });
 
     function plusSlides(n) {
@@ -436,18 +471,18 @@
         <a href="index.html">⬅ Torna ai miei esempi</a>
     </div>
 
-    <header class="hero" id="home">
+    <header class="hero bubble-section" id="home">
         <h1>Ritrova la tua Armonia</h1>
         <p>Prenditi cura di te. Trattamenti viso, corpo e percorsi benessere creati per far risplendere la tua bellezza naturale.</p>
         <a href="#servizi" class="btn-hero">Scopri i Trattamenti</a>
     </header>
 
-    <section class="intro">
+    <section class="intro bubble-section">
         <h2>Il tuo angolo di relax a Varese</h2>
         <p>In Armonia Beauty Lounge crediamo che la bellezza nasca dal benessere profondo. Lasciati alle spalle lo stress quotidiano e affidati alle mani esperte delle nostre professioniste per un'esperienza di puro relax e rigenerazione.</p>
     </section>
     
-    <section class="venue-carousel-section">
+    <section class="venue-carousel-section bubble-section">
         <h2>Le Nostre Cabine</h2>
         <p style="margin-bottom: 30px; color: #888;">Ambienti sanificati, luci soffuse e aromaterapia per coccolarti in ogni momento.</p>
         <div class="carousel-container">
@@ -466,7 +501,7 @@
         </div>
     </section>
 
-    <section class="about" id="chi-siamo">
+    <section class="about bubble-section" id="chi-siamo">
         <div class="about-content">
             <h2>La Nostra Filosofia</h2>
             <p>Aperto nel 2015, Armonia nasce dalla passione di Giulia e del suo team per la cura della pelle e del corpo. Utilizziamo esclusivamente cosmetici cruelty-free, privi di parabeni e ricchi di principi attivi naturali.</p>
@@ -476,19 +511,19 @@
     </section>
 
     <section class="staff">
-        <h2>Le tue Beauty Expert</h2>
+        <h2 class="bubble-section">Le tue Beauty Expert</h2>
         <div class="staff-grid">
-            <div class="staff-card">
+            <div class="staff-card bubble-section">
                 <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Estetista Specializzata" class="staff-img">
                 <h3>Giulia R.</h3><p>Direttrice & Skin Expert</p>
             </div>
             
-            <div class="staff-card">
+            <div class="staff-card bubble-section">
                 <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Massaggiatrice" class="staff-img">
                 <h3>Marta C.</h3><p>Specialista Corpo & Benessere</p>
             </div>
             
-            <div class="staff-card">
+            <div class="staff-card bubble-section">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Onicotecnica" class="staff-img">
                 <h3>Chiara S.</h3><p>Nail Artist & Lash Maker</p>
             </div>
@@ -496,9 +531,9 @@
     </section>
 
     <section id="servizi" class="menu-section">
-        <h2>I Nostri Trattamenti</h2>
+        <h2 class="bubble-section">I Nostri Trattamenti</h2>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Viso ✨</h3>
             <div class="menu-item">
                 <div class="item-text-wrapper"><span class="item-name">Pulizia Viso Profonda</span><span class="item-desc">Detersione, vaporizzazione, spremitura, maschera lenitiva e massaggio finale.</span></div>
@@ -514,7 +549,7 @@
             </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Corpo 🌿</h3>
             <div class="menu-item">
                 <div class="item-text-wrapper"><span class="item-name">Massaggio Rilassante (50 min)</span><span class="item-desc">Movimenti lenti e avvolgenti con oli essenziali caldi.</span></div>
@@ -530,7 +565,7 @@
             </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Mani & Piedi 💅</h3>
             <div class="menu-item">
                 <div class="item-text-wrapper"><span class="item-name">Manicure con Semipermanente</span><span class="item-desc">Cura delle cuticole, limatura e applicazione colore a lunga durata.</span></div>
@@ -546,7 +581,7 @@
             </div>
         </div>
 
-        <div class="menu-category">
+        <div class="menu-category bubble-section">
             <h3>Epilazione 🌸</h3>
             <div class="menu-item">
                 <div class="item-text-wrapper"><span class="item-name">Cera Total Body</span><span class="item-desc">Gambe intere, inguine, ascelle e braccia con cera al titanio o brasiliana.</span></div>
@@ -559,7 +594,7 @@
         </div>
     </section>
 
-    <section class="location-section" id="dove-siamo">
+    <section class="location-section bubble-section" id="dove-siamo">
         <h2>Vieni a trovarci</h2>
         <div class="location-container">
             <div class="location-info">
@@ -576,12 +611,12 @@
 
             <div class="location-map">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7911.9627930947545!2d8.82947639999999!3d45.816591100000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4786809d8decb387%3A0xd14ed7c1ec685863!2sVia%20Giuseppe%20Mazzini%2C%206%2C%2021100%20Varese%20VA!5e1!3m2!1sen!2sit!4v1771612828309!5m2!1sen!2sit" 
-                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>>
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
 
-    <footer class="main-footer" id="contatti">
+    <footer class="main-footer bubble-section" id="contatti">
         <div class="footer-grid">
             <div class="footer-col">
                 <h3>Prenota ora</h3>
