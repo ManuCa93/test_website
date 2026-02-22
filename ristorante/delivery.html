@@ -3,57 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ordina Online - Ristorante Al Lago</title>
+    <meta name="description" content="Ordina Ristorante Al Lago su Deliveroo, Just Eat, Uber Eats e Glovo. Oppure direttamente via WhatsApp.">
+    <title>Ordina Online | Ristorante Al Lago – Varese</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 40px 20px; background: #f8f9fa; color: #333; }
-        h1 { margin-bottom: 30px; }
-        .delivery-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+        :root {
+            --colore-1-sfondo:   #f8f9fa;
+            --colore-2-primario: #c0392b;
+            --colore-3-testo:    #2c3e50;
+            --colore-4-dettagli: #d4ac0d;
+            --white-pure: #ffffff;
+            --nav-height: 60px;
         }
-        .delivery-link:hover { transform: scale(1.02); }
-        .logo { width: 40px; margin-right: 15px; }
-        .btn-back { display: inline-block; margin-top: 30px; color: #666; text-decoration: none; }
-        /* Colori Brand */
-        .deliveroo { border-left: 10px solid #00ccbc; }
-        .justeat { border-left: 10px solid #f36d00; }
-        .glovo { border-left: 10px solid #ffc244; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+        body {
+            padding-top: var(--nav-height);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--colore-3-testo);
+            background-color: var(--colore-1-sfondo);
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--colore-3-testo); }
+        a { text-decoration: none; }
+        section { padding: 60px 20px; }
+
+        /* REVEAL */
+        .reveal-section { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal-visible  { opacity: 1; transform: translateY(0); }
+
+        /* NAVBAR */
+        .top-navbar {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: var(--nav-height);
+            background-color: var(--colore-2-primario);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; z-index: 3000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
+        }
+        .nav-brand { color: var(--white-pure); font-family: 'Merriweather', serif; font-weight: bold; font-size: 1.2rem; }
+        .nav-links { list-style: none; display: flex; align-items: center; gap: 25px; }
+        .nav-links li a { color: var(--white-pure); font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-transform: uppercase; }
+        .nav-links li a:hover { color: var(--colore-4-dettagli); }
+        .nav-book-btn {
+            background-color: var(--colore-4-dettagli) !important;
+            color: var(--colore-3-testo) !important;
+            padding: 10px 24px; border-radius: 50px;
+            font-weight: 700 !important; font-size: 0.85rem !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease; text-transform: uppercase;
+            letter-spacing: 1px; border: 2px solid transparent;
+        }
+        .nav-book-btn:hover { background-color: var(--white-pure) !important; color: var(--colore-4-dettagli) !important; border-color: var(--white-pure) !important; transform: translateY(-2px); }
+        .hamburger, .close-x { display: none; }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; background: none; border: none; color: var(--white-pure); font-size: 1.8rem; cursor: pointer; }
+            .nav-links {
+                position: fixed; top: 0; right: 0; height: 100vh; width: 80%;
+                background-color: var(--colore-2-primario);
+                flex-direction: column; justify-content: center;
+                gap: 30px; transform: translateX(100%);
+                transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.3); z-index: 4000;
+            }
+            .nav-links.show { transform: translateX(0); }
+            .nav-links li { width: 80%; text-align: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.5rem; }
+            .nav-links.show li { opacity: 1; transform: translateY(0); }
+            .nav-links.show li:nth-of-type(1) { transition-delay: 0.15s; }
+            .nav-links.show li:nth-of-type(2) { transition-delay: 0.25s; }
+            .nav-links.show li:nth-of-type(3) { transition-delay: 0.35s; }
+            .nav-links.show li:nth-of-type(4) { transition-delay: 0.45s; }
+            .close-x { display: block; position: absolute; top: 25px; right: 25px; background: none; border: none; color: var(--white-pure); font-size: 2.5rem; cursor: pointer; }
+        }
+
+        /* OVERLAY */
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 20%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 3500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s; backdrop-filter: blur(3px); }
+        .menu-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.5s ease 0.1s, visibility 0s 0s; }
+
+        /* NAV-BACK */
+        .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
+        .nav-back a { color: #666; font-weight: 600; }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1400&q=80') center/cover;
+            color: var(--white-pure); text-align: center; padding: 100px 20px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
+        .hero-btn-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .btn-hero { padding: 15px 30px; border-radius: 50px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; display: inline-block; border: 2px solid transparent; }
+        .btn-primary { background: var(--colore-2-primario); color: var(--white-pure); }
+        .btn-primary:hover { background: transparent; border-color: var(--white-pure); color: var(--white-pure); }
+        .btn-contrast { background: var(--colore-4-dettagli); color: var(--colore-3-testo); }
+        .btn-contrast:hover { background: var(--white-pure); color: var(--colore-4-dettagli); border-color: var(--white-pure); }
+
+        /* INTRO */
+        .intro { text-align: center; background: var(--white-pure); }
+        .intro h2 { color: var(--colore-2-primario); margin-bottom: 20px; }
+
+        /* PLATFORM CARDS */
+        .platforms-section { background: var(--colore-1-sfondo); text-align: center; }
+        .platforms-section h2 { margin-bottom: 10px; }
+        .platforms-section .sub { color: #666; margin-bottom: 40px; }
+        .platforms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
+        .platform-card {
+            background: var(--white-pure); border-radius: 15px; padding: 36px 24px;
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--colore-4-dettagli);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+        }
+        .platform-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .platform-logo { width: 68px; height: 68px; border-radius: 14px; object-fit: contain; background: #f0f0f0; padding: 8px; }
+        .platform-card h3 { font-size: 1.2rem; margin: 0; }
+        .platform-card p { font-size: 0.9rem; color: #666; line-height: 1.6; margin: 0; }
+        .pill { font-size: 0.75rem; font-weight: 700; padding: 4px 14px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .pill-green  { background: #e8f5e9; color: #2e7d32; }
+        .pill-orange { background: #fff3e0; color: #e65100; }
+        .pill-dark   { background: #f0f0f0; color: #212121; }
+        .pill-yellow { background: #fffde7; color: #f57f17; }
+        .btn-platform { display: block; width: 100%; padding: 12px 0; border-radius: 50px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.88rem; transition: all 0.3s ease; border: 2px solid transparent; margin-top: 4px; }
+        .btn-deliveroo { background: #00CCBC; color: var(--white-pure); }
+        .btn-deliveroo:hover { background: #00b3a4; }
+        .btn-justeat   { background: #FF8000; color: var(--white-pure); }
+        .btn-justeat:hover { background: #e07000; }
+        .btn-ubereats  { background: #000000; color: var(--white-pure); }
+        .btn-ubereats:hover { background: #333; }
+        .btn-glovo     { background: #FFC244; color: #1a1a1a; }
+        .btn-glovo:hover { background: #e6ad3a; }
+
+        /* DIRECT ORDER */
+        .direct-section { background-color: rgba(192, 57, 43, 0.92); color: var(--white-pure); text-align: center; }
+        .direct-section h2 { color: var(--colore-4-dettagli); margin-bottom: 15px; }
+        .direct-section .sub { opacity: 0.85; margin-bottom: 40px; font-size: 1.05rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .direct-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto 40px; }
+        .direct-card { background: rgba(255,255,255,0.12); border-radius: 15px; padding: 30px 22px; border: 1px solid rgba(255,255,255,0.2); text-align: left; }
+        .direct-card .icon { font-size: 2rem; display: block; margin-bottom: 12px; }
+        .direct-card h3 { color: var(--white-pure); font-size: 1.05rem; margin-bottom: 8px; font-family: 'Merriweather', serif; }
+        .direct-card p { font-size: 0.9rem; opacity: 0.85; line-height: 1.7; }
+        .direct-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-wa { background: #25D366; color: var(--white-pure); padding: 15px 34px; border-radius: 50px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: opacity 0.25s; }
+        .btn-wa:hover { opacity: 0.88; }
+        .btn-tel-w { border: 2px solid var(--white-pure); color: var(--white-pure); padding: 15px 34px; border-radius: 50px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: all 0.25s; }
+        .btn-tel-w:hover { background: rgba(255,255,255,0.15); }
+
+        /* FAQ */
+        .faq-section { background: var(--white-pure); }
+        .faq-section h2 { text-align: center; margin-bottom: 10px; }
+        .faq-section .sub { text-align: center; color: #666; margin-bottom: 40px; }
+        .faq-list { max-width: 750px; margin: 0 auto; }
+        .faq-item { background: var(--colore-1-sfondo); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+        .faq-question { width: 100%; background: none; border: none; padding: 20px 24px; text-align: left; font-family: 'Merriweather', serif; font-size: 1rem; color: var(--colore-3-testo); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .faq-question:hover { background: #eee; }
+        .faq-arrow { font-size: 1rem; transition: transform 0.3s; flex-shrink: 0; color: var(--colore-2-primario); }
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .faq-answer p { padding: 0 24px 20px; font-size: 0.95rem; color: #555; line-height: 1.75; }
+
+        /* FOOTER */
+        .main-footer { background-color: var(--colore-2-primario); color: var(--white-pure); padding: 60px 20px 120px; }
+        .footer-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .footer-col { flex: 1; min-width: 280px; max-width: 400px; }
+        .footer-col h3 { color: var(--colore-4-dettagli); font-size: 1.3rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col p { margin-bottom: 10px; font-size: 1rem; line-height: 1.8; }
+        .footer-col a { color: var(--white-pure); transition: opacity 0.3s; }
+        .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
+        .footer-legal { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; text-align: center; opacity: 0.8; }
+
+        /* FLOATING */
+        .floating-actions { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 25px; z-index: 2000; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .floating-actions.is-hidden { opacity: 0; transform: translateY(100px); pointer-events: none; }
+        .float-circle { width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white-pure); font-size: 0.7rem; font-weight: bold; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center; animation: pulse 2s infinite; }
+        .float-circle span { font-size: 1.6rem; margin-bottom: 2px; }
+        .bg-green { background-color: #25D366; }
+        .bg-call  { background-color: var(--colore-2-primario); }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        #backToTop { display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2500; border: none; background-color: var(--colore-3-testo); color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s; }
+        #backToTop:hover { background-color: var(--colore-2-primario); }
     </style>
 </head>
 <body>
 
-    <h1>Dove vuoi ordinare?</h1>
-    <p>Scegli la tua piattaforma preferita:</p>
+<!-- NAVBAR -->
+<nav class="top-navbar">
+    <a href="demo-ristorante.html" class="nav-brand">Ristorante Al Lago</a>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <ul id="nav-links" class="nav-links">
+        <button class="close-x" onclick="chiudiMenu()">✕</button>
+        <li><a href="demo-ristorante.html#home"       onclick="chiudiMenu()">Home</a></li>
+        <li><a href="demo-ristorante.html#chi-siamo"  onclick="chiudiMenu()">Chi Siamo</a></li>
+        <li><a href="demo-ristorante.html#menu"       onclick="chiudiMenu()">Menù</a></li>
+        <li><a href="demo-ristorante.html#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
+        <li><a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a></li>
+    </ul>
+</nav>
+<div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
 
-    <br>
+<div class="nav-back"><a href="demo-ristorante.html">⬅ Torna alla Home</a></div>
 
-    <a href="#" class="delivery-link deliveroo">
-        <img src="https://play-lh.googleusercontent.com/X7Vo7TOJ_jR9AqzqajpJyXZA3XqyKd0LJhG6OR3Yi_uwgGSkXaz39SwSmNg50tiesOUA=s256-rw" class="logo" alt="Deliveroo">
-        Deliveroo
-    </a>
+<!-- HERO -->
+<header class="hero reveal-section">
+    <h1>Ordinaci Online</h1>
+    <p>I sapori del lago a casa tua. Siamo su tutte le principali piattaforme di delivery — o scrivici direttamente.</p>
+    <div class="hero-btn-container">
+        <a href="#piattaforme" class="btn-hero btn-contrast">Vedi le Piattaforme</a>
+        <a href="#ordine-diretto" class="btn-hero btn-primary">Ordina via WhatsApp</a>
+    </div>
+</header>
 
-    <a href="#" class="delivery-link justeat">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6VNfkwY80O30Wosx8FXpXMm_iJqczgi52Aw&s" class="logo" alt="Just Eat">
-        Just Eat
-    </a>
+<!-- INTRO -->
+<section class="intro reveal-section">
+    <h2>Scegli Come Ordinare</h2>
+    <p>Puoi trovarci su Deliveroo, Just Eat, Uber Eats e Glovo. Oppure, se vuoi accedere al menù completo e risparmiare sulle commissioni, ordina direttamente da noi via WhatsApp.</p>
+</section>
 
-    <a href="#" class="delivery-link glovo">
-        <img src="https://www.vectorlogo.zone/logos/glovoapp/glovoapp-icon.svg" class="logo" alt="Glovo">
-        Glovo
-    </a>
+<!-- PIATTAFORME -->
+<section class="platforms-section reveal-section" id="piattaforme">
+    <h2>Le Nostre Piattaforme</h2>
+    <p class="sub">Clicca su quella che usi di solito — ti porta direttamente al nostro profilo.</p>
+    <div class="platforms-grid">
 
-    <a href="demo-ristorante.html" class="btn-back">← Torna al sito</a>
+        <div class="platform-card">
+            <img class="platform-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Deliveroo_Logo.svg/512px-Deliveroo_Logo.svg.png" alt="Deliveroo" onerror="this.style.display='none'">
+            <h3>Deliveroo</h3>
+            <span class="pill pill-green">✓ Disponibile</span>
+            <p>La piattaforma più usata a Varese. Tracciamento in tempo reale e consegna rapida.</p>
+            <a href="https://deliveroo.it" target="_blank" class="btn-platform btn-deliveroo">Ordina su Deliveroo →</a>
+        </div>
 
+        <div class="platform-card">
+            <img class="platform-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Just_Eat_logo.svg/512px-Just_Eat_logo.svg.png" alt="Just Eat" onerror="this.style.display='none'">
+            <h3>Just Eat</h3>
+            <span class="pill pill-orange">✓ Disponibile</span>
+            <p>Ampia scelta di orari. Pagamento con carta, contanti o PayPal direttamente in app.</p>
+            <a href="https://www.justeat.it" target="_blank" class="btn-platform btn-justeat">Ordina su Just Eat →</a>
+        </div>
+
+        <div class="platform-card">
+            <img class="platform-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_Eats_2020_logo.svg/512px-Uber_Eats_2020_logo.svg.png" alt="Uber Eats" onerror="this.style.display='none'">
+            <h3>Uber Eats</h3>
+            <span class="pill pill-dark">✓ Disponibile</span>
+            <p>Ideale se usi già l'app Uber. Consegna integrata e monitoraggio preciso.</p>
+            <a href="https://www.ubereats.com" target="_blank" class="btn-platform btn-ubereats">Ordina su Uber Eats →</a>
+        </div>
+
+        <div class="platform-card">
+            <img class="platform-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Glovo_logo.svg/512px-Glovo_logo.svg.png" alt="Glovo" onerror="this.style.display='none'">
+            <h3>Glovo</h3>
+            <span class="pill pill-yellow">✓ Disponibile</span>
+            <p>Veloce e puntuale. Su Glovo il menù pizza è disponibile fino a tarda sera.</p>
+            <a href="https://glovoapp.com" target="_blank" class="btn-platform btn-glovo">Ordina su Glovo →</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ORDINE DIRETTO -->
+<section class="direct-section reveal-section" id="ordine-diretto">
+    <h2>Preferisci Ordinare Direttamente?</h2>
+    <p class="sub">Nessuna commissione alla piattaforma. Menù completo, stesso prezzo del ristorante, risposta in 2 minuti.</p>
+    <div class="direct-grid">
+        <div class="direct-card">
+            <span class="icon">💶</span>
+            <h3>Stesso Prezzo del Menù</h3>
+            <p>Le piattaforme applicano commissioni fino al 30% che spesso si traducono in prezzi più alti. Da noi direttamente paghi esattamente quanto vedi sul menù.</p>
+        </div>
+        <div class="direct-card">
+            <span class="icon">🍽️</span>
+            <h3>Menù Completo Disponibile</h3>
+            <p>Sulle piattaforme pubblichiamo una selezione ottimizzata per il delivery. Ordinando direttamente puoi richiedere qualsiasi piatto, inclusi i fuori carta del giorno.</p>
+        </div>
+        <div class="direct-card">
+            <span class="icon">⚡</span>
+            <h3>Risposta Immediata</h3>
+            <p>Confermiamo via WhatsApp in meno di 2 minuti durante l'orario di apertura. Nessuna app, nessuna attesa algoritmica.</p>
+        </div>
+    </div>
+    <div class="direct-btns">
+        <a href="https://wa.me/393330000000?text=Ciao!%20Vorrei%20ordinare%20per%20asporto%2Fdomicilio.%20Ecco%20il%20mio%20ordine:" target="_blank" class="btn-hero btn-wa">💬 Ordina via WhatsApp</a>
+        <a href="tel:+390332000000" class="btn-hero btn-tel-w">📞 0332 00.00.00</a>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section reveal-section">
+    <h2>Domande Frequenti</h2>
+    <p class="sub">Sul delivery e sull'asporto</p>
+    <div class="faq-list">
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Consegnate in tutta Varese? <span class="faq-arrow">▾</span>
+            </button>
+            <div class="faq-answer"><p>Tramite le piattaforme la zona dipende dal loro raggio di copertura (solitamente 3–5 km). Ordinando direttamente copriamo Varese città e le frazioni principali: Schiranna, Masnago, Casbeno, Bizzozero. Per zone più lontane scrivici prima su WhatsApp.</p></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Il menù sulle piattaforme è uguale a quello del ristorante? <span class="faq-arrow">▾</span>
+            </button>
+            <div class="faq-answer"><p>Sulle piattaforme trovi una selezione pensata per viaggiare bene (pizze, antipasti, secondi robusti). Per risotti e piatti più delicati ti consigliamo di ordinare direttamente da noi — vengono preparati al momento e consegnati appena pronti.</p></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Posso ordinare anche solo per asporto? <span class="faq-arrow">▾</span>
+            </button>
+            <div class="faq-answer"><p>Sì, l'asporto è sempre disponibile ordinando direttamente via WhatsApp o telefono. Il tuo ordine è pronto in 25–35 minuti. Il ritiro avviene dall'ingresso principale in Via Lungolago di Schiranna 42.</p></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Quali sono gli orari di consegna? <span class="faq-arrow">▾</span>
+            </button>
+            <div class="faq-answer"><p>Siamo attivi sulle piattaforme negli stessi orari del ristorante: <strong>Lun–Ven 12:00–14:30 / 19:00–23:00</strong>, <strong>Sab–Dom 12:00–15:00 / 18:30–23:30</strong>. Chiusi il Martedì.</p></div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Come si paga ordinando direttamente? <span class="faq-arrow">▾</span>
+            </button>
+            <div class="faq-answer"><p>Accettiamo contanti alla consegna, POS (carta e contactless) oppure pagamento anticipato via PayPal o bonifico. Emettiamo sempre ricevuta fiscale.</p></div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="main-footer reveal-section">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h3>Contatti Rapidi</h3>
+            <p>📞 Telefono: <a href="tel:+390332000000">0332 00.00.00</a></p>
+            <p>📱 WhatsApp: <a href="https://wa.me/393330000000">333 00.00.000</a></p>
+            <p>📧 Email: info@ristoranteallago.demo</p>
+        </div>
+        <div class="footer-col">
+            <h3>Orari di Apertura</h3>
+            <p>Lun - Ven: 12:00–14:30 / 19:00–23:00</p>
+            <p>Sab - Dom: 12:00–15:00 / 18:30–23:30</p>
+            <p><em>Chiuso il Martedì</em></p>
+        </div>
+    </div>
+    <div class="footer-legal">
+        <p>© 2026 Ristorante Al Lago S.r.l. — Tutti i diritti riservati</p>
+        <p><a href="#" style="color:white">Privacy Policy</a> | <a href="#" style="color:white">Cookie Policy</a></p>
+    </div>
+</footer>
+
+<!-- FLOATING -->
+<div id="action-buttons" class="floating-actions">
+    <a href="https://wa.me/393330000000" target="_blank" class="float-circle bg-green"><span>💬</span></a>
+    <a href="tel:+390332000000" class="float-circle bg-call"><span>📞</span></a>
+</div>
+<button onclick="topFunction()" id="backToTop" title="Torna su">↑</button>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('nav-links').classList.toggle('show');
+        document.getElementById('menu-overlay').classList.toggle('active');
+    }
+    function chiudiMenu() {
+        if (window.innerWidth <= 768) toggleMenu();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const obs = new IntersectionObserver((entries, observer) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('reveal-visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal-section').forEach(s => obs.observe(s));
+    });
+    function toggleFaq(btn) {
+        const item = btn.closest('.faq-item');
+        const answer = item.querySelector('.faq-answer');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => {
+            i.classList.remove('open');
+            i.querySelector('.faq-answer').style.maxHeight = '0';
+        });
+        if (!isOpen) { item.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
+    }
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', () => {
+        let st = window.pageYOffset;
+        document.getElementById('action-buttons').classList.toggle('is-hidden', st > 100 && st > lastScrollTop);
+        document.getElementById('backToTop').style.display = st > 300 ? 'block' : 'none';
+        lastScrollTop = st <= 0 ? 0 : st;
+    });
+    function topFunction() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+</script>
 </body>
 </html>

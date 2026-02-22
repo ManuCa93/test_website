@@ -3,173 +3,492 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Scopri l'origine e la provenienza degli ingredienti usati nei piatti del Ristorante Al Lago.">
-    <title>Origine Ingredienti | Ristorante Al Lago</title>
+    <meta name="description" content="La filiera degli ingredienti del Ristorante Al Lago di Varese. Scopri da dove vengono i nostri prodotti.">
+    <title>La Nostra Filiera | Ristorante Al Lago – Varese</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
-    
     <style>
-        /* Manteniamo la stessa tavolozza della home */
         :root {
-            --colore-1-sfondo:   #f8f9fa; 
-            --colore-2-primario: #c0392b; 
-            --colore-3-testo:    #2c3e50; 
-            --colore-4-dettagli: #d4ac0d; 
+            --colore-1-sfondo:   #f8f9fa;
+            --colore-2-primario: #c0392b;
+            --colore-3-testo:    #2c3e50;
+            --colore-4-dettagli: #d4ac0d;
             --white-pure: #ffffff;
             --nav-height: 60px;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--colore-3-testo);
-            background-color: var(--colore-1-sfondo);
-            padding-top: var(--nav-height);
-            line-height: 1.6;
-        }
-
+        html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+        body { padding-top: var(--nav-height); font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--colore-3-testo); background-color: var(--colore-1-sfondo); overflow-x: hidden; }
         h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--colore-3-testo); }
         a { text-decoration: none; }
         section { padding: 60px 20px; }
 
-        /* Navbar Identica */
-        .top-navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
-            background-color: var(--colore-2-primario); display: flex;
-            justify-content: space-between; align-items: center; padding: 0 20px;
-            z-index: 3000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border-radius: 0 0 20px 20px;
-        }
+        .reveal-section { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal-visible  { opacity: 1; transform: translateY(0); }
+
+        /* NAVBAR */
+        .top-navbar { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height); background-color: var(--colore-2-primario); display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 3000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border-radius: 0 0 20px 20px; }
         .nav-brand { color: var(--white-pure); font-family: 'Merriweather', serif; font-weight: bold; font-size: 1.2rem; }
-        .nav-back-link { color: var(--white-pure); font-weight: bold; transition: color 0.3s; font-size: 0.95rem; text-transform: uppercase;}
-        .nav-back-link:hover { color: var(--colore-4-dettagli); }
+        .nav-links { list-style: none; display: flex; align-items: center; gap: 25px; }
+        .nav-links li a { color: var(--white-pure); font-weight: 600; font-size: 0.95rem; transition: color 0.3s; text-transform: uppercase; }
+        .nav-links li a:hover { color: var(--colore-4-dettagli); }
+        .nav-book-btn { background-color: var(--colore-4-dettagli) !important; color: var(--colore-3-testo) !important; padding: 10px 24px; border-radius: 50px; font-weight: 700 !important; font-size: 0.85rem !important; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; border: 2px solid transparent; }
+        .nav-book-btn:hover { background-color: var(--white-pure) !important; color: var(--colore-4-dettagli) !important; border-color: var(--white-pure) !important; transform: translateY(-2px); }
+        .hamburger, .close-x { display: none; }
 
-        /* Header Interno */
-        .page-header {
-            background-color: var(--colore-3-testo);
-            color: var(--white-pure);
-            text-align: center;
-            padding: 80px 20px 60px;
+        @media (max-width: 768px) {
+            .hamburger { display: block; background: none; border: none; color: var(--white-pure); font-size: 1.8rem; cursor: pointer; }
+            .nav-links { position: fixed; top: 0; right: 0; height: 100vh; width: 80%; background-color: var(--colore-2-primario); flex-direction: column; justify-content: center; gap: 30px; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); box-shadow: -5px 0 25px rgba(0,0,0,0.3); z-index: 4000; }
+            .nav-links.show { transform: translateX(0); }
+            .nav-links li { width: 80%; text-align: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.2); opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.5rem; }
+            .nav-links.show li { opacity: 1; transform: translateY(0); }
+            .nav-links.show li:nth-of-type(1) { transition-delay: 0.15s; }
+            .nav-links.show li:nth-of-type(2) { transition-delay: 0.25s; }
+            .nav-links.show li:nth-of-type(3) { transition-delay: 0.35s; }
+            .nav-links.show li:nth-of-type(4) { transition-delay: 0.45s; }
+            .close-x { display: block; position: absolute; top: 25px; right: 25px; background: none; border: none; color: var(--white-pure); font-size: 2.5rem; cursor: pointer; }
         }
-        .page-header h1 { color: var(--colore-4-dettagli); font-size: 2.5rem; margin-bottom: 15px; }
-        .page-header p { max-width: 600px; margin: auto; font-size: 1.1rem; opacity: 0.9; }
 
-        /* Griglia Provenienza */
-        .provenance-container { max-width: 1000px; margin: -30px auto 40px auto; position: relative; z-index: 10; }
-        .dish-card {
-            background: var(--white-pure);
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-            padding: 30px;
-            border-left: 5px solid var(--colore-2-primario);
-        }
-        .dish-card h2 { color: var(--colore-2-primario); font-size: 1.6rem; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        
-        .ingredient-list { list-style: none; }
-        .ingredient-list li {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dotted #e0e0e0;
-            display: flex;
-            flex-direction: column;
-        }
-        .ingredient-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        
-        .ing-name { font-weight: 600; font-size: 1.1rem; color: var(--colore-3-testo); }
-        .ing-origin { color: #666; font-size: 0.95rem; margin-top: 4px; display: flex; align-items: flex-start; gap: 8px;}
-        .ing-origin span { color: var(--colore-2-primario); font-size: 1.2rem; line-height: 1;}
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 20%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 3500; opacity: 0; visibility: hidden; transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s; backdrop-filter: blur(3px); }
+        .menu-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.5s ease 0.1s, visibility 0s 0s; }
 
-        /* Footer */
-        .main-footer { background-color: var(--colore-2-primario); color: var(--white-pure); width: 100%; text-align: center; padding: 40px 20px; margin-top: 40px;}
+        .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
+        .nav-back a { color: #666; font-weight: 600; }
+
+        /* HERO */
+        .page-hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80') center/cover;
+            background-attachment: fixed;
+            color: var(--white-pure); text-align: center;
+            padding: 100px 20px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .page-hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
+        .page-hero p { font-size: 1.15rem; max-width: 600px; margin-bottom: 6px; }
+        .page-hero .small { font-size: 0.9rem; opacity: 0.75; }
+
+        /* INTRO BANNER */
+        .intro-banner { background-color: var(--white-pure); text-align: center; }
+        .intro-banner h2 { color: var(--colore-2-primario); margin-bottom: 15px; }
+        .intro-banner p { max-width: 750px; margin: 0 auto; color: #555; }
+
+        /* CATEGORY SECTION */
+        .cat-section { }
+        .cat-section:nth-child(odd)  { background: var(--colore-1-sfondo); }
+        .cat-section:nth-child(even) { background: var(--white-pure); }
+
+        .cat-header { text-align: center; margin-bottom: 40px; }
+        .cat-header .cat-label { display: inline-block; background: var(--colore-2-primario); color: var(--white-pure); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; padding: 5px 16px; border-radius: 50px; margin-bottom: 12px; }
+        .cat-header h2 { font-size: 2rem; margin-bottom: 8px; }
+        .cat-header p { color: #666; max-width: 600px; margin: 0 auto; }
+
+        /* DISH BLOCK */
+        .dish-block { background: var(--white-pure); border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 30px 32px; margin-bottom: 24px; max-width: 900px; margin-left: auto; margin-right: auto; border-left: 5px solid var(--colore-4-dettagli); }
+        .cat-section:nth-child(even) .dish-block { background: var(--colore-1-sfondo); }
+        .dish-block h3 { color: var(--colore-2-primario); font-size: 1.25rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .dish-block h3 .price { margin-left: auto; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 1rem; color: var(--colore-3-testo); background: var(--colore-4-dettagli); padding: 4px 14px; border-radius: 50px; white-space: nowrap; }
+        .ingredient-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+        .ingredient-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.93rem; }
+        .ing-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--colore-2-primario); flex-shrink: 0; margin-top: 5px; }
+        .ing-body strong { display: block; color: var(--colore-3-testo); font-weight: 600; }
+        .ing-body .ing-place { color: var(--colore-2-primario); font-size: 0.82rem; font-weight: 600; }
+        .ing-body .ing-note  { color: #777; font-size: 0.82rem; font-style: italic; }
+
+        /* BASE PIZZA BLOCK */
+        .base-block { background: rgba(192,57,43,0.07); border-radius: 12px; padding: 20px 24px; max-width: 900px; margin: 0 auto 24px; border: 1px dashed var(--colore-2-primario); }
+        .base-block p { font-size: 0.9rem; color: #555; font-style: italic; text-align: center; margin-bottom: 14px; }
+
+        /* FOOTER */
+        .main-footer { background-color: var(--colore-2-primario); color: var(--white-pure); padding: 60px 20px 120px; }
+        .footer-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .footer-col { flex: 1; min-width: 280px; max-width: 400px; }
+        .footer-col h3 { color: var(--colore-4-dettagli); font-size: 1.3rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col p { margin-bottom: 10px; font-size: 1rem; line-height: 1.8; }
+        .footer-col a { color: var(--white-pure); transition: opacity 0.3s; }
+        .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
+        .footer-legal { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; text-align: center; opacity: 0.8; }
+
+        .floating-actions { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 25px; z-index: 2000; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .floating-actions.is-hidden { opacity: 0; transform: translateY(100px); pointer-events: none; }
+        .float-circle { width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white-pure); font-size: 0.7rem; font-weight: bold; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center; animation: pulse 2s infinite; }
+        .float-circle span { font-size: 1.6rem; margin-bottom: 2px; }
+        .bg-delivery { background-color: var(--colore-4-dettagli); }
+        .bg-call     { background-color: var(--colore-2-primario); }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        #backToTop { display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2500; border: none; background-color: var(--colore-3-testo); color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #backToTop:hover { background-color: var(--colore-2-primario); }
     </style>
 </head>
 <body>
 
-    <nav class="top-navbar">
-        <a href="demo-ristorante.html#menu" class="nav-brand">Ristorante Al Lago</a>
-        <a href="demo-ristorante.html#menu" class="nav-back-link">⬅ Torna al Menù</a>
-    </nav>
+<nav class="top-navbar">
+    <a href="demo-ristorante.html" class="nav-brand">Ristorante Al Lago</a>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <ul id="nav-links" class="nav-links">
+        <button class="close-x" onclick="chiudiMenu()">✕</button>
+        <li><a href="demo-ristorante.html#home"       onclick="chiudiMenu()">Home</a></li>
+        <li><a href="demo-ristorante.html#chi-siamo"  onclick="chiudiMenu()">Chi Siamo</a></li>
+        <li><a href="demo-ristorante.html#menu"       onclick="chiudiMenu()">Menù</a></li>
+        <li><a href="demo-ristorante.html#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
+        <li><a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a></li>
+    </ul>
+</nav>
+<div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+<div class="nav-back"><a href="demo-ristorante.html">⬅ Torna alla Home</a></div>
 
-    <header class="page-header">
-        <h1>Origine degli Ingredienti</h1>
-        <p>Scopri l'esatta provenienza delle materie prime che compongono i tuoi piatti preferiti. Collaboriamo con le eccellenze del nostro territorio.</p>
-    </header>
+<!-- HERO -->
+<header class="page-hero reveal-section">
+    <h1>La Nostra Filiera</h1>
+    <p>Ogni ingrediente ha un nome, un produttore e un luogo di origine.</p>
+    <p class="small">Filiera corta · Produttori locali · Freschi ogni giorno</p>
+</header>
 
-    <main class="provenance-container">
-        
-        <div class="dish-card">
-            <h2>Antipasti: Tagliere Varesino</h2>
-            <ul class="ingredient-list">
-                <li>
-                    <span class="ing-name">Salumi e Affettati (Salame prealpino, Coppa)</span>
-                    <span class="ing-origin"><span>📍</span> Salumificio Artigianale Colombo (Crosio della Valle, VA) - Carni 100% italiane.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Formaggella del Luinese DOP</span>
-                    <span class="ing-origin"><span>📍</span> Azienda Agricola Il Vallone (Luino, VA) - Latte crudo intero di capra.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Miele di Acacia</span>
-                    <span class="ing-origin"><span>📍</span> Apicoltura Varesina Valli (Brinzio, VA) - Estratto a freddo.</span>
-                </li>
-            </ul>
+<!-- INTRO -->
+<section class="intro-banner reveal-section">
+    <h2>Trasparenza e Genuinità</h2>
+    <p>Dal 1985 selezioniamo personalmente ogni materia prima. Qui trovi, piatto per piatto, da dove provengono gli ingredienti che portiamo in tavola ogni giorno.</p>
+</section>
+
+<!-- ========== ANTIPASTI ========== -->
+<section class="cat-section reveal-section">
+    <div class="cat-header">
+        <span class="cat-label">🫙 Antipasti</span>
+        <h2>I Nostri Antipasti</h2>
+        <p>Prodotti del territorio varesino per cominciare nel modo giusto.</p>
+    </div>
+
+    <div class="dish-block">
+        <h3>🫙 Tagliere Varesino <span class="price">€ 14</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Salame Prealpino & Coppa</strong><span class="ing-place">📍 Salumificio Artigianale Colombo · Crosio della Valle (VA)</span><span class="ing-note">Carni 100% italiane, stagionatura artigianale</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Formaggella del Luinese DOP</strong><span class="ing-place">📍 Azienda Agricola Il Vallone · Luino (VA)</span><span class="ing-note">Latte crudo intero di capra</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Miele di Acacia</strong><span class="ing-place">📍 Apicoltura Varesina Valli · Brinzio (VA)</span><span class="ing-note">Estratto a freddo, non pastorizzato</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Focaccine al Farro</strong><span class="ing-place">📍 Forno Artigianale Dal Lago · Varese</span><span class="ing-note">Farina di farro biologica, cotte ogni mattina</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🐟 Carpaccio di Lavarello <span class="price">€ 13</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Lavarello del Lago Maggiore</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Varese / Verbano</span><span class="ing-note">Pescato fresco ogni mattina</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pistacchi di Bronte</strong><span class="ing-place">📍 Cooperativa Biologica Bronte · Bronte (CT)</span><span class="ing-note">DOP, raccolto a mano in ottobre</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Olio EVO & Agrumi</strong><span class="ing-place">📍 Frantoio Ravida · Menfi (AG)</span><span class="ing-note">Prima spremitura a freddo, extravergine certificato</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🧀 Burrata con Pomodorini <span class="price">€ 11</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Burrata Fresca</strong><span class="ing-place">📍 Caseificio Artigianale Di Terlizzi · Terlizzi (BA)</span><span class="ing-note">Prodotta il giorno stesso, arrivo ogni mattina</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Crostini di Pane Tipo 1</strong><span class="ing-place">📍 Mulino Rigamonti · Como</span><span class="ing-note">Grano 100% italiano macinato a pietra</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pomodorini Confit</strong><span class="ing-place">📍 Azienda Agricola Bio Sud · Puglia</span><span class="ing-note">Varietà Datterino, coltivazione biologica</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍄 Crostini ai Funghi Porcini <span class="price">€ 10</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Funghi Porcini</strong><span class="ing-place">📍 Raccoglitori Locali · Prealpi Varesine</span><span class="ing-note">Raccolti freschi in stagione, surgelati artigianalmente fuori stagione</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Grana Padano DOP</strong><span class="ing-place">📍 Consorzio Grana Padano · Po Varesino</span><span class="ing-note">Stagionatura minima 16 mesi</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pane Artigianale</strong><span class="ing-place">📍 Forno Artigianale Dal Lago · Varese</span><span class="ing-note">Sfornato ogni mattina</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🥗 Insalata di Persico e Rucola <span class="price">€ 12</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pesce Persico del Lago</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Varese / Verbano</span><span class="ing-note">Pescato fresco giornaliero, filettato in sede</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Rucola Selvatica</strong><span class="ing-place">📍 Azienda Agricola Bassi · Gavirate (VA)</span><span class="ing-note">Raccolta a mano, consegna trisettimanale</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Cipolla di Tropea</strong><span class="ing-place">📍 Cooperativa Agri Tropea · Tropea (VV)</span><span class="ing-note">IGP, dolce e croccante</span></span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- ========== PRIMI ========== -->
+<section class="cat-section reveal-section">
+    <div class="cat-header">
+        <span class="cat-label">🍝 Primi Piatti</span>
+        <h2>I Nostri Primi</h2>
+        <p>Paste fresche tirate a mano e risotti con materie prime del territorio.</p>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍚 Risotto al Pesce Persico <span class="price">€ 18</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Riso Carnaroli</strong><span class="ing-place">📍 Azienda Agricola Lodigiana · Vercelli (VC)</span><span class="ing-note">Da semente certificata, essiccazione naturale</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Filetti di Pesce Persico</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Varese / Verbano</span><span class="ing-note">Pescato fresco ogni mattina</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Burro di Latteria</strong><span class="ing-place">📍 Consorzio Latte Varese</span><span class="ing-note">Burro da panna centrifugata fresca</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Zafferano DOP</strong><span class="ing-place">📍 Azienda Agricola Zafferano d'Abruzzo · L'Aquila</span><span class="ing-note">Pistilli interi, raccolto a mano in ottobre</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍝 Tagliolini al Ragù di Lago <span class="price">€ 16</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pasta Fresca all'Uovo</strong><span class="ing-place">📍 Produzione interna · Cucina Al Lago</span><span class="ing-note">Tirata a mano ogni giorno, uova fresche locali</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Persico, Lavarello & Tinca</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Verbano</span><span class="ing-note">Ragù lento, cottura 4 ore</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pomodoro Biologico</strong><span class="ing-place">📍 Azienda Agricola Bio Sud · Puglia</span><span class="ing-note">San Marzano DOP, passato in giornata</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍄 Pappardelle ai Porcini <span class="price">€ 15</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Farina di Farro Integrale</strong><span class="ing-place">📍 Mulino Rigamonti · Como</span><span class="ing-note">Grano 100% italiano, macinato a pietra</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Funghi Porcini delle Prealpi</strong><span class="ing-place">📍 Raccoglitori Locali · Prealpi Varesine</span><span class="ing-note">Freschi in stagione, artigianalmente essiccati fuori stagione</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pecorino di Fossa</strong><span class="ing-place">📍 Caseificio Beltrami · Sogliano al Rubicone (FC)</span><span class="ing-note">Stagionato in fossa di tufo, 90 giorni minimi</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🧅 Minestrone della Tradizione <span class="price">€ 12</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Verdure di Stagione</strong><span class="ing-place">📍 Orto Cooperativa Contadini Varesini · Varese e dintorni</span><span class="ing-note">Consegna quotidiana, cultivar locali</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Fagioli Borlotti</strong><span class="ing-place">📍 Azienda Agricola Bassi · Gavirate (VA)</span><span class="ing-note">Coltivazione tradizionale senza pesticidi</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Riso Integrale</strong><span class="ing-place">📍 Azienda Agricola Lodigiana · Vercelli (VC)</span><span class="ing-note">Varietà originaria, lavorazione minima</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍋 Spaghetti Aglio Olio e Lavarello <span class="price">€ 14</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Lavarello Affumicato</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Verbano</span><span class="ing-note">Affumicatura artigianale con legno di faggio</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Limone di Amalfi</strong><span class="ing-place">📍 Cooperativa Agricola Amalfitana · Costa Amalfitana (SA)</span><span class="ing-note">IGP, profumatissimo, buccia non trattata</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Aglio Dolce</strong><span class="ing-place">📍 Aglio Bianco Polesano · Rovigo (RO)</span><span class="ing-note">DOP, sapore delicato e digeribile</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🧈 Risotto al Casera e Noci <span class="price">€ 15</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Casera DOP</strong><span class="ing-place">📍 Consorzio Tutela Valtellina Casera · Sondrio</span><span class="ing-note">Latte vaccino intero, stagionatura minima 70 giorni</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Noci</strong><span class="ing-place">📍 Azienda Agricola Piana · Brinzio (VA)</span><span class="ing-note">Varietà locale, raccolto autunnale</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Miele di Montagna</strong><span class="ing-place">📍 Apicoltura Varesina Valli · Brinzio (VA)</span><span class="ing-note">Millefiori di alta quota</span></span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- ========== SECONDI ========== -->
+<section class="cat-section reveal-section">
+    <div class="cat-header">
+        <span class="cat-label">🥩 Secondi Piatti</span>
+        <h2>I Nostri Secondi</h2>
+        <p>Carni locali e pesce di lago selezionati ogni giorno.</p>
+    </div>
+
+    <div class="dish-block">
+        <h3>🥩 Filetto al Pepe Verde <span class="price">€ 26</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Filetto di Fassona Piemontese</strong><span class="ing-place">📍 Macelleria Storica Rossi · Varese</span><span class="ing-note">Allevata al pascolo, frollatura minima 21 giorni</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Panna Fresca</strong><span class="ing-place">📍 Consorzio Latte Varese</span><span class="ing-note">Panna da centrifugazione fresca, non UHT</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pepe Verde in Grani</strong><span class="ing-place">📍 Importazione selezionata · Madagascar</span><span class="ing-note">Pepe verde in salamoia, varietà Penja</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🐟 Persico in Padella <span class="price">€ 20</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Filetti di Pesce Persico</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Varese / Verbano</span><span class="ing-note">Pescato fresco, filettato al momento</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Burro Chiarificato</strong><span class="ing-place">📍 Consorzio Latte Varese</span><span class="ing-note">Chiarificato in sede, punto di fumo elevato</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Panko Artigianale</strong><span class="ing-place">📍 Forno Artigianale Dal Lago · Varese</span><span class="ing-note">Pane asciugato e macinato ogni settimana</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍗 Pollo alla Varesina <span class="price">€ 19</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pollo Ruspante</strong><span class="ing-place">📍 Allevamento Colombo · Induno Olona (VA)</span><span class="ing-note">Allevato a terra, mangime senza OGM</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Polenta Taragna</strong><span class="ing-place">📍 Mulino Bertoni · Tirano (SO)</span><span class="ing-note">Farina di grano saraceno e mais, macinata a pietra</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Olive Taggiasche</strong><span class="ing-place">📍 Frantoio Roi · Badalucco (IM)</span><span class="ing-note">Denocciolate in olio EVO, varietà taggiasca DOP</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🫘 Grigliata Mista di Lago <span class="price">€ 24</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Persico, Lavarello & Tinca</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Varese / Verbano</span><span class="ing-note">Mix di pescato fresco giornaliero, griglia a legna</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Erbe Aromatiche</strong><span class="ing-place">📍 Orto del Ristorante · Giardino interno</span><span class="ing-note">Rosmarino, timo, salvia: colte ogni giorno</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Sale Marino Integrale</strong><span class="ing-place">📍 Saline di Cervia · Cervia (RA)</span><span class="ing-note">Sale dolce, raccolta artigianale</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🥗 Tagliata di Manzo e Rucola <span class="price">€ 23</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Fassona Piemontese</strong><span class="ing-place">📍 Macelleria Storica Rossi · Varese</span><span class="ing-note">Taglio controfiletto, frollatura 21 giorni</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Grana Padano DOP 24 mesi</strong><span class="ing-place">📍 Consorzio Grana Padano · Po Varesino</span><span class="ing-note">Stagionatura 24 mesi, scaglie a mano</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Rucola Selvatica</strong><span class="ing-place">📍 Azienda Agricola Bassi · Gavirate (VA)</span><span class="ing-note">Raccolta a mano tre volte a settimana</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🧆 Polpette della Nonna <span class="price">€ 16</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Manzo & Maiale Misto</strong><span class="ing-place">📍 Macelleria Storica Rossi · Varese</span><span class="ing-note">Macinato fresco il giorno stesso</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pomodoro San Marzano Bio</strong><span class="ing-place">📍 Azienda Agricola Bio Sud · Puglia</span><span class="ing-note">DOP, passato in giornata senza additivi</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Pane Raffermo</strong><span class="ing-place">📍 Forno Artigianale Dal Lago · Varese</span><span class="ing-note">Ingrediente segreto della ricetta originale</span></span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- ========== PIZZE ========== -->
+<section class="cat-section reveal-section">
+    <div class="cat-header">
+        <span class="cat-label">🍕 Pizze</span>
+        <h2>Le Nostre Pizze</h2>
+        <p>Impasto maturato 48 ore, ingredienti selezionati, cottura in forno a legna.</p>
+    </div>
+
+    <div class="base-block">
+        <p>🔑 <strong>Base comune a tutte le pizze</strong> — questi ingredienti fondamentali sono gli stessi per ogni pizza del menù</p>
+        <ul class="ingredient-list" style="max-width:800px;margin:0 auto;">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Farina Tipo 1 & Integrale</strong><span class="ing-place">📍 Mulino Rigamonti · Como</span><span class="ing-note">Grano 100% italiano, macinato a pietra, impasto maturato 48h</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Fiordilatte (Mozzarella)</strong><span class="ing-place">📍 Caseificio Prealpino · Varese</span><span class="ing-note">Lavorata a mano ogni mattina, consegna giornaliera</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Salsa di Pomodoro</strong><span class="ing-place">📍 Azienda Agricola Bio Sud · Puglia</span><span class="ing-note">San Marzano DOP, raccolti e passati in giornata, biologico</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Olio EVO a Filo</strong><span class="ing-place">📍 Frantoio Ravida · Menfi (AG)</span><span class="ing-note">Prima spremitura a freddo, aggiunto a crudo in uscita</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍕 Varesina <span class="price">€ 14</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Salame Prealpino</strong><span class="ing-place">📍 Salumificio Artigianale Colombo · Crosio della Valle (VA)</span><span class="ing-note">Taglio a mano, stagionatura 45 giorni</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Formaggella del Luinese DOP</strong><span class="ing-place">📍 Azienda Agricola Il Vallone · Luino (VA)</span><span class="ing-note">Latte crudo di capra, aggiunta in uscita</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Miele di Acacia a Filo</strong><span class="ing-place">📍 Apicoltura Varesina Valli · Brinzio (VA)</span><span class="ing-note">Versato a crudo per equilibrare la sapidità</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍕 Al Lago <span class="price">€ 15</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Filetti di Pesce Persico</strong><span class="ing-place">📍 Cooperativa Pescatori del Lago · Verbano</span><span class="ing-note">Pescato fresco, saltato in padella prima di andare in forno</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Zucchine Grigliate</strong><span class="ing-place">📍 Orto Cooperativa Contadini Varesini · Varese</span><span class="ing-note">Crema di base, zucchine locali di stagione</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Limone di Amalfi IGP</strong><span class="ing-place">📍 Cooperativa Agricola Amalfitana · Costa Amalfitana (SA)</span><span class="ing-note">Scorza grattugiata a crudo in uscita</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍕 Porcini e Salsiccia <span class="price">€ 14</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Funghi Porcini Trifolati</strong><span class="ing-place">📍 Raccoglitori Locali · Prealpi Varesine</span><span class="ing-note">Freschi in stagione, essiccati artigianalmente fuori stagione</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Salsiccia Artigianale</strong><span class="ing-place">📍 Salumificio Artigianale Colombo · Crosio della Valle (VA)</span><span class="ing-note">Carne di maiale varesino, speziatura tradizionale</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Grana Padano DOP</strong><span class="ing-place">📍 Consorzio Grana Padano · Po Varesino</span><span class="ing-note">Scaglie aggiunte in uscita</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍕 Quattro Formaggi <span class="price">€ 13</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Casera DOP della Valtellina</strong><span class="ing-place">📍 Consorzio Tutela Valtellina Casera · Sondrio</span><span class="ing-note">Stagionatura 70 giorni, fuso in cottura</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Gorgonzola DOP</strong><span class="ing-place">📍 Consorzio Gorgonzola · Novara</span><span class="ing-note">Varietà dolce, erborinatura naturale</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Grana Padano DOP 24 mesi</strong><span class="ing-place">📍 Consorzio Grana Padano · Po Varesino</span><span class="ing-note">Grattugiato fresco, aggiunto in uscita</span></span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- ========== DOLCI ========== -->
+<section class="cat-section reveal-section">
+    <div class="cat-header">
+        <span class="cat-label">🍮 Dolci</span>
+        <h2>I Nostri Dolci</h2>
+        <p>Preparati ogni mattina in cucina. Nessun dolce industriale.</p>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍮 Panna Cotta al Miele di Brinzio <span class="price">€ 7</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Miele di Acacia</strong><span class="ing-place">📍 Apicoltura Varesina Valli · Brinzio (VA)</span><span class="ing-note">Estratto a freddo, non pastorizzato</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Frutti di Bosco Locali</strong><span class="ing-place">📍 Azienda Agricola Piana · Brinzio (VA)</span><span class="ing-note">Mirtilli, lamponi, more — coulis preparato in casa</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Nocciole Piemonte IGP</strong><span class="ing-place">📍 Ferrero Agricola · Cuneo (CN)</span><span class="ing-note">Tonda gentile, granella tostata al momento</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🍫 Tortino al Cioccolato Fondente <span class="price">€ 8</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Cioccolato Fondente 70%</strong><span class="ing-place">📍 Domori · None (TO)</span><span class="ing-note">Cacao monorigine, senza lecitine aggiunte</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Gelato alla Crema di Latte</strong><span class="ing-place">📍 Gelateria Artigianale Lago Azzurro · Varese</span><span class="ing-note">Latte fresco locale, preparazione giornaliera</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Sale di Maldon</strong><span class="ing-place">📍 Saline di Maldon · Essex, UK</span><span class="ing-note">Fiocchi di sale marino, aggiunto a finitura</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🫐 Tiramisù della Casa <span class="price">€ 7</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Mascarpone</strong><span class="ing-place">📍 Consorzio Latte Varese</span><span class="ing-note">Produzione fresca, 48h di vita massima</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Savoiardi Artigianali</strong><span class="ing-place">📍 Biscottificio Matilde · Varese</span><span class="ing-note">Ricetta originale, uova fresche locali</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Caffè Espresso</strong><span class="ing-place">📍 Torrefazione Quarta · Lecce</span><span class="ing-note">Blend tradizionale, macinato al momento</span></span></li>
+        </ul>
+    </div>
+
+    <div class="dish-block">
+        <h3>🧀 Selezione di Formaggi Locali <span class="price">€ 12</span></h3>
+        <ul class="ingredient-list">
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Formaggella del Luinese DOP</strong><span class="ing-place">📍 Azienda Agricola Il Vallone · Luino (VA)</span><span class="ing-note">Latte crudo di capra</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Casera DOP</strong><span class="ing-place">📍 Consorzio Tutela Valtellina Casera · Sondrio</span><span class="ing-note">Stagionatura 70 giorni</span></span></li>
+            <li><span class="ing-dot"></span><span class="ing-body"><strong>Confettura di Fichi</strong><span class="ing-place">📍 Produzione interna · Cucina Al Lago</span><span class="ing-note">Fichi del giardino, preparata ogni autunno</span></span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- CTA -->
+<section style="background:rgba(192,57,43,0.92);color:white;text-align:center;padding:60px 20px;" class="reveal-section">
+    <h2 style="color:#d4ac0d;margin-bottom:15px;">Vieni a Scoprirli di Persona</h2>
+    <p style="max-width:600px;margin:0 auto 30px;font-size:1.05rem;opacity:0.9;">Ogni giorno la cucina seleziona il meglio dal mercato. Il menù cambia con le stagioni — la qualità no.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="demo-ristorante.html#menu" style="background:#d4ac0d;color:#2c3e50;padding:15px 30px;border-radius:50px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;">Guarda il Menù</a>
+        <a href="https://www.thefork.it/" target="_blank" style="border:2px solid white;color:white;padding:15px 30px;border-radius:50px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;">Prenota un Tavolo</a>
+    </div>
+</section>
+
+<footer class="main-footer reveal-section">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h3>Contatti</h3>
+            <p>📞 <a href="tel:+390332000000">0332 00.00.00</a></p>
+            <p>💬 <a href="https://wa.me/393330000000">WhatsApp</a></p>
+            <p>📧 info@ristoranteallago.demo</p>
         </div>
-
-        <div class="dish-card">
-            <h2>Primi: Risotto al Pesce Persico</h2>
-            <ul class="ingredient-list">
-                <li>
-                    <span class="ing-name">Riso Carnaroli Classico</span>
-                    <span class="ing-origin"><span>📍</span> Azienda Agricola Lodigiana (VC) - Riso da semente certificata.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Filetti di Pesce Persico</span>
-                    <span class="ing-origin"><span>📍</span> Cooperativa Pescatori del Lago (Varese / Lago Maggiore) - Pescato fresco giornaliero.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Burro di Latteria</span>
-                    <span class="ing-origin"><span>📍</span> Consorzio Latte Varese - Burro da panna centrifugata fresca.</span>
-                </li>
-            </ul>
+        <div class="footer-col">
+            <h3>Dove Siamo</h3>
+            <p>📍 Via Lungolago di Schiranna, 42</p>
+            <p>21100 Varese (VA)</p>
+            <p>🚗 Parcheggio gratuito di fronte</p>
         </div>
+    </div>
+    <div class="footer-legal">
+        <p>© 2026 Ristorante Al Lago S.r.l. · <a href="#" style="color:white">Privacy</a> · <a href="#" style="color:white">Cookie</a></p>
+    </div>
+</footer>
 
-        <div class="dish-card">
-            <h2>Pizze: Le Nostre Basi</h2>
-            <ul class="ingredient-list">
-                <li>
-                    <span class="ing-name">Farina per Impasto (Tipo 1 e Integrale)</span>
-                    <span class="ing-origin"><span>📍</span> Mulino Rigamonti (Como) - Grano 100% italiano macinato a pietra.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Fiordilatte (Mozzarella)</span>
-                    <span class="ing-origin"><span>📍</span> Caseificio Prealpino (VA) - Lavorata a mano ogni mattina.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Salsa di Pomodoro</span>
-                    <span class="ing-origin"><span>📍</span> Azienda Agricola Bio Sud (Puglia) - Pomodori San Marzano raccolti e passati in giornata.</span>
-                </li>
-            </ul>
-        </div>
+<div id="action-buttons" class="floating-actions">
+    <a href="delivery.html" class="float-circle bg-delivery"><span>🛵</span></a>
+    <a href="tel:+390332000000" class="float-circle bg-call"><span>📞</span></a>
+</div>
+<button onclick="topFunction()" id="backToTop">↑</button>
 
-        <div class="dish-card">
-            <h2>Secondi: Filetto al Pepe Verde</h2>
-            <ul class="ingredient-list">
-                <li>
-                    <span class="ing-name">Filetto di Manzo</span>
-                    <span class="ing-origin"><span>📍</span> Macelleria Storica Rossi (Varese) - Carne di fassona piemontese allevata al pascolo.</span>
-                </li>
-                <li>
-                    <span class="ing-name">Panna Fresca e Pepe Verde</span>
-                    <span class="ing-origin"><span>📍</span> Panna dal Consorzio Latte Varese; Pepe in grani importazione selezionata (Madagascar).</span>
-                </li>
-            </ul>
-        </div>
-
-    </main>
-
-    <footer class="main-footer">
-        <p>© 2026 Ristorante Al Lago S.r.l. - Trasparenza e Qualità al primo posto.</p>
-    </footer>
-
+<script>
+    function toggleMenu() {
+        document.getElementById('nav-links').classList.toggle('show');
+        document.getElementById('menu-overlay').classList.toggle('active');
+    }
+    function chiudiMenu() { if (window.innerWidth <= 768) toggleMenu(); }
+    document.addEventListener('DOMContentLoaded', () => {
+        const obs = new IntersectionObserver((entries, obs) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('reveal-visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-section').forEach(s => obs.observe(s));
+    });
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', () => {
+        let st = window.pageYOffset;
+        document.getElementById('action-buttons').classList.toggle('is-hidden', st > 100 && st > lastScrollTop);
+        document.getElementById('backToTop').style.display = st > 300 ? 'block' : 'none';
+        lastScrollTop = st <= 0 ? 0 : st;
+    });
+    function topFunction() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+</script>
 </body>
 </html>

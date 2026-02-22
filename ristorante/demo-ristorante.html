@@ -30,7 +30,7 @@
             margin: 0; padding: 0;
             padding-top: var(--nav-height);
             width: 100%;
-            overflow-x: hidden;
+            overflow-x: clip;
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--colore-3-testo);
@@ -221,15 +221,33 @@
         .nav-back a { color: #666; font-weight: 600; }
 
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            position: relative;
+            background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: var(--white-pure);
             text-align: center;
-            padding: 100px 20px;
+            padding: 160px 20px;
+            min-height: 100vh;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
         }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 0;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+
         .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
         
@@ -508,7 +526,7 @@
         <a href="../index.html">⬅ Torna ai miei esempi</a>
     </div>
 
-    <header class="hero reveal-section" id="home">
+    <header class="hero" id="home">
         <h1>Ristorante "Al Lago"</h1>
         <p>Sapori autentici della tradizione tra il lago e le prealpi varesine.</p>
         
@@ -523,9 +541,9 @@
         <p>Dal 1985 portiamo in tavola solo ingredienti freschi e locali. La nostra passione è l'ospitalità, la nostra specialità è farvi sentire bene.</p>
     </section>
     
-    <section class="venue-carousel-section reveal-section">
-        <h2>L'Atmosfera</h2>
-        <p style="margin-bottom: 20px; color: #666;">Un ambiente caldo e accogliente per le tue serate speciali.</p>
+    <section class="venue-carousel-section reveal-section" style="text-align:center;">
+        <h2 style="text-align:center;">L'Atmosfera</h2>
+        <p style="margin-bottom:20px; color:#666; text-align:center;">Un ambiente caldo e accogliente per le tue serate speciali.</p>
         
         <div class="carousel-wrapper">
             <div class="carousel-container">
@@ -595,175 +613,279 @@
         </div>
     </section>
 
-    <section id="menu" class="menu-section">
-        <h2 class="reveal-section">Il Nostro Menù</h2>
+    <!-- ======= MENU ======= -->
+    <section id="menu" style="padding:70px 20px;background:#fdfaf6;">
+    <div style="max-width:1100px;margin:0 auto;">
+        <p style="text-align:center;color:#8b6f5e;font-family:'Playfair Display',serif;font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Cucina & Pizzeria</p>
+        <h2 style="text-align:center;font-family:'Playfair Display',serif;font-size:2.4rem;color:#2d1b0e;margin-bottom:10px;">Il Nostro Menù</h2>
+        <p style="text-align:center;color:#6b5c50;max-width:560px;margin:0 auto 40px;font-size:1rem;line-height:1.7;">Ingredienti selezionati, filiera corta, ricette della tradizione varesina. Prezzi IVA inclusa.</p>
 
-        <div class="menu-category reveal-section">
-            <h3>Antipasti</h3>
-            <div class="menu-item">
-                <div><span class="item-name">Tagliere Varesino</span><span class="item-desc">Salumi locali, Formaggella del Luinese e miele varesino.</span></div>
-                <span class="item-price">€ 14.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Carpaccio di Lavarello</span><span class="item-desc">Pesce di lago marinato agli agrumi e pepe rosa.</span></div>
-                <span class="item-price">€ 13.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Sciatt Valtellinesi</span><span class="item-desc">Frittelle di grano saraceno con cuore di formaggio fuso.</span></div>
-                <span class="item-price">€ 11.00</span>
-            </div>
-            
-            <div class="carousel-wrapper menu-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1541529086526-db283c563270?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tagliere Salumi"></div>
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Carpaccio"></div>
-                    <button class="prev-btn">❮</button>
-                    <button class="next-btn">❯</button>
-                </div>
-                <div class="carousel-dots-container">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
+        <!-- TAB FILTRI -->
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:42px;" id="menu-tabs">
+        <button onclick="filterMenu('antipasti')" class="mtab active" data-cat="antipasti">🫙 Antipasti</button>
+        <button onclick="filterMenu('primi')"    class="mtab"        data-cat="primi">🍝 Primi</button>
+        <button onclick="filterMenu('secondi')"  class="mtab"        data-cat="secondi">🥩 Secondi</button>
+        <button onclick="filterMenu('pizze')"    class="mtab"        data-cat="pizze">🍕 Pizze</button>
+        <button onclick="filterMenu('dolci')"    class="mtab"        data-cat="dolci">🍮 Dolci</button>
+        <button onclick="filterMenu('bevande')"  class="mtab"        data-cat="bevande">🍷 Bevande</button>
         </div>
 
-        <div class="menu-category reveal-section">
-            <h3>I Primi</h3>
-            <div class="menu-item">
-                <div><span class="item-name">Risotto al Pesce Persico</span><span class="item-desc">Il re del lago, mantecato al burro e salvia croccante.</span></div>
-                <span class="item-price">€ 18.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Tagliatelle ai Funghi Porcini</span><span class="item-desc">Pasta fresca all'uovo con funghi freschi dei nostri boschi.</span></div>
-                <span class="item-price">€ 16.00</span>
-            </div>
+        <style>
+        .mtab{background:#fff;border:2px solid #e8ddd5;color:#5c4033;font-family:'Playfair Display',serif;font-size:0.9rem;padding:9px 20px;border-radius:50px;cursor:pointer;transition:all 0.25s;white-space:nowrap;}
+        .mtab:hover,.mtab.active{background:#8b6f5e;border-color:#8b6f5e;color:#fff;}
+        .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+        .menu-card{background:#fff;border-radius:14px;padding:24px 26px;box-shadow:0 3px 15px rgba(0,0,0,0.06);border-left:4px solid #d4a96a;transition:transform 0.25s,box-shadow 0.25s;display:flex;flex-direction:column;gap:8px;}
+        .menu-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.1);}
+        .menu-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;color:#2d1b0e;margin:0;}
+        .menu-card .desc{font-size:0.88rem;color:#6b5c50;line-height:1.65;margin:0;}
+        .menu-card .price-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+        .menu-card .price{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;color:#8b6f5e;}
+        .menu-card .tag{font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;}
+        .tag-locale{background:#e8f5e9;color:#2e7d32;}
+        .tag-veg{background:#fff8e1;color:#f57f17;}
+        .tag-pesce{background:#e3f2fd;color:#1565c0;}
+        .tag-firma{background:#fce4ec;color:#880e4f;}
+        .menu-divider{display:none;}
+        </style>
 
-            <div class="carousel-wrapper menu-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide fade"><img src="https://www.salepepe.it/files/2023/05/AA220457_alta-1140x636.jpg" alt="Risotto"></div>
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pasta Funghi"></div>
-                    <button class="prev-btn">❮</button>
-                    <button class="next-btn">❯</button>
-                </div>
-                <div class="carousel-dots-container">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
+        <div class="menu-grid" id="menu-grid">
+
+        <!-- ===== ANTIPASTI ===== -->
+        <div class="menu-card" data-cat="antipasti">
+            <h3>🫙 Tagliere Varesino</h3>
+            <p class="desc">Salame prealpino, coppa artigianale, formaggella del Luinese DOP, miele di acacia di Brinzio e focaccine al farro.</p>
+            <div class="price-row"><span class="price">€ 14</span><span class="tag tag-locale">Filiera Locale</span></div>
         </div>
 
-        <div class="menu-category reveal-section">
-            <h3>I Secondi</h3>
-            <div class="menu-item">
-                <div><span class="item-name">Filetto al Pepe Verde</span><span class="item-desc">Manzo selezionato con salsa cremosa al pepe verde.</span></div>
-                <span class="item-price">€ 22.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Frittura Mista di Lago</span><span class="item-desc">Alborelle, agoni e filetti di persico fritti dorati.</span></div>
-                <span class="item-price">€ 19.00</span>
-            </div>
-
-            <div class="carousel-wrapper menu-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Filetto Carne"></div>
-                    <div class="carousel-slide fade"><img src="https://www.giallozafferano.it/images/282-28243/Fritto-misto-di-pesce-e-verdure_650x433_wm.jpg" alt="Frittura Pesce"></div>
-                    <button class="prev-btn">❮</button>
-                    <button class="next-btn">❯</button>
-                </div>
-                <div class="carousel-dots-container">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
+        <div class="menu-card" data-cat="antipasti">
+            <h3>🐟 Carpaccio di Lavarello</h3>
+            <p class="desc">Lavarello del Lago Maggiore marinato agli agrumi, olio EVO, finocchietto selvatico e pistacchi di Bronte.</p>
+            <div class="price-row"><span class="price">€ 13</span><span class="tag tag-pesce">Pesce di Lago</span></div>
         </div>
 
-        <div class="menu-category reveal-section">
-            <h3>Le Pizze</h3>
-            <div class="menu-item">
-                <div><span class="item-name">Margherita</span><span class="item-desc">Pomodoro, mozzarella, basilico.</span></div>
-                <span class="item-price">€ 8.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">La Varesina</span><span class="item-desc">Gorgonzola, speck croccante e noci.</span></div>
-                <span class="item-price">€ 12.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Diavola</span><span class="item-desc">Pomodoro, mozzarella, spianata calabra piccante.</span></div>
-                <span class="item-price">€ 10.00</span>
-            </div>
-
-            <div class="carousel-wrapper menu-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza Margherita"></div>
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pizza Diavola"></div>
-                    <button class="prev-btn">❮</button>
-                    <button class="next-btn">❯</button>
-                </div>
-                <div class="carousel-dots-container">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
+        <div class="menu-card" data-cat="antipasti">
+            <h3>🧀 Burrata con Pomodorini</h3>
+            <p class="desc">Burrata fresca pugliese su crema di basilico, pomodorini confit, olio al tartufo e crostini di pane tipo 1 del Mulino Rigamonti.</p>
+            <div class="price-row"><span class="price">€ 11</span><span class="tag tag-veg">Vegetariano</span></div>
         </div>
 
-        <div class="menu-category reveal-section">
-            <h3>Dolci</h3>
-            <div class="menu-item">
-                <div><span class="item-name">Tiramisù Artigianale</span><span class="item-desc">Fatto in casa secondo la ricetta originale.</span></div>
-                <span class="item-price">€ 6.50</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Panna Cotta</span><span class="item-desc">Ai frutti di bosco o caramello.</span></div>
-                <span class="item-price">€ 6.00</span>
-            </div>
-
-            <div class="carousel-wrapper menu-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide fade"><img src="https://ricetta.it/Uploads/Imgs/tiramisu-classico.jpg.webp" alt="Tiramisù"></div>
-                    <div class="carousel-slide fade"><img src="https://www.cucchiaio.it/content/dam/cucchiaio/it/ricette/2009/11/ricetta-panna-cotta/panna%20cotta-1.jpg" alt="Panna Cotta"></div>
-                    <button class="prev-btn">❮</button>
-                    <button class="next-btn">❯</button>
-                </div>
-                <div class="carousel-dots-container">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
+        <div class="menu-card" data-cat="antipasti">
+            <h3>🍄 Crostini ai Funghi Porcini</h3>
+            <p class="desc">Pane tostato artigianale con crema di porcini delle prealpi varesine, scaglie di grana padano DOP e timo fresco.</p>
+            <div class="price-row"><span class="price">€ 10</span><span class="tag tag-veg">Vegetariano</span></div>
         </div>
 
-        <div class="menu-category reveal-section">
-            <h3>Bevande</h3>
-            <div class="menu-item">
-                <div><span class="item-name">Acqua Minerale 0.75l</span><span class="item-desc">Naturale o Frizzante.</span></div>
-                <span class="item-price">€ 2.50</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Birra Artigianale Varesina 0.4l</span><span class="item-desc">Bionda locale non filtrata.</span></div>
-                <span class="item-price">€ 6.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Vino della Casa 0.5l</span><span class="item-desc">Rosso o Bianco fermo.</span></div>
-                <span class="item-price">€ 8.00</span>
-            </div>
-            <div class="menu-item">
-                <div><span class="item-name">Caffè Espresso</span><span class="item-desc">Torrefazione locale.</span></div>
-                <span class="item-price">€ 1.50</span>
-            </div>
-
-            <div class="carousel-wrapper menu-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vino Rosso"></div>
-                    <div class="carousel-slide fade"><img src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Birra Artigianale"></div>
-                    <button class="prev-btn">❮</button>
-                    <button class="next-btn">❯</button>
-                </div>
-                <div class="carousel-dots-container">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </div>
+        <div class="menu-card" data-cat="antipasti">
+            <h3>🥗 Insalata di Persico e Rucola</h3>
+            <p class="desc">Filetti di pesce persico del lago dorati in padella, rucola selvatica, pomodorini, cipolla di Tropea e vinaigrette al limone.</p>
+            <div class="price-row"><span class="price">€ 12</span><span class="tag tag-pesce">Pesce di Lago</span></div>
         </div>
+
+        <div class="menu-card" data-cat="antipasti">
+            <h3>🫒 Antipasto del Giorno</h3>
+            <p class="desc">Selezione dello chef in base alla disponibilità del mercato del mattino. Chiedi al tuo cameriere cosa c'è oggi.</p>
+            <div class="price-row"><span class="price">€ 12</span><span class="tag tag-firma">Del Giorno</span></div>
+        </div>
+
+        <!-- ===== PRIMI ===== -->
+        <div class="menu-card" data-cat="primi">
+            <h3>🍚 Risotto al Pesce Persico</h3>
+            <p class="desc">Il nostro piatto simbolo. Riso Carnaroli del Vercellese, filetti di pesce persico pescati al mattino sul Lago Maggiore, burro di latteria del Consorzio Varese e zafferano DOP.</p>
+            <div class="price-row"><span class="price">€ 18</span><span class="tag tag-firma">Firma</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="primi">
+            <h3>🍝 Tagliolini al Ragù di Lago</h3>
+            <p class="desc">Pasta fresca all'uovo tirata a mano, ragù lento con persico, lavarello e tinca del Verbano, pomodoro biologico e erbe aromatiche.</p>
+            <div class="price-row"><span class="price">€ 16</span><span class="tag tag-pesce">Pesce di Lago</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="primi">
+            <h3>🍄 Pappardelle ai Porcini</h3>
+            <p class="desc">Pappardelle di farro intergrale, funghi porcini delle prealpi varesine trifolati con aglio, olio e prezzemolo, pecorino di fossa.</p>
+            <div class="price-row"><span class="price">€ 15</span><span class="tag tag-veg">Vegetariano</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="primi">
+            <h3>🧅 Minestrone della Tradizione</h3>
+            <p class="desc">Zuppa di verdure di stagione degli orti locali, fagioli borlotti, riso integrale e un filo di olio EVO a crudo. Servito caldo o tiepido.</p>
+            <div class="price-row"><span class="price">€ 12</span><span class="tag tag-veg">Vegan</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="primi">
+            <h3>🍋 Spaghetti Aglio Olio e Lavarello</h3>
+            <p class="desc">Spaghetti di semola, olio EVO, aglio dolce, peperoncino calabrese, filetti di lavarello affumicato del lago e scorza di limone di Amalfi.</p>
+            <div class="price-row"><span class="price">€ 14</span><span class="tag tag-pesce">Pesce di Lago</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="primi">
+            <h3>🧈 Risotto al Casera e Noci</h3>
+            <p class="desc">Riso Carnaroli mantecato con Casera DOP della Valtellina, gherigli di noce, miele di montagna e pepe rosa. Comfort food puro.</p>
+            <div class="price-row"><span class="price">€ 15</span><span class="tag tag-veg">Vegetariano</span></div>
+        </div>
+
+        <!-- ===== SECONDI ===== -->
+        <div class="menu-card" data-cat="secondi">
+            <h3>🥩 Filetto al Pepe Verde</h3>
+            <p class="desc">Filetto di fassona piemontese (Macelleria Rossi, Varese) alla brace, salsa al pepe verde del Madagascar, panna fresca e brandy. Servito con patate arrosto.</p>
+            <div class="price-row"><span class="price">€ 26</span><span class="tag tag-firma">Firma</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="secondi">
+            <h3>🐟 Persico in Padella</h3>
+            <p class="desc">Filetti di pesce persico del lago impanati nel panko e dorati nel burro chiarificato. Serviti con insalata di campo e limone.</p>
+            <div class="price-row"><span class="price">€ 20</span><span class="tag tag-pesce">Pesce di Lago</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="secondi">
+            <h3>🍗 Pollo alla Varesina</h3>
+            <p class="desc">Coscia di pollo ruspante allevato a Varese, brasata lentamente con vino bianco, olive taggiasche, pomodorini e rosmarino. Con polenta taragna.</p>
+            <div class="price-row"><span class="price">€ 19</span><span class="tag tag-locale">Filiera Locale</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="secondi">
+            <h3>🫘 Grigliata Mista di Lago</h3>
+            <p class="desc">Persico, lavarello e tinca del Lago Maggiore grigliati al momento con olio alle erbe, sale marino integrale e verdure di stagione.</p>
+            <div class="price-row"><span class="price">€ 24</span><span class="tag tag-pesce">Pesce di Lago</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="secondi">
+            <h3>🥗 Tagliata di Manzo e Rucola</h3>
+            <p class="desc">Tagliata di fassona, rucola selvatica, scaglie di grana padano stagionato 24 mesi, pomodorini e olio EVO. Con patatine croccanti.</p>
+            <div class="price-row"><span class="price">€ 23</span><span class="tag tag-locale">Filiera Locale</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="secondi">
+            <h3>🧆 Polpette della Nonna</h3>
+            <p class="desc">Polpette di manzo e maiale al sugo di pomodoro biologico, basilico fresco e peperoncino. Servite con pane casereccio per fare la scarpetta.</p>
+            <div class="price-row"><span class="price">€ 16</span><span class="tag tag-locale">Tradizione</span></div>
+        </div>
+
+        <!-- ===== PIZZE ===== -->
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Margherita</h3>
+            <p class="desc">Salsa di pomodoro San Marzano Bio Sud, fiordilatte del Caseificio Prealpino, basilico fresco, olio EVO. Impasto tipo 1 maturato 48h.</p>
+            <div class="price-row"><span class="price">€ 9</span><span class="tag tag-veg">Vegetariano</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Diavola</h3>
+            <p class="desc">Pomodoro San Marzano, fiordilatte, salame piccante artigianale calabrese, peperoncino fresco e origano di montagna.</p>
+            <div class="price-row"><span class="price">€ 12</span><span class="tag tag-locale">Artigianale</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Al Lago</h3>
+            <p class="desc">Base bianca con crema di zucchine, fiordilatte, filetti di persico del lago, limone grattugiato e erba cipollina. La nostra pizza firma.</p>
+            <div class="price-row"><span class="price">€ 15</span><span class="tag tag-firma">Firma</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Varesina</h3>
+            <p class="desc">Pomodoro, fiordilatte, salame prealpino del Salumificio Colombo, formaggella del Luinese DOP e miele di acacia a filo.</p>
+            <div class="price-row"><span class="price">€ 14</span><span class="tag tag-locale">Filiera Locale</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Porcini e Salsiccia</h3>
+            <p class="desc">Base bianca, fiordilatte, funghi porcini trifolati delle prealpi, salsiccia artigianale varesina, scaglie di grana e timo.</p>
+            <div class="price-row"><span class="price">€ 14</span><span class="tag tag-locale">Stagionale</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Quattro Formaggi</h3>
+            <p class="desc">Fiordilatte, Casera DOP della Valtellina, gorgonzola DOP, grana padano stagionato 24 mesi. Impasto integrale disponibile su richiesta.</p>
+            <div class="price-row"><span class="price">€ 13</span><span class="tag tag-veg">Vegetariano</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Primavera Vegana</h3>
+            <p class="desc">Base di pomodoro, verdure di stagione grigliate (zucchine, melanzane, peperoni), olive, capperi e olio al basilico. Senza latticini.</p>
+            <div class="price-row"><span class="price">€ 12</span><span class="tag tag-veg">Vegan</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="pizze">
+            <h3>🍕 Calzone Fritto</h3>
+            <p class="desc">Impasto fritto croccante, ricotta fresca, salame piccante, provola e pomodoro. Servito con sugo di pomodoro a parte.</p>
+            <div class="price-row"><span class="price">€ 13</span><span class="tag tag-locale">Artigianale</span></div>
+        </div>
+
+        <!-- ===== DOLCI ===== -->
+        <div class="menu-card" data-cat="dolci">
+            <h3>🍮 Panna Cotta al Miele di Brinzio</h3>
+            <p class="desc">Panna cotta fatta in casa con miele di acacia dell'Apicoltura Varesina Valli, coulis di frutti di bosco locali e granella di nocciole.</p>
+            <div class="price-row"><span class="price">€ 7</span><span class="tag tag-locale">Fatto in Casa</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="dolci">
+            <h3>🍫 Tortino al Cioccolato Fondente</h3>
+            <p class="desc">Tortino caldo con cuore morbido, cioccolato fondente 70%, servito con gelato alla crema di latte artigianale e sale di Maldon.</p>
+            <div class="price-row"><span class="price">€ 8</span><span class="tag tag-firma">Firma</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="dolci">
+            <h3>🍋 Sorbetto al Limone</h3>
+            <p class="desc">Sorbetto artigianale al limone di Amalfi IGP, menta fresca e una spolverata di zest. Leggero e rinfrescante.</p>
+            <div class="price-row"><span class="price">€ 5</span><span class="tag tag-veg">Vegan</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="dolci">
+            <h3>🫐 Tiramisù della Casa</h3>
+            <p class="desc">Ricetta tradizionale con savoiardi, mascarpone, caffè espresso e cacao amaro. Preparato ogni mattina, finisce in fretta.</p>
+            <div class="price-row"><span class="price">€ 7</span><span class="tag tag-firma">Fatto in Casa</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="dolci">
+            <h3>🧀 Selezione di Formaggi Locali</h3>
+            <p class="desc">Tre formaggi della zona (Formaggella del Luinese, Casera, Grana) con miele di montagna, noci e confettura di fichi.</p>
+            <div class="price-row"><span class="price">€ 12</span><span class="tag tag-locale">Filiera Locale</span></div>
+        </div>
+
+        <!-- ===== BEVANDE ===== -->
+        <div class="menu-card" data-cat="bevande">
+            <h3>🍷 Vino della Casa</h3>
+            <p class="desc">Bianco o rosso sfuso, selezionato da vignaioli lombardi. Fresco, beverino, abbinato alla nostra cucina.</p>
+            <div class="price-row"><span class="price">¼ € 4 · ½ € 7 · 1L € 13</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="bevande">
+            <h3>🍾 Franciacorta DOCG</h3>
+            <p class="desc">Franciacorta Brut Satèn, Cantine Bersi Serlini. Bollicine lombarde d'eccellenza per celebrare ogni occasione.</p>
+            <div class="price-row"><span class="price">Bottiglia € 35</span><span class="tag tag-locale">Lombardia</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="bevande">
+            <h3>🫙 Acqua e Bibite</h3>
+            <p class="desc">Acqua naturale o frizzante (75cl), Coca-Cola, Fanta, succhi di frutta biologici, acqua tonica.</p>
+            <div class="price-row"><span class="price">€ 2 / € 3</span></div>
+        </div>
+
+        <div class="menu-card" data-cat="bevande">
+            <h3>☕ Caffè e Digestivi</h3>
+            <p class="desc">Espresso, macchiato, cappuccino. Amaro del lago, grappa artigianale varesina, limoncello di produzione propria.</p>
+            <div class="price-row"><span class="price">€ 1.50 / € 4</span></div>
+        </div>
+
+        </div><!-- fine menu-grid -->
+
+        <p style="text-align:center;margin-top:40px;color:#8b6f5e;font-size:0.88rem;">🌾 Impasto pizza disponibile anche <strong>senza glutine</strong> su richiesta (+€ 2) · Allergeni disponibili su richiesta</p>
+
+    </div>
     </section>
+
+    <script>
+    function filterMenu(cat){
+    document.querySelectorAll('.menu-card').forEach(c=>{
+        c.style.display = (c.dataset.cat===cat) ? 'flex' : 'none';
+    });
+    document.querySelectorAll('.mtab').forEach(t=>{
+        t.classList.toggle('active', t.dataset.cat===cat);
+    });
+    }
+    document.addEventListener('DOMContentLoaded',()=>filterMenu('antipasti'));
+    </script>
+
+
 
     <section class="location-section reveal-section" id="dove-siamo">
         <h2>Vienici a trovare</h2>
