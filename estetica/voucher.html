@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Regala una Gift Card di Armonia Beauty Lounge. Scegli un trattamento o un importo a piacere.">
+    <title>Regala un Voucher | Armonia Beauty Lounge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --colore-1-sfondo:   #fdfaf8; 
+            --colore-2-primario: #b76e79; 
+            --colore-3-testo:    #4a4a4a; 
+            --colore-4-dettagli: #d8a48f; 
+            --white-pure: #ffffff;
+            --nav-height: 70px; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--colore-3-testo);
+            background-color: var(--colore-1-sfondo);
+            padding-top: var(--nav-height);
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--colore-2-primario); font-weight: 600; }
+        a { text-decoration: none; }
+
+        .top-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            background-color: var(--white-pure); display: flex;
+            justify-content: space-between; align-items: center; padding: 0 40px;
+            z-index: 3000; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .nav-brand { color: var(--colore-2-primario); font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 1px; white-space: nowrap;}
+        .nav-back-link { color: var(--colore-3-testo); font-weight: 600; font-size: 1.2rem; text-transform: uppercase; transition: color 0.3s; white-space: nowrap;}
+        .nav-back-link:hover { color: var(--colore-2-primario); }
+
+        .page-header {
+            background: linear-gradient(rgba(253, 250, 248, 0.8), rgba(183, 110, 121, 0.8)), url('https://images.unsplash.com/photo-1606312619070-d48b4c652a52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+            text-align: center;
+            color: var(--white-pure);
+            padding: 100px 20px 80px;
+        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 15px; color: var(--white-pure); text-shadow: 1px 1px 10px rgba(0,0,0,0.1);}
+        .page-header p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; opacity: 0.95; }
+
+        .details-container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+        
+        /* --- STILI TESTI RESPONSIVE --- */
+        .steps-box {
+            text-align: center; margin-bottom: 60px;
+        }
+        .steps-box h2 { font-size: 2rem; margin-bottom: 15px; }
+        .steps-box p {
+            font-size: 1.25rem; /* Testo grande su PC */
+            line-height: 2.2;
+            color: var(--colore-3-testo);
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .payment-card {
+            background: var(--white-pure);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(183, 110, 121, 0.08);
+            text-align: center;
+            border-top: 6px solid var(--colore-2-primario);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .payment-card h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4rem;
+            color: var(--colore-3-testo);
+            margin-bottom: 15px;
+        }
+        .payment-icon { font-size: 3.5rem; display: block; margin-bottom: 10px; }
+        
+        .payment-card p {
+            font-size: 1.05rem; /* Dimensione ideale su PC */
+            margin-bottom: 15px;
+        }
+
+        .iban-box {
+            background-color: var(--colore-1-sfondo);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 1.1rem; /* Dimensione IBAN su PC */
+            color: var(--colore-3-testo);
+            letter-spacing: 1px;
+            border: 1px dashed var(--colore-4-dettagli);
+        }
+
+        .btn-payment {
+            display: inline-block;
+            background: var(--colore-2-primario);
+            color: var(--white-pure);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(183, 110, 121, 0.3);
+            width: 100%;
+        }
+        .btn-payment:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(183, 110, 121, 0.4); }
+
+        .btn-whatsapp {
+            background: #25D366;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        .btn-whatsapp:hover { box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
+
+        .main-footer { background-color: #3a3a3a; color: #f0f0f0; text-align: center; padding: 40px 20px; margin-top: 80px;}
+
+        /* --- ADATTAMENTI PER CELLULARE --- */
+        @media (max-width: 768px) {
+            .top-navbar { padding: 0 15px; } 
+            .nav-brand { font-size: 1.1rem; } 
+            .nav-back-link { font-size: 0.85rem; } 
+            .page-header { padding: 80px 20px 40px; }
+            .page-header h1 { font-size: 2.2rem; }
+            
+            /* Rimpicciolisce i testi per non sbordare da cellulare */
+            .steps-box p { font-size: 1.05rem; line-height: 2; }
+            .payment-card p { font-size: 0.95rem; }
+            .iban-box { font-size: 0.95rem; letter-spacing: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <a href="demo-estetica.html" class="nav-brand">Armonia Lounge</a>
+        <a href="demo-estetica.html" class="nav-back-link">⬅ Torna alla Home</a>
+    </nav>
+
+    <header class="page-header">
+        <h1>Gift Card</h1>
+        <p>Regalare un momento per sé è il dono più prezioso. Scegli il metodo di pagamento che preferisci e ricevi subito il tuo elegante voucher digitale.</p>
+    </header>
+
+    <main class="details-container">
+        
+        <div class="steps-box">
+            <h2>Come Funziona?</h2>
+            <p>
+                <strong>1. Scegli un importo a piacere</strong> (es. 50€, 100€) o contattaci per regalare un <strong>trattamento specifico</strong>.<br>
+                <strong>2. Effettua il pagamento</strong> tramite Carta, Apple Pay o Bonifico.<br>
+                <strong>3. Scrivici su WhatsApp:</strong> ti invieremo subito il <strong>Voucher personalizzato in PDF</strong>, pronto da stampare o inviare su smartphone!
+            </p>
+        </div>
+
+        <div class="payment-grid">
+            
+            <div class="payment-card">
+                <div>
+                    <span class="payment-icon">💳</span>
+                    <h3>Carta, Google Pay o Apple Pay</h3>
+                    <p>Pagamento istantaneo e sicuro al 100% gestito tramite Stripe. Ricevi il voucher in pochi minuti senza attese.</p>
+                </div>
+                <a href="#" target="_blank" class="btn-payment">Paga Online Ora</a>
+            </div>
+
+            <div class="payment-card">
+                <div>
+                    <span class="payment-icon">🏦</span>
+                    <h3>Bonifico Bancario</h3>
+                    <p>Effettua comodamente un bonifico dal tuo home banking utilizzando i seguenti dati:</p>
+                    
+                    <div class="iban-box">
+                        <span style="font-size: 0.8rem; color: #888; display:block; margin-bottom: 5px;">IBAN</span>
+                        IT00 A000 0000 0000 0000 0000 000<br>
+                        <span style="font-size: 0.8rem; color: #888; display:block; margin-top: 10px; margin-bottom: 5px;">Intestato a</span>
+                        Armonia Beauty Lounge S.r.l.<br>
+                        <span style="font-size: 0.8rem; color: #888; display:block; margin-top: 10px; margin-bottom: 5px;">Causale</span>
+                        Gift Card + Nome di chi riceve il regalo
+                    </div>
+                </div>
+                
+                <a href="https://wa.me/393330000000?text=Ciao!%20Ho%20appena%20fatto%20un%20bonifico%20per%20una%20Gift%20Card.%20Ecco%20la%20ricevuta:" target="_blank" class="btn-payment btn-whatsapp">Invia Ricevuta su WhatsApp</a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2026 Armonia Beauty Lounge - Varese</p>
+    </footer>
+
+</body>
+</html>

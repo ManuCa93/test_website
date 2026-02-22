@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Scopri l'origine e la provenienza degli ingredienti usati nei piatti del Ristorante Al Lago.">
+    <title>Origine Ingredienti | Ristorante Al Lago</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Manteniamo la stessa tavolozza della home */
+        :root {
+            --colore-1-sfondo:   #f8f9fa; 
+            --colore-2-primario: #c0392b; 
+            --colore-3-testo:    #2c3e50; 
+            --colore-4-dettagli: #d4ac0d; 
+            --white-pure: #ffffff;
+            --nav-height: 60px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--colore-3-testo);
+            background-color: var(--colore-1-sfondo);
+            padding-top: var(--nav-height);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Merriweather', serif; color: var(--colore-3-testo); }
+        a { text-decoration: none; }
+        section { padding: 60px 20px; }
+
+        /* Navbar Identica */
+        .top-navbar {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            background-color: var(--colore-2-primario); display: flex;
+            justify-content: space-between; align-items: center; padding: 0 20px;
+            z-index: 3000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); border-radius: 0 0 20px 20px;
+        }
+        .nav-brand { color: var(--white-pure); font-family: 'Merriweather', serif; font-weight: bold; font-size: 1.2rem; }
+        .nav-back-link { color: var(--white-pure); font-weight: bold; transition: color 0.3s; font-size: 0.95rem; text-transform: uppercase;}
+        .nav-back-link:hover { color: var(--colore-4-dettagli); }
+
+        /* Header Interno */
+        .page-header {
+            background-color: var(--colore-3-testo);
+            color: var(--white-pure);
+            text-align: center;
+            padding: 80px 20px 60px;
+        }
+        .page-header h1 { color: var(--colore-4-dettagli); font-size: 2.5rem; margin-bottom: 15px; }
+        .page-header p { max-width: 600px; margin: auto; font-size: 1.1rem; opacity: 0.9; }
+
+        /* Griglia Provenienza */
+        .provenance-container { max-width: 1000px; margin: -30px auto 40px auto; position: relative; z-index: 10; }
+        .dish-card {
+            background: var(--white-pure);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-left: 5px solid var(--colore-2-primario);
+        }
+        .dish-card h2 { color: var(--colore-2-primario); font-size: 1.6rem; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        .ingredient-list { list-style: none; }
+        .ingredient-list li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dotted #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+        .ingredient-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .ing-name { font-weight: 600; font-size: 1.1rem; color: var(--colore-3-testo); }
+        .ing-origin { color: #666; font-size: 0.95rem; margin-top: 4px; display: flex; align-items: flex-start; gap: 8px;}
+        .ing-origin span { color: var(--colore-2-primario); font-size: 1.2rem; line-height: 1;}
+
+        /* Footer */
+        .main-footer { background-color: var(--colore-2-primario); color: var(--white-pure); width: 100%; text-align: center; padding: 40px 20px; margin-top: 40px;}
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <a href="demo-ristorante.html#menu" class="nav-brand">Ristorante Al Lago</a>
+        <a href="demo-ristorante.html#menu" class="nav-back-link">⬅ Torna al Menù</a>
+    </nav>
+
+    <header class="page-header">
+        <h1>Origine degli Ingredienti</h1>
+        <p>Scopri l'esatta provenienza delle materie prime che compongono i tuoi piatti preferiti. Collaboriamo con le eccellenze del nostro territorio.</p>
+    </header>
+
+    <main class="provenance-container">
+        
+        <div class="dish-card">
+            <h2>Antipasti: Tagliere Varesino</h2>
+            <ul class="ingredient-list">
+                <li>
+                    <span class="ing-name">Salumi e Affettati (Salame prealpino, Coppa)</span>
+                    <span class="ing-origin"><span>📍</span> Salumificio Artigianale Colombo (Crosio della Valle, VA) - Carni 100% italiane.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Formaggella del Luinese DOP</span>
+                    <span class="ing-origin"><span>📍</span> Azienda Agricola Il Vallone (Luino, VA) - Latte crudo intero di capra.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Miele di Acacia</span>
+                    <span class="ing-origin"><span>📍</span> Apicoltura Varesina Valli (Brinzio, VA) - Estratto a freddo.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dish-card">
+            <h2>Primi: Risotto al Pesce Persico</h2>
+            <ul class="ingredient-list">
+                <li>
+                    <span class="ing-name">Riso Carnaroli Classico</span>
+                    <span class="ing-origin"><span>📍</span> Azienda Agricola Lodigiana (VC) - Riso da semente certificata.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Filetti di Pesce Persico</span>
+                    <span class="ing-origin"><span>📍</span> Cooperativa Pescatori del Lago (Varese / Lago Maggiore) - Pescato fresco giornaliero.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Burro di Latteria</span>
+                    <span class="ing-origin"><span>📍</span> Consorzio Latte Varese - Burro da panna centrifugata fresca.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dish-card">
+            <h2>Pizze: Le Nostre Basi</h2>
+            <ul class="ingredient-list">
+                <li>
+                    <span class="ing-name">Farina per Impasto (Tipo 1 e Integrale)</span>
+                    <span class="ing-origin"><span>📍</span> Mulino Rigamonti (Como) - Grano 100% italiano macinato a pietra.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Fiordilatte (Mozzarella)</span>
+                    <span class="ing-origin"><span>📍</span> Caseificio Prealpino (VA) - Lavorata a mano ogni mattina.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Salsa di Pomodoro</span>
+                    <span class="ing-origin"><span>📍</span> Azienda Agricola Bio Sud (Puglia) - Pomodori San Marzano raccolti e passati in giornata.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dish-card">
+            <h2>Secondi: Filetto al Pepe Verde</h2>
+            <ul class="ingredient-list">
+                <li>
+                    <span class="ing-name">Filetto di Manzo</span>
+                    <span class="ing-origin"><span>📍</span> Macelleria Storica Rossi (Varese) - Carne di fassona piemontese allevata al pascolo.</span>
+                </li>
+                <li>
+                    <span class="ing-name">Panna Fresca e Pepe Verde</span>
+                    <span class="ing-origin"><span>📍</span> Panna dal Consorzio Latte Varese; Pepe in grani importazione selezionata (Madagascar).</span>
+                </li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2026 Ristorante Al Lago S.r.l. - Trasparenza e Qualità al primo posto.</p>
+    </footer>
+
+</body>
+</html>

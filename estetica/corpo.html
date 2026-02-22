@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trattamenti Corpo | Armonia Beauty Lounge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root { --colore-1-sfondo: #fdfaf8; --colore-2-primario: #b76e79; --colore-3-testo: #4a4a4a; --colore-4-dettagli: #d8a48f; --white-pure: #ffffff; --nav-height: 70px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1.8; color: var(--colore-3-testo); background-color: var(--colore-1-sfondo); padding-top: var(--nav-height); }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--colore-2-primario); font-weight: 600; }
+        a { text-decoration: none; }
+        .top-navbar { position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height); background-color: var(--white-pure); display: flex; justify-content: space-between; align-items: center; padding: 0 40px; z-index: 3000; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .nav-brand { color: var(--colore-2-primario); font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 1px; white-space: nowrap; }
+        .nav-back-link { color: var(--colore-3-testo); font-weight: 600; font-size: 0.95rem; text-transform: uppercase; transition: color 0.3s; white-space: nowrap; }
+        .nav-back-link:hover { color: var(--colore-2-primario); }
+        .page-header { background: linear-gradient(rgba(253, 250, 248, 0.7), rgba(253, 250, 248, 0.9)), url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover; text-align: center; padding: 100px 20px 80px; }
+        .page-header h1 { font-size: 3rem; margin-bottom: 15px; }
+        .page-header p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; color: var(--colore-3-testo); }
+        .details-container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+        .service-row { display: flex; flex-wrap: wrap; gap: 50px; align-items: center; margin-bottom: 100px; }
+        .service-row:nth-child(even) { flex-direction: row-reverse; }
+        .service-text { flex: 1; min-width: 300px; }
+        .service-text h2 { font-size: 2.2rem; margin-bottom: 15px; border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; padding-bottom: 5px; }
+        .service-text p { margin-bottom: 20px; font-size: 1.05rem; }
+        .service-price { display: inline-block; font-size: 1.2rem; font-weight: 600; color: var(--white-pure); background-color: var(--colore-2-primario); padding: 5px 15px; border-radius: 20px; margin-bottom: 20px; }
+        .service-media { flex: 1; min-width: 300px; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px rgba(183, 110, 121, 0.15); }
+        .service-media img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 20px; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 20px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .cta-section { background-color: var(--colore-2-primario); color: var(--white-pure); text-align: center; padding: 60px 20px; border-radius: 20px; margin-bottom: 60px; }
+        .cta-section h3 { color: var(--white-pure); font-size: 2rem; margin-bottom: 15px; }
+        .btn-prenota { display: inline-block; margin-top: 20px; background: var(--white-pure); color: var(--colore-2-primario); padding: 15px 35px; border-radius: 50px; font-weight: 600; text-transform: uppercase; transition: transform 0.3s; }
+        .btn-prenota:hover { transform: scale(1.05); }
+        .main-footer { background-color: #3a3a3a; color: #f0f0f0; text-align: center; padding: 40px 20px; }
+        /* Contenitore Bottoni CTA e Bottone Secondario */
+        .cta-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 25px; }
+        .btn-torna { 
+            display: inline-block; 
+            background: transparent; 
+            color: var(--white-pure); 
+            border: 2px solid var(--white-pure); 
+            padding: 13px 33px; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            transition: all 0.3s; 
+        }
+        .btn-torna:hover { background: var(--white-pure); color: var(--colore-2-primario); transform: scale(1.05); }
+        @media (max-width: 768px) { .service-row { gap: 30px; margin-bottom: 60px; } .top-navbar { padding: 0 15px; } .nav-brand { font-size: 1.1rem; } .nav-back-link { font-size: 0.75rem; } .page-header { padding: 60px 20px 40px; } .page-header h1 { font-size: 2.2rem; } }
+    </style>
+</head>
+<body>
+    <nav class="top-navbar">
+        <a href="demo-estetica.html" class="nav-brand">Armonia Lounge</a>
+        <a href="demo-estetica.html#servizi" class="nav-back-link">⬅ Torna ai Trattamenti</a>
+    </nav>
+    <header class="page-header">
+        <h1>Trattamenti Corpo</h1>
+        <p>Ritrova leggerezza ed energia. Percorsi olistici pensati per allentare le tensioni muscolari, drenare i liquidi in eccesso e donare nuova vita alla tua pelle.</p>
+    </header>
+    <main class="details-container">
+        <div class="service-row">
+            <div class="service-text">
+                <h2>Massaggio Rilassante</h2>
+                <div class="service-price">55 € - Durata: 50 min</div>
+                <p>Un'esperienza avvolgente per staccare la spina. Eseguiamo manovre lente, fluide e profonde per sciogliere le tensioni nervose e muscolari accumulate.</p>
+                <p>Utilizziamo oli essenziali riscaldati a base di lavanda e arancio dolce, che non solo idratano profondamente la pelle, ma favoriscono anche un rilassamento mentale attraverso l'aromaterapia.</p>
+            </div>
+            <div class="service-media">
+                <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Massaggio Rilassante">
+            </div>
+        </div>
+        <div class="service-row">
+            <div class="service-text">
+                <h2>Massaggio Drenante Gambe</h2>
+                <div class="service-price">45 € - Durata: 40 min</div>
+                <p>Soffri di gambe pesanti o ritenzione idrica? Questo massaggio si basa sui principi del linfodrenaggio manuale per stimolare la circolazione sanguigna e linfatica.</p>
+                <p>Guarda il nostro video dimostrativo per capire come i movimenti a "pompage" aiutano a sgonfiare i tessuti ed eliminare le tossine, regalando una sensazione di leggerezza immediata.</p>
+            </div>
+            <div class="service-media">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/5D28kE26mJw" title="Massaggio Drenante" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="service-row">
+            <div class="service-text">
+                <h2>Scrub Corpo Rinnovatore</h2>
+                <div class="service-price">40 € - Durata: 40 min</div>
+                <p>Il segreto per una pelle vellutata tutto l'anno. Consiste in una profonda esfoliazione su tutto il corpo utilizzando preziosi Sali del Mar Morto uniti a burro di karité.</p>
+                <p>Questo trattamento rimuove le cellule morte, ossigena i tessuti, previene i peli incarniti e prepara la pelle a ricevere al meglio i successivi trattamenti o l'abbronzatura.</p>
+            </div>
+            <div class="service-media">
+                <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Scrub Corpo">
+            </div>
+        </div>
+        <div class="cta-section">
+            <h3>Pronta per il tuo momento di relax?</h3>
+            <p>Seleziona il trattamento che preferisci o torna alla lista per scoprirli tutti.</p>
+            
+            <div class="cta-buttons">
+                <a href="https://www.fresha.com/" target="_blank" class="btn-prenota" style="margin-top: 0;">Prenota Ora</a>
+                <a href="demo-estetica.html#servizi" class="btn-torna">Torna ai Servizi</a>
+            </div>
+        </div>
+    </main>
+    <footer class="main-footer"><p>© 2026 Armonia Beauty Lounge - Varese</p></footer>
+</body>
+</html>

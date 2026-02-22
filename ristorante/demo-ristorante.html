@@ -98,12 +98,12 @@
 
         .nav-links li a:hover { color: var(--colore-4-dettagli); }
 
-        /* --- BOTTONE PRENOTA (Identico tra Navbar e Hero) --- */
+        /* --- BOTTONE PRENOTA --- */
         .nav-book-btn {
             background-color: var(--colore-4-dettagli) !important; /* Oro */
             color: var(--colore-3-testo) !important; /* Scuro */
             padding: 10px 24px;
-            border-radius: 50px; /* Arrotondato come l'altro */
+            border-radius: 50px; 
             font-weight: 700 !important;
             font-size: 0.85rem !important;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -122,7 +122,7 @@
         .hamburger, .close-x { display: none; }
 
         /* =========================================
-           STILE MOBILE
+           STILE MOBILE & ANIMAZIONI MENU
            ========================================= */
         @media (max-width: 768px) {
             .hamburger {
@@ -147,7 +147,7 @@
                 justify-content: center;
                 gap: 30px;
                 transform: translateX(100%);
-                transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
                 box-shadow: -5px 0 25px rgba(0,0,0,0.3);
                 z-index: 4000;
             }
@@ -159,10 +159,29 @@
                 text-align: center;
                 padding: 15px 0;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                
+                /* ANIMAZIONE INIZIALE NASCOSTA */
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.4s ease, transform 0.4s ease;
             }
 
             .nav-links li:last-child { border-bottom: none; }
             .nav-links li a { font-size: 1.5rem; }
+
+            /* QUANDO IL MENU È APERTO, LE VOCI COMPAIONO */
+            .nav-links.show li {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* RITARDI A CASCATA (Stagger effect) */
+            .nav-links.show li:nth-of-type(1) { transition-delay: 0.15s; }
+            .nav-links.show li:nth-of-type(2) { transition-delay: 0.25s; }
+            .nav-links.show li:nth-of-type(3) { transition-delay: 0.35s; }
+            .nav-links.show li:nth-of-type(4) { transition-delay: 0.45s; }
+            .nav-links.show li:nth-of-type(5) { transition-delay: 0.55s; }
+            .nav-links.show li:nth-of-type(6) { transition-delay: 0.65s; }
 
             .close-x {
                 display: block;
@@ -214,7 +233,6 @@
         .hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 10px; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; }
         
-        /* Contenitore pulsanti Hero per affiancarli */
         .hero-btn-container {
             display: flex;
             gap: 20px;
@@ -230,150 +248,74 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
             display: inline-block;
-            border: 2px solid transparent; /* Aggiunto bordo invisibile per evitare "salti" all'hover */
+            border: 2px solid transparent; 
         }
 
-        /* Stile Standard (Rosso) */
-        .btn-primary {
-            background: var(--colore-2-primario);
-            color: var(--white-pure);
-        }
-        .btn-primary:hover { 
-            background: transparent;
-            border-color: var(--colore-2-primario);
-            color: var(--white-pure); 
-        }
+        .btn-primary { background: var(--colore-2-primario); color: var(--white-pure); }
+        .btn-primary:hover { background: transparent; border-color: var(--colore-2-primario); color: var(--white-pure); }
 
-        /* Stile Opposto (Oro/Giallo) */
-        .btn-contrast {
-            background: var(--colore-4-dettagli);
-            color: var(--colore-3-testo);
-        }
-        .btn-contrast:hover { 
-            background: var(--white-pure); 
-            color: var(--colore-4-dettagli); /* Cambiato il colore del testo all'hover */
-            border-color: var(--white-pure);
-        }
+        .btn-contrast { background: var(--colore-4-dettagli); color: var(--colore-3-testo); }
+        .btn-contrast:hover { background: var(--white-pure); color: var(--colore-4-dettagli); border-color: var(--white-pure); }
 
         .intro { text-align: center; background: var(--white-pure); }
         .intro h2 { color: var(--colore-2-primario); margin-bottom: 20px; }
 
-        .about { 
-            background: var(--white-pure); 
-            display: flex; flex-wrap: wrap; align-items: center; 
-            gap: 40px; text-align: center; justify-content: center;
-        }
+        .about { background: var(--white-pure); display: flex; flex-wrap: wrap; align-items: center; gap: 40px; text-align: center; justify-content: center; }
         .about-content { flex: 1; min-width: 300px; max-width: 800px; }
 
         .staff { background: var(--colore-1-sfondo); text-align: center; }
         .staff h2 { margin-bottom: 40px; }
         .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
-        .staff-card { 
-            background: var(--white-pure); padding: 20px; border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
-        }
+        .staff-card { background: var(--white-pure); padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s; }
         .staff-card:hover { transform: translateY(-10px); }
-        .staff-img { 
-            width: 120px; height: 120px; border-radius: 50%; object-fit: cover; 
-            margin-bottom: 15px; border: 3px solid var(--colore-4-dettagli);
-        }
+        .staff-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--colore-4-dettagli); }
         .staff-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
         .staff-card p { color: var(--colore-2-primario); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; }
 
         /* --- STILE CAROSELLO PRINCIPALE --- */
         .carousel-wrapper { position: relative; width: 100%; margin: auto; }
-        .carousel-container {
-            max-width: 1000px; position: relative; margin: auto; overflow: hidden;
-            border-radius: 15px; border: 5px solid var(--white-pure);
-            outline: 1px solid #ddd; box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-        }
+        .carousel-container { max-width: 1000px; position: relative; margin: auto; overflow: hidden; border-radius: 15px; border: 5px solid var(--white-pure); outline: 1px solid #ddd; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
         .carousel-slide { display: none; height: 400px; }
         .fade { animation-name: fade; animation-duration: 1.5s; }
         @keyframes fade { from {opacity: .4} to {opacity: 1} }
         .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
-        .prev-btn, .next-btn {
-            cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px;
-            color: var(--white-pure); font-weight: bold; font-size: 18px; transition: 0.6s ease;
-            background-color: rgba(0,0,0,0.3); border: none; user-select: none;
-        }
+        .prev-btn, .next-btn { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: var(--white-pure); font-weight: bold; font-size: 18px; transition: 0.6s ease; background-color: rgba(0,0,0,0.3); border: none; user-select: none; }
         .next-btn { right: 0; border-radius: 3px 0 0 3px; }
         .prev-btn { left: 0; border-radius: 0 3px 3px 0; }
         .prev-btn:hover, .next-btn:hover { background-color: rgba(0,0,0,0.8); }
         .carousel-dots-container { text-align: center; padding-top: 15px; }
-        .dot {
-            cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb;
-            border-radius: 50%; display: inline-block; transition: background-color 0.6s ease;
-        }
+        .dot { cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb; border-radius: 50%; display: inline-block; transition: background-color 0.6s ease; }
         .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
 
-        /* --- CAROSELLO MENU IBRIDO (Mobile: Slider, Desktop: Affiancate) --- */
+        /* --- CAROSELLO MENU IBRIDO --- */
         .menu-carousel { margin-top: 25px; }
-        
         @media (max-width: 768px) {
             .menu-carousel .carousel-container { border: none; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border-radius: 15px;}
             .menu-carousel .carousel-slide { height: 250px; }
             .menu-carousel .prev-btn, .menu-carousel .next-btn { padding: 10px; font-size: 14px; }
         }
-
         @media (min-width: 769px) {
-            .menu-carousel .carousel-container {
-                display: flex;
-                gap: 20px;
-                box-shadow: none;
-                border: none;
-                outline: none;
-                overflow: visible;
-            }
-            .menu-carousel .carousel-slide {
-                display: block !important;
-                flex: 1;
-                height: 220px; 
-                border-radius: 12px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-                transition: transform 0.4s ease;
-                opacity: 1 !important; 
-                animation: none !important;
-            }
+            .menu-carousel .carousel-container { display: flex; gap: 20px; box-shadow: none; border: none; outline: none; overflow: visible; }
+            .menu-carousel .carousel-slide { display: block !important; flex: 1; height: 220px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.4s ease; opacity: 1 !important; animation: none !important; }
             .menu-carousel .carousel-slide img { border-radius: 12px; }
             .menu-carousel .carousel-slide:hover { transform: scale(1.03); }
-            
-            .menu-carousel .prev-btn, 
-            .menu-carousel .next-btn, 
-            .menu-carousel .carousel-dots-container { display: none !important; }
+            .menu-carousel .prev-btn, .menu-carousel .next-btn, .menu-carousel .carousel-dots-container { display: none !important; }
         }
 
         /* Menu Ristorante */
         .menu-section { background: var(--white-pure); }
         .menu-section h2 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
-        .menu-category {
-            background: var(--white-pure); padding: 25px; border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px;
-        }
-        .menu-category h3 { 
-            color: var(--colore-2-primario); margin-bottom: 20px; 
-            border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; 
-        }
-        .menu-item {
-            display: flex; justify-content: space-between; align-items: baseline;
-            margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;
-        }
+        .menu-category { background: var(--white-pure); padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .menu-category h3 { color: var(--colore-2-primario); margin-bottom: 20px; border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; }
+        .menu-item { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px; }
         .item-name { font-weight: 600; font-size: 1.1rem; }
         .item-desc { display: block; font-size: 0.9rem; color: #666; margin-top: 5px; }
         .item-price { font-weight: bold; color: var(--colore-2-primario); font-size: 1.1rem; margin-left: 15px; white-space: nowrap; flex-shrink: 0; text-align: right; }
 
         /* Floating Actions */
-        .floating-actions {
-            position: fixed; bottom: 30px; left: 0; right: 0; display: flex;
-            justify-content: space-between; padding: 0 25px; z-index: 2000;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .floating-actions { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 25px; z-index: 2000; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .floating-actions.is-hidden { opacity: 0; transform: translateY(100px); pointer-events: none; }
-        .float-circle {
-            width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; color: var(--white-pure); font-size: 0.7rem;
-            font-weight: bold; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center;
-            animation: pulse 2s infinite;
-        }
+        .float-circle { width: 65px; height: 65px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--white-pure); font-size: 0.7rem; font-weight: bold; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center; animation: pulse 2s infinite; }
         .float-circle span { font-size: 1.6rem; margin-bottom: 2px; }
         .bg-delivery { background-color: var(--colore-4-dettagli); }
         .bg-call { background-color: var(--colore-2-primario); }
@@ -386,10 +328,7 @@
         .location-info { flex: 1; min-width: 300px; background: var(--white-pure); padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .location-info h3 { color: var(--colore-2-primario); margin-bottom: 15px; border-bottom: 2px solid var(--colore-4-dettagli); display: inline-block; }
         .location-info p { margin-bottom: 10px; font-size: 1.1rem; }
-        .btn-maps {
-            display: inline-block; margin-top: 20px; padding: 10px 20px;
-            background-color: var(--colore-3-testo); color: var(--white-pure); border-radius: 8px; font-weight: bold; transition: background 0.3s; text-align: center;
-        }
+        .btn-maps { display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: var(--colore-3-testo); color: var(--white-pure); border-radius: 8px; font-weight: bold; transition: background 0.3s; text-align: center; }
         .btn-maps:hover { background-color: var(--colore-2-primario); }
         .location-map { flex: 1; min-width: 300px; height: 400px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .location-map iframe { width: 100%; height: 100%; border: 0; }
@@ -404,13 +343,13 @@
         .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
         .footer-legal { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; text-align: center; opacity: 0.8; max-width: 1200px; margin-left: auto; margin-right: auto; }
 
-        #backToTop {
-            display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            z-index: 2500; border: none; outline: none; background-color: var(--colore-3-testo);
-            color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px;
-            font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s;
-        }
+        #backToTop { display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2500; border: none; outline: none; background-color: var(--colore-3-testo); color: var(--white-pure); cursor: pointer; padding: 10px 15px; border-radius: 50px; font-size: 18px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s; }
         #backToTop:hover { background-color: var(--colore-2-primario); }
+        
+        /* --- SEZIONE RECENSIONI --- */
+        .reviews-section { background-color: var(--colore-1-sfondo); text-align: center; padding: 60px 20px; }
+        .reviews-header-small { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-bottom: 5px; font-family: 'Inter', sans-serif; }
+        .quote-icon { font-size: 3rem; color: var(--colore-4-dettagli); line-height: 1; margin-top: 10px; display: block; }
     </style>
 </head>
 <body>
@@ -425,9 +364,9 @@
             
             <li><a href="#home" onclick="chiudiMenu()">Home</a></li>
             <li><a href="#chi-siamo" onclick="chiudiMenu()">Chi Siamo</a></li>
+            <li><a href="#recensioni" onclick="chiudiMenu()">Recensioni</a></li>
             <li><a href="#menu" onclick="chiudiMenu()">Menù</a></li>
-            <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
-            
+            <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>            
             <li>
                 <a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a>
             </li>
@@ -636,6 +575,26 @@
         </div>
     </section>
 
+    <section class="ingredients-info reveal-section" style="padding-bottom: 0;">
+        <div style="background-color: rgba(192, 57, 43, 0.92); color: var(--white-pure); padding: 50px 20px; border-radius: 15px; max-width: 1000px; margin: 0 auto 20px auto; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); backdrop-filter: blur(5px);">
+            <h2 style="color: var(--colore-4-dettagli); margin-bottom: 15px;">Trasparenza e Genuinità</h2>
+            <p style="max-width: 700px; margin: 0 auto 30px auto; font-size: 1.1rem; line-height: 1.6;">
+            Solo materie prime locali selezionate per garantirti freschezza assoluta. Scopri la filiera dei nostri piatti.
+            </p>
+            <a href="provenienza.html" class="btn-hero" style="background-color: var(--white-pure); color: var(--colore-2-primario); border: 2px solid var(--white-pure);">Scopri la Filiera dei Piatti</a>
+        </div>
+    </section>
+
+    <section class="reviews-section reveal-section" id="recensioni">
+        <p class="reviews-header-small">Recensioni</p>
+        <h2>Cosa dicono di noi</h2>
+        <span class="quote-icon">❞</span>
+
+        <div style="margin-top: 30px; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 15px;">
+            <script defer async src='https://cdn.trustindex.io/loader.js?a15809565b0a438992560ac7010'></script>
+        </div>
+    </section>
+
     <section id="menu" class="menu-section">
         <h2 class="reveal-section">Il Nostro Menù</h2>
 
@@ -834,7 +793,7 @@
             </div>
         </div>
     </section>
-
+    
     <footer class="main-footer reveal-section" id="contatti">
         <div class="footer-grid">
             <div class="footer-col">
@@ -851,7 +810,7 @@
             </div>
         </div>
         <div class="footer-legal">
-            <p>© 2024 Ristorante Al Lago S.r.l. - Tutti i diritti riservati</p>
+            <p>© 2026 Ristorante Al Lago S.r.l. - Tutti i diritti riservati</p>
             <p>Partita IVA: 01234567890 | Rea: VA-123456</p>
             <p><a href="#" style="color: white;">Privacy Policy</a> | <a href="#" style="color: white;">Cookie Policy</a></p>
         </div>
