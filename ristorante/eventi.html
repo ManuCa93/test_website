@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eventi al Ristorante Al Lago – Varese. Serate musicali, degustazioni, cene a tema ogni settimana.">
+    <title>Eventi | Ristorante Al Lago – Varese</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --colore-1-sfondo:   #f8f9fa;
+            --colore-2-primario: #c0392b;
+            --colore-3-testo:    #2c3e50;
+            --colore-4-dettagli: #d4ac0d;
+            --white-pure: #ffffff;
+            --nav-height: 60px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:var(--nav-height); }
+        body { margin:0; padding:0; padding-top:var(--nav-height); width:100%; overflow-x:clip;
+               font-family:'Inter',sans-serif; line-height:1.6; color:var(--colore-3-testo);
+               background-color:var(--colore-1-sfondo); }
+        h1,h2,h3 { font-family:'Merriweather',serif; color:var(--colore-3-testo); }
+        a { text-decoration:none; }
+        section { padding:60px 20px; }
+
+        .reveal-section { opacity:0; transform:translateY(40px); transition:all 0.9s cubic-bezier(0.25,0.8,0.25,1); }
+        .reveal-visible  { opacity:1; transform:translateY(0); }
+
+        /* NAVBAR */
+        .top-navbar { position:fixed; top:0; left:0; width:100%; height:var(--nav-height);
+            background-color:var(--colore-2-primario); display:flex; justify-content:space-between;
+            align-items:center; padding:0 20px; z-index:3000;
+            box-shadow:0 2px 10px rgba(0,0,0,0.2); border-radius:0 0 20px 20px; }
+        .nav-brand { color:var(--white-pure); font-family:'Merriweather',serif; font-weight:bold; font-size:1.2rem; }
+        .nav-links { list-style:none; display:flex; align-items:center; gap:25px; margin:0; padding:0; }
+        .nav-links li a { color:var(--white-pure); font-weight:600; font-size:0.95rem; transition:color 0.3s; text-transform:uppercase; }
+        .nav-links li a:hover { color:var(--colore-4-dettagli); }
+        .nav-links li a.active-page { color:var(--colore-4-dettagli); border-bottom:2px solid var(--colore-4-dettagli); padding-bottom:2px; }
+        .nav-book-btn { background-color:var(--colore-4-dettagli) !important; color:var(--colore-3-testo) !important;
+            padding:10px 24px; border-radius:50px; font-weight:700 !important; font-size:0.85rem !important;
+            box-shadow:0 4px 10px rgba(0,0,0,0.15); transition:all 0.3s ease;
+            text-transform:uppercase; letter-spacing:1px; border:2px solid transparent; }
+        .nav-book-btn:hover { background-color:var(--white-pure) !important; color:var(--colore-4-dettagli) !important;
+            border-color:var(--white-pure) !important; transform:translateY(-2px); }
+        .hamburger,.close-x { display:none; }
+        @media (max-width:768px) {
+            .hamburger { display:block; background:none; border:none; color:var(--white-pure); font-size:1.8rem; cursor:pointer; }
+            .nav-links { position:fixed; top:0; right:0; height:100vh; width:80%; background-color:var(--colore-2-primario);
+                flex-direction:column; align-items:center; justify-content:center; gap:30px;
+                transform:translateX(100%); transition:transform 0.5s cubic-bezier(0.77,0,0.175,1);
+                box-shadow:-5px 0 25px rgba(0,0,0,0.3); z-index:4000; }
+            .nav-links.show { transform:translateX(0); }
+            .nav-links li { width:80%; text-align:center; padding:15px 0;
+                border-bottom:1px solid rgba(255,255,255,0.2);
+                opacity:0; transform:translateY(20px); transition:opacity 0.4s ease, transform 0.4s ease; }
+            .nav-links li:last-child { border-bottom:none; }
+            .nav-links li a { font-size:1.5rem; }
+            .nav-links.show li { opacity:1; transform:translateY(0); }
+            .nav-links.show li:nth-of-type(1){transition-delay:0.15s}
+            .nav-links.show li:nth-of-type(2){transition-delay:0.25s}
+            .nav-links.show li:nth-of-type(3){transition-delay:0.35s}
+            .nav-links.show li:nth-of-type(4){transition-delay:0.45s}
+            .nav-links.show li:nth-of-type(5){transition-delay:0.55s}
+            .nav-links.show li:nth-of-type(6){transition-delay:0.65s}
+            .close-x { display:block; position:absolute; top:25px; right:25px;
+                background:none; border:none; color:var(--white-pure); font-size:2.5rem; cursor:pointer; }
+        }
+        .menu-overlay { position:fixed; top:0; left:0; width:20%; height:100%;
+            background-color:rgba(0,0,0,0.6); z-index:3500; opacity:0; visibility:hidden;
+            transition:opacity 0.3s ease 0.1s, visibility 0s 0.4s; backdrop-filter:blur(3px); }
+        .menu-overlay.active { opacity:1; visibility:visible; transition:opacity 0.5s ease 0.1s, visibility 0s 0s; }
+
+        /* HERO */
+        .hero-eventi { position:relative;
+            background:linear-gradient(135deg,var(--colore-2-primario) 0%,#8b1a12 60%,var(--colore-3-testo) 100%);
+            color:var(--white-pure); text-align:center; padding:100px 20px 80px;
+            display:flex; flex-direction:column; justify-content:center; align-items:center; overflow:hidden; }
+        .hero-eventi::before { content:''; position:absolute; inset:0;
+            background:url('https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            opacity:0.18; z-index:0; }
+        .hero-eventi > * { position:relative; z-index:1; }
+        .hero-eventi h1 { font-size:2.8rem; color:var(--white-pure); margin-bottom:15px; }
+        .hero-eventi p  { font-size:1.15rem; max-width:600px; margin-bottom:30px; opacity:0.92; }
+        .hero-badge { display:inline-block; background:var(--colore-4-dettagli); color:var(--colore-3-testo);
+            font-weight:700; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase;
+            padding:6px 18px; border-radius:50px; margin-bottom:20px; }
+
+        /* INTRO */
+        .intro-eventi { background:var(--white-pure); text-align:center; padding:50px 20px 30px; }
+        .intro-eventi h2 { color:var(--colore-2-primario); font-size:2rem; margin-bottom:15px; }
+        .intro-eventi p  { max-width:650px; margin:0 auto; color:#555; font-size:1.05rem; }
+
+        /* FILTRI */
+        .filtro-tag-container { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; padding:20px 20px 40px; background:var(--white-pure); }
+        .filtro-tag { display:inline-block; padding:7px 18px; border-radius:50px; border:2px solid var(--colore-2-primario);
+            color:var(--colore-2-primario); font-weight:600; font-size:0.85rem; cursor:pointer;
+            transition:all 0.25s ease; text-transform:uppercase; letter-spacing:0.5px; }
+        .filtro-tag:hover,.filtro-tag.attivo { background:var(--colore-2-primario); color:var(--white-pure); }
+
+        /* CALENDARIO */
+        .calendario-section { background:var(--colore-1-sfondo); padding:20px 20px 80px; }
+        .settimane-wrapper   { max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:40px; }
+        .settimana-label     { font-family:'Inter',sans-serif; font-size:0.8rem; font-weight:700;
+            letter-spacing:2px; text-transform:uppercase; color:#999; margin-bottom:10px; }
+
+        /* CARD EVENTO */
+        .evento-card { background:var(--white-pure); border-radius:20px; box-shadow:0 4px 20px rgba(0,0,0,0.07);
+            display:flex; align-items:stretch; overflow:hidden;
+            transition:transform 0.3s ease, box-shadow 0.3s ease; position:relative; }
+        .evento-card:hover { transform:translateY(-5px); box-shadow:0 12px 35px rgba(0,0,0,0.12); }
+        .evento-accent { width:8px; flex-shrink:0; }
+        .acc-musica    { background:#6c3483; }
+        .acc-degusta   { background:var(--colore-4-dettagli); }
+        .acc-cena      { background:var(--colore-2-primario); }
+        .acc-speciale  { background:#1a7a4a; }
+        .acc-aperitivo { background:#e67e22; }
+
+        .evento-data-box { display:flex; flex-direction:column; align-items:center; justify-content:center;
+            padding:20px 22px; background:var(--colore-1-sfondo); min-width:90px; text-align:center;
+            border-right:1px solid #eee; flex-shrink:0; }
+        .evento-giorno-nome { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--colore-2-primario); }
+        .evento-giorno-num  { font-family:'Merriweather',serif; font-size:2.2rem; font-weight:700; color:var(--colore-3-testo); line-height:1.1; }
+        .evento-mese        { font-size:0.75rem; font-weight:600; text-transform:uppercase; color:#888; letter-spacing:1px; }
+
+        .evento-body { padding:20px 25px; flex:1; display:flex; flex-direction:column; justify-content:center; gap:8px; }
+        .evento-categoria { font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+        .cat-musica    { color:#6c3483; }
+        .cat-degusta   { color:#b8860b; }
+        .cat-cena      { color:var(--colore-2-primario); }
+        .cat-speciale  { color:#1a7a4a; }
+        .cat-aperitivo { color:#e67e22; }
+
+        .evento-titolo { font-family:'Merriweather',serif; font-size:1.25rem; color:var(--colore-3-testo); margin:0; }
+        .evento-desc   { font-size:0.92rem; color:#666; margin:0; }
+        .evento-meta   { display:flex; flex-wrap:wrap; gap:12px; margin-top:4px; }
+        .evento-meta span { font-size:0.82rem; color:#888; }
+
+        .badge-prossimo { position:absolute; top:14px; right:16px; background:var(--colore-2-primario);
+            color:var(--white-pure); font-size:0.7rem; font-weight:700; letter-spacing:1px;
+            text-transform:uppercase; padding:4px 12px; border-radius:50px; }
+
+        .evento-btn { display:inline-block; margin-top:10px; align-self:flex-start; padding:8px 20px;
+            border-radius:50px; background:var(--colore-3-testo); color:var(--white-pure);
+            font-size:0.82rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
+            transition:background 0.3s, transform 0.2s; border:2px solid transparent; }
+        .evento-btn:hover { background:var(--colore-2-primario); transform:translateY(-2px); }
+
+        /* NEWSLETTER */
+        .newsletter-section { background:var(--colore-2-primario); padding:60px 20px; text-align:center; color:var(--white-pure); }
+        .newsletter-section h2 { color:var(--white-pure); font-size:1.8rem; margin-bottom:10px; }
+        .newsletter-section p  { font-size:1rem; opacity:0.9; margin-bottom:30px; max-width:500px; margin-left:auto; margin-right:auto; }
+        .newsletter-form { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; max-width:500px; margin:0 auto; }
+        .newsletter-form input  { flex:1; min-width:220px; padding:14px 20px; border-radius:50px; border:none;
+            font-size:1rem; font-family:'Inter',sans-serif; outline:none; }
+        .newsletter-form button { padding:14px 28px; border-radius:50px; border:none; background:var(--colore-4-dettagli);
+            color:var(--colore-3-testo); font-size:0.9rem; font-weight:700; text-transform:uppercase;
+            letter-spacing:1px; cursor:pointer; transition:background 0.3s,transform 0.2s; }
+        .newsletter-form button:hover { background:var(--white-pure); transform:translateY(-2px); }
+
+        /* FLOATING */
+        .floating-actions { position:fixed; bottom:30px; left:0; right:0; display:flex;
+            justify-content:space-between; padding:0 25px; z-index:2000;
+            transition:all 0.5s cubic-bezier(0.4,0,0.2,1); }
+        .floating-actions.is-hidden { opacity:0; transform:translateY(100px); pointer-events:none; }
+        .float-circle { width:65px; height:65px; border-radius:50%; display:flex; flex-direction:column;
+            align-items:center; justify-content:center; color:var(--white-pure); font-size:0.7rem;
+            font-weight:bold; box-shadow:0 6px 20px rgba(0,0,0,0.3); text-align:center; animation:pulse 2s infinite; }
+        .float-circle span { font-size:1.6rem; margin-bottom:2px; }
+        .bg-delivery { background-color:var(--colore-4-dettagli); }
+        .bg-call     { background-color:var(--colore-2-primario); }
+        @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
+
+        /* FOOTER */
+        .main-footer { background-color:var(--colore-2-primario); color:var(--white-pure); width:100%;
+            margin:0; padding:60px 20px 120px; position:relative; }
+        .footer-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:60px; max-width:1200px; margin:0 auto; text-align:center; }
+        .footer-col { flex:1; min-width:280px; max-width:400px; }
+        .footer-col h3 { color:var(--colore-4-dettagli); font-size:1.3rem; margin-bottom:20px; text-transform:uppercase; letter-spacing:1px; }
+        .footer-col p  { margin-bottom:10px; font-size:1rem; line-height:1.8; }
+        .footer-col a  { color:var(--white-pure); text-decoration:none; transition:opacity 0.3s; }
+        .footer-col a:hover { opacity:0.7; text-decoration:underline; }
+        .footer-legal { margin-top:50px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.2);
+            font-size:0.85rem; text-align:center; opacity:0.8; max-width:1200px; margin-left:auto; margin-right:auto; }
+
+        #backToTop { display:none; position:fixed; bottom:40px; left:50%; transform:translateX(-50%); z-index:2500;
+            border:none; outline:none; background-color:var(--colore-3-testo); color:var(--white-pure);
+            cursor:pointer; padding:10px 15px; border-radius:50px; font-size:18px; font-weight:bold;
+            box-shadow:0 4px 10px rgba(0,0,0,0.2); transition:opacity 0.3s; }
+        #backToTop:hover { background-color:var(--colore-2-primario); }
+
+        @media (max-width:600px) {
+            .hero-eventi h1 { font-size:2rem; }
+            .evento-data-box { padding:15px 14px; min-width:72px; }
+            .evento-giorno-num { font-size:1.7rem; }
+            .evento-titolo { font-size:1.05rem; }
+            .evento-body { padding:16px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-navbar">
+        <a href="demo-ristorante.html" class="nav-brand">Ristorante Al Lago</a>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <ul id="nav-links" class="nav-links">
+            <button class="close-x" onclick="chiudiMenu()">✕</button>
+            <li><a href="demo-ristorante.html#home"       onclick="chiudiMenu()">Home</a></li>
+            <li><a href="demo-ristorante.html#chi-siamo"  onclick="chiudiMenu()">Chi Siamo</a></li>
+            <li><a href="demo-ristorante.html#menu"       onclick="chiudiMenu()">Menù</a></li>
+            <li><a href="eventi.html" class="active-page" onclick="chiudiMenu()">Eventi</a></li>
+            <li><a href="demo-ristorante.html#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
+            <li><a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a></li>
+        </ul>
+    </nav>
+    <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <section class="hero-eventi">
+        <span class="hero-badge">📅 Calendario Settimanale</span>
+        <h1>I Nostri Eventi</h1>
+        <p>Ogni settimana una serata speciale al Lago. Musica dal vivo, degustazioni, cene a tema e tanto altro ti aspettano.</p>
+    </section>
+
+    <section class="intro-eventi reveal-section">
+        <h2>Cosa Succede Questa Stagione</h2>
+        <p>Dal martedì jazz al venerdì di degustazione: ogni settimana c'è un appuntamento da non perdere. Prenota il tuo tavolo in anticipo — i posti sono limitati.</p>
+    </section>
+
+    <div class="filtro-tag-container reveal-section">
+        <span class="filtro-tag attivo" onclick="filtraEventi('tutti',this)">Tutti</span>
+        <span class="filtro-tag" onclick="filtraEventi('musica',this)">🎵 Musica Live</span>
+        <span class="filtro-tag" onclick="filtraEventi('degusta',this)">🍷 Degustazione</span>
+        <span class="filtro-tag" onclick="filtraEventi('cena',this)">🍽️ Cena a Tema</span>
+        <span class="filtro-tag" onclick="filtraEventi('aperitivo',this)">🥂 Aperitivo Speciale</span>
+        <span class="filtro-tag" onclick="filtraEventi('speciale',this)">⭐ Evento Speciale</span>
+    </div>
+
+    <section class="calendario-section">
+        <!-- Le card vengono generate da JS leggendo eventi-data.js -->
+        <div class="settimane-wrapper" id="calendarioWrapper">
+            <p style="text-align:center;color:#999;padding:40px 0;">Caricamento eventi...</p>
+        </div>
+    </section>
+
+    <section class="newsletter-section reveal-section">
+        <h2>Non Perdere il Prossimo Evento</h2>
+        <p>Lasciaci la tua email e ogni settimana ti avvisiamo prima dell'apertura delle prenotazioni.</p>
+        <form class="newsletter-form" onsubmit="iscriviNewsletter(event)">
+            <input type="email" placeholder="La tua email..." required />
+            <button type="submit">Iscriviti 🔔</button>
+        </form>
+    </section>
+
+    <footer class="main-footer reveal-section">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Contatti Rapidi</h3>
+                <p>📞 Telefono: <a href="tel:+390332000000">0332 00.00.00</a></p>
+                <p>📱 WhatsApp: <a href="https://wa.me/39333000000">333 00.00.000</a></p>
+                <p>📧 Email: info@ristoranteallago.demo</p>
+            </div>
+            <div class="footer-col">
+                <h3>Orari di Apertura</h3>
+                <p>Lun – Ven: 12:00–14:30 / 19:00–23:00</p>
+                <p>Sab – Dom: 12:00–15:00 / 18:30–23:30</p>
+                <p><em>Chiuso il Martedì</em></p>
+            </div>
+        </div>
+        <div class="footer-legal">
+            <p>© 2026 Ristorante Al Lago S.r.l. — Tutti i diritti riservati</p>
+            <p><a href="#" style="color:white">Privacy Policy</a> | <a href="#" style="color:white">Cookie Policy</a></p>
+        </div>
+    </footer>
+
+    <div class="floating-actions" id="floatingActions">
+        <a href="delivery.html" class="float-circle bg-delivery"><span>🛵</span>Delivery</a>
+        <a href="tel:+390332000000"  class="float-circle bg-call"><span>📞</span>Chiama</a>
+    </div>
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+    <!-- Carica il file dati condiviso -->
+    <script src="eventi-data.js"></script>
+
+    <script>
+        /* -------- NAVBAR -------- */
+        function toggleMenu() {
+            document.getElementById('nav-links').classList.toggle('show');
+            document.getElementById('menu-overlay').classList.toggle('active');
+        }
+        function chiudiMenu() { if (window.innerWidth <= 768) toggleMenu(); }
+
+        /* -------- RENDER CALENDARIO DA DATI -------- */
+        function renderCalendario(lista) {
+            const wrapper = document.getElementById('calendarioWrapper');
+            const accMap  = { musica:'acc-musica', degusta:'acc-degusta', cena:'acc-cena', speciale:'acc-speciale', aperitivo:'acc-aperitivo' };
+            const catMap  = { musica:'cat-musica', degusta:'cat-degusta', cena:'cat-cena', speciale:'cat-speciale', aperitivo:'cat-aperitivo' };
+
+            wrapper.innerHTML = lista.map(ev => `
+                <div data-id="${ev.id}">
+                    <p class="settimana-label">${ev.settimana}</p>
+                    <div class="evento-card reveal-section" data-categoria="${ev.categoria}">
+                        <div class="evento-accent ${accMap[ev.categoria]}"></div>
+                        <div class="evento-data-box">
+                            <span class="evento-giorno-nome">${ev.giorno}</span>
+                            <span class="evento-giorno-num">${ev.num}</span>
+                            <span class="evento-mese">${ev.mese}</span>
+                        </div>
+                        <div class="evento-body">
+                            <span class="evento-categoria ${catMap[ev.categoria]}">${ev.catLabel}</span>
+                            <h3 class="evento-titolo">${ev.titolo}</h3>
+                            <p class="evento-desc">${ev.desc}</p>
+                            <div class="evento-meta">
+                                <span>🕗 ${ev.ora}</span>
+                                <span>📍 ${ev.luogo}</span>
+                                <span>👥 ${ev.posti}</span>
+                            </div>
+                            <a href="https://www.thefork.it/" target="_blank" class="evento-btn">Prenota il Tavolo →</a>
+                        </div>
+                        ${ev.prossimo ? '<span class="badge-prossimo">📍 Questa settimana</span>' : ''}
+                    </div>
+                </div>
+            `).join('');
+
+            /* Ri-attiva reveal observer sulle nuove card */
+            activateReveal();
+        }
+
+        /* -------- FILTRO -------- */
+        function filtraEventi(cat, el) {
+            document.querySelectorAll('.filtro-tag').forEach(t => t.classList.remove('attivo'));
+            el.classList.add('attivo');
+            const lista = cat === 'tutti' ? EVENTI : EVENTI.filter(e => e.categoria === cat);
+            renderCalendario(lista);
+        }
+
+        /* -------- REVEAL -------- */
+        function activateReveal() {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('reveal-visible'); });
+            }, { threshold: 0.08 });
+            document.querySelectorAll('.reveal-section').forEach(el => obs.observe(el));
+        }
+
+        /* -------- INIT -------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCalendario(EVENTI);
+
+            /* back to top */
+            const btn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => { btn.style.display = window.scrollY > 400 ? 'block' : 'none'; });
+
+            /* floating hide on footer */
+            const footer = document.querySelector('.main-footer');
+            const fa     = document.getElementById('floatingActions');
+            new IntersectionObserver(([e]) => fa.classList.toggle('is-hidden', e.isIntersecting), { threshold:0.1 }).observe(footer);
+        });
+
+        /* -------- NEWSLETTER -------- */
+        function iscriviNewsletter(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.textContent = '✅ Iscritto!';
+            e.target.querySelector('input').value = '';
+            setTimeout(() => { btn.textContent = 'Iscriviti 🔔'; }, 3000);
+        }
+    </script>
+</body>
+</html>

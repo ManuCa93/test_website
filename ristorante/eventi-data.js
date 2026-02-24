@@ -1,0 +1,137 @@
+/* ==============================================
+   EVENTI-DATA.JS — fonte unica di tutti gli eventi
+   Modifica solo questo file per aggiornare sia
+   il calendario (eventi.html) che il carosello
+   in homepage (demo-ristorante.html)
+   ============================================== */
+
+const EVENTI = [
+  {
+    id: 1,
+    giorno:    "Mar",
+    num:       "24",
+    mese:      "Feb",
+    anno:      "2026",
+    categoria: "musica",
+    catLabel:  "🎵 Musica Live",
+    titolo:    "Serata Jazz al Lago",
+    desc:      "Il Quartetto Rosso & Nero porta il jazz classico direttamente sul lungolago. Atmosfera intima, calice di vino incluso.",
+    ora:       "21:00",
+    luogo:     "Sala principale",
+    posti:     "Max 40 posti",
+    settimana: "Settimana 1 — 24 Febbraio 2026",
+    prossimo:  true
+  },
+  {
+    id: 2,
+    giorno:    "Ven",
+    num:       "6",
+    mese:      "Mar",
+    anno:      "2026",
+    categoria: "degusta",
+    catLabel:  "🍷 Degustazione",
+    titolo:    "Viaggio tra i Vini delle Prealpi",
+    desc:      "Sei etichette selezionate dalla cantina, abbinate ai piatti della tradizione varesina. Con la guida del nostro sommelier.",
+    ora:       "20:00",
+    luogo:     "Sala del Lago",
+    posti:     "Max 24 posti",
+    settimana: "Settimana 2 — 3 Marzo 2026",
+    prossimo:  false
+  },
+  {
+    id: 3,
+    giorno:    "Mer",
+    num:       "11",
+    mese:      "Mar",
+    anno:      "2026",
+    categoria: "cena",
+    catLabel:  "🍽️ Cena a Tema",
+    titolo:    "Cucina del Lago: Pesce di Stagione",
+    desc:      "Un menù degustazione interamente dedicato al pescato del Lago di Varese: lavarello, agoni, persico. Chef Marco ai fornelli.",
+    ora:       "19:30",
+    luogo:     "Terrazza esterna",
+    posti:     "Max 30 posti",
+    settimana: "Settimana 3 — 10 Marzo 2026",
+    prossimo:  false
+  },
+  {
+    id: 4,
+    giorno:    "Sab",
+    num:       "21",
+    mese:      "Mar",
+    anno:      "2026",
+    categoria: "aperitivo",
+    catLabel:  "🥂 Aperitivo Speciale",
+    titolo:    "Aperitivo di Primavera sul Lungolago",
+    desc:      "Inauguriamo la terrazza esterna per la stagione primaverile. Cocktail artigianali, stuzzichini e tramonto sul lago.",
+    ora:       "18:30",
+    luogo:     "Terrazza esterna",
+    posti:     "Max 60 posti",
+    settimana: "Settimana 4 — 17 Marzo 2026",
+    prossimo:  false
+  },
+  {
+    id: 5,
+    giorno:    "Gio",
+    num:       "26",
+    mese:      "Mar",
+    anno:      "2026",
+    categoria: "musica",
+    catLabel:  "🎵 Musica Live",
+    titolo:    "Acoustic Night: Folk & Cantautorato",
+    desc:      "Serata acustica con la cantautrice Elisa Varano. Voce, chitarra e storie sul palco. Cena disponibile con prenotazione.",
+    ora:       "21:30",
+    luogo:     "Sala principale",
+    posti:     "Max 50 posti",
+    settimana: "Settimana 5 — 24 Marzo 2026",
+    prossimo:  false
+  },
+  {
+    id: 6,
+    giorno:    "Dom",
+    num:       "5",
+    mese:      "Apr",
+    anno:      "2026",
+    categoria: "speciale",
+    catLabel:  "⭐ Evento Speciale",
+    titolo:    "Pranzo di Pasqua: Gran Menù della Tradizione",
+    desc:      "Celebriamo la Pasqua con agnello, risotto primavera e dolci artigianali della nonna. Famiglie benvenute.",
+    ora:       "12:30",
+    luogo:     "Tutto il ristorante",
+    posti:     "Max 80 posti",
+    settimana: "Settimana 6 — 31 Marzo 2026",
+    prossimo:  false
+  },
+  {
+    id: 7,
+    giorno:    "Ven",
+    num:       "10",
+    mese:      "Apr",
+    anno:      "2026",
+    categoria: "degusta",
+    catLabel:  "🍷 Degustazione",
+    titolo:    "Formaggi & Vini Lombardi",
+    desc:      "Abbinamenti insoliti tra i formaggi DOP della Lombardia e le migliori etichette regionali. Un percorso guidato in cinque tappe.",
+    ora:       "20:30",
+    luogo:     "Cantina privata",
+    posti:     "Max 20 posti",
+    settimana: "Settimana 7 — 7 Aprile 2026",
+    prossimo:  false
+  },
+  {
+    id: 8,
+    giorno:    "Mar",
+    num:       "14",
+    mese:      "Apr",
+    anno:      "2026",
+    categoria: "cena",
+    catLabel:  "🍽️ Cena a Tema",
+    titolo:    "Una Sera in Piemonte",
+    desc:      "Tajarin al tartufo, vitello tonnato, bagna cauda e Barolo: una serata dedicata ai sapori del Piemonte.",
+    ora:       "19:30",
+    luogo:     "Sala principale",
+    posti:     "Max 35 posti",
+    settimana: "Settimana 8 — 14 Aprile 2026",
+    prossimo:  false
+  }
+];
