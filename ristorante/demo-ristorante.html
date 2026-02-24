@@ -384,7 +384,7 @@
             <li><a href="#chi-siamo" onclick="chiudiMenu()">Chi Siamo</a></li>
             <li><a href="#recensioni" onclick="chiudiMenu()">Recensioni</a></li>
             <li><a href="#menu" onclick="chiudiMenu()">Menù</a></li>
-            <li><a href="eventi.html" onclick="chiudiMenu()">Eventi</a></li>
+            <li><a href="#eventi-preview" onclick="chiudiMenu()">Eventi</a></li>
             <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>            
             <li>
                 <a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a>
@@ -648,118 +648,65 @@
         .tag-firma{background:#fce4ec;color:#880e4f;}
         .menu-divider{display:none;}
         
+        /* --- SCROLLSPY: link attivo navbar --- */
+        .nav-links li a.nav-active {
+            color: var(--colore-4-dettagli) !important;
+            border-bottom: 2px solid var(--colore-4-dettagli);
+            padding-bottom: 2px;
+        }
+
         /* =============================================
-           ANTEPRIMA EVENTI — sezione in homepage
+           ANTEPRIMA EVENTI — sezione homepage
            ============================================= */
-        .eventi-preview-section { background:var(--colore-1-sfondo); padding:70px 20px 60px; text-align:center; }
-        .eventi-preview-header  { max-width:650px; margin:0 auto 40px; }
-        .eventi-small-label     { display:inline-block; font-size:0.78rem; font-weight:700;
-            letter-spacing:2.5px; text-transform:uppercase; color:var(--colore-2-primario); margin-bottom:10px; }
-        .eventi-preview-section h2       { font-size:2rem; margin-bottom:12px; color:var(--colore-3-testo); }
-        .eventi-preview-section .ep-sub  { color:#666; font-size:1rem; }
-
-        /* Wrapper esterno: solo position:relative, NO overflow */
-        .eventi-carousel-wrapper {
-            position: relative;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 40px;      /* spazio per le frecce laterali */
-        }
-
-        /* Maschera interna: overflow:hidden per nascondere le card fuori campo */
-        .ev-track-mask {
-            overflow: hidden;
-            border-radius: 4px;
-        }
-
-        /* Track scorrevole */
-        .eventi-carousel-track {
-            display: flex;
-            gap: 20px;
-            transition: transform 0.5s cubic-bezier(0.25,0.8,0.25,1);
-            will-change: transform;
-        }
-
-        /* Card singola */
-        .ev-card { background:var(--white-pure); border-radius:18px; box-shadow:0 4px 20px rgba(0,0,0,0.07);
-            display:flex; align-items:stretch; overflow:hidden; flex-shrink:0; text-align:left;
-            transition:transform 0.3s ease, box-shadow 0.3s ease; }
-        .ev-card:hover { transform:translateY(-6px); box-shadow:0 14px 35px rgba(0,0,0,0.12); }
-
-        .ev-card-accent   { width:7px; flex-shrink:0; }
-        .ev-acc-musica    { background:#6c3483; }
-        .ev-acc-degusta   { background:var(--colore-4-dettagli); }
-        .ev-acc-cena      { background:var(--colore-2-primario); }
-        .ev-acc-speciale  { background:#1a7a4a; }
-        .ev-acc-aperitivo { background:#e67e22; }
-
-        .ev-card-date { display:flex; flex-direction:column; align-items:center; justify-content:center;
-            padding:18px 16px; background:var(--colore-1-sfondo); min-width:72px;
-            border-right:1px solid #eee; flex-shrink:0; }
-        .ev-day-name { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--colore-2-primario); }
-        .ev-day-num  { font-family:'Merriweather',serif; font-size:2rem; font-weight:700; color:var(--colore-3-testo); line-height:1.1; }
-        .ev-month    { font-size:0.7rem; font-weight:600; text-transform:uppercase; color:#888; letter-spacing:1px; }
-
-        .ev-card-body { padding:18px 20px; display:flex; flex-direction:column; gap:6px; justify-content:center; }
-        .ev-cat            { font-size:0.72rem; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; }
-        .ev-cat-musica     { color:#6c3483; }
-        .ev-cat-degusta    { color:#b8860b; }
-        .ev-cat-cena       { color:var(--colore-2-primario); }
-        .ev-cat-speciale   { color:#1a7a4a; }
-        .ev-cat-aperitivo  { color:#e67e22; }
-        .ev-card-body h3   { font-family:'Merriweather',serif; font-size:1.05rem; color:var(--colore-3-testo); margin:0; }
-        .ev-card-body p    { font-size:0.88rem; color:#666; margin:0; line-height:1.5; }
-        .ev-meta           { display:flex; gap:12px; flex-wrap:wrap; }
-        .ev-meta span      { font-size:0.78rem; color:#999; }
-
-        /* Frecce — posizionate rispetto al wrapper esterno (no overflow clip) */
-        .ev-prev, .ev-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--white-pure);
-            border: 2px solid #eee;
-            color: var(--colore-3-testo);
-            font-size: 1.2rem;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-        .ev-prev { left: 0; }
-        .ev-next { right: 0; }
-        .ev-prev:hover, .ev-next:hover {
-            background: var(--colore-2-primario);
-            color: var(--white-pure);
-            border-color: var(--colore-2-primario);
-        }
-
-        /* Dots */
-        .ev-dots       { display:flex; justify-content:center; gap:8px; margin-top:20px; }
-        .ev-dot        { width:10px; height:10px; border-radius:50%; background:#ccc; cursor:pointer;
-            transition:background 0.3s,transform 0.2s; border:none; }
-        .ev-dot.active { background:var(--colore-2-primario); transform:scale(1.3); }
-
-        /* CTA */
-        .btn-tutti-eventi { display:inline-block; padding:14px 36px; border-radius:50px;
-            background:var(--colore-2-primario); color:var(--white-pure); font-weight:700;
-            font-size:0.95rem; text-transform:uppercase; letter-spacing:1px;
-            border:2px solid var(--colore-2-primario); transition:all 0.3s ease;
-            box-shadow:0 4px 15px rgba(192,57,43,0.3); }
-        .btn-tutti-eventi:hover { background:transparent; color:var(--colore-2-primario); transform:translateY(-2px); }
-
-        /* Responsive */
-        @media (min-width:1000px)                     { .ev-card { width:calc((100% - 40px) / 3); } }
-        @media (min-width:600px) and (max-width:999px) { .ev-card { width:calc((100% - 20px) / 2); } }
-        @media (max-width:599px) {
-            .ev-card { width:calc(100% - 0px); }
-            .eventi-carousel-wrapper { padding: 0 44px; }
-        }
+        .eventi-preview-section{background:var(--colore-1-sfondo);padding:70px 20px 60px;text-align:center;}
+        .eventi-preview-header{max-width:650px;margin:0 auto 40px;}
+        .eventi-small-label{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:2.5px;
+            text-transform:uppercase;color:var(--colore-2-primario);margin-bottom:10px;}
+        .eventi-preview-section h2{font-size:2rem;margin-bottom:12px;color:var(--colore-3-testo);}
+        .eventi-preview-section .ep-sub{color:#666;font-size:1rem;}
+        .eventi-carousel-wrapper{position:relative;max-width:1100px;margin:0 auto;padding:0 40px;}
+        .ev-track-mask{overflow:hidden;border-radius:4px;}
+        .eventi-carousel-track{display:flex;gap:20px;transition:transform .5s cubic-bezier(.25,.8,.25,1);will-change:transform;}
+        .ev-card{background:var(--white-pure);border-radius:18px;box-shadow:0 4px 20px rgba(0,0,0,.07);
+            display:flex;align-items:stretch;overflow:hidden;flex-shrink:0;text-align:left;
+            transition:transform .3s ease,box-shadow .3s ease;}
+        .ev-card:hover{transform:translateY(-6px);box-shadow:0 14px 35px rgba(0,0,0,.12);}
+        .ev-card-accent{width:7px;flex-shrink:0;}
+        .ev-acc-musica{background:#6c3483;} .ev-acc-degusta{background:var(--colore-4-dettagli);}
+        .ev-acc-cena{background:var(--colore-2-primario);} .ev-acc-speciale{background:#1a7a4a;}
+        .ev-acc-aperitivo{background:#e67e22;}
+        .ev-card-date{display:flex;flex-direction:column;align-items:center;justify-content:center;
+            padding:18px 16px;background:var(--colore-1-sfondo);min-width:72px;border-right:1px solid #eee;flex-shrink:0;}
+        .ev-day-name{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--colore-2-primario);}
+        .ev-day-num{font-family:'Merriweather',serif;font-size:2rem;font-weight:700;color:var(--colore-3-testo);line-height:1.1;}
+        .ev-month{font-size:.7rem;font-weight:600;text-transform:uppercase;color:#888;letter-spacing:1px;}
+        .ev-card-body{padding:18px 20px;display:flex;flex-direction:column;gap:6px;justify-content:center;}
+        .ev-cat{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+        .ev-cat-musica{color:#6c3483;} .ev-cat-degusta{color:#b8860b;} .ev-cat-cena{color:var(--colore-2-primario);}
+        .ev-cat-speciale{color:#1a7a4a;} .ev-cat-aperitivo{color:#e67e22;}
+        .ev-card-body h3{font-family:'Merriweather',serif;font-size:1.05rem;color:var(--colore-3-testo);margin:0;}
+        .ev-card-body p{font-size:.88rem;color:#666;margin:0;line-height:1.5;}
+        .ev-meta{display:flex;gap:12px;flex-wrap:wrap;}
+        .ev-meta span{font-size:.78rem;color:#999;}
+        .ev-prev,.ev-next{position:absolute;top:50%;transform:translateY(-50%);
+            background:var(--white-pure);border:2px solid #eee;color:var(--colore-3-testo);
+            font-size:1.2rem;width:40px;height:40px;border-radius:50%;cursor:pointer;
+            box-shadow:0 4px 12px rgba(0,0,0,.12);transition:all .3s;
+            display:flex;align-items:center;justify-content:center;z-index:10;}
+        .ev-prev{left:0;} .ev-next{right:0;}
+        .ev-prev:hover,.ev-next:hover{background:var(--colore-2-primario);color:var(--white-pure);border-color:var(--colore-2-primario);}
+        .ev-dots{display:flex;justify-content:center;gap:8px;margin-top:20px;}
+        .ev-dot{width:10px;height:10px;border-radius:50%;background:#ccc;cursor:pointer;
+            transition:background .3s,transform .2s;border:none;}
+        .ev-dot.active{background:var(--colore-2-primario);transform:scale(1.3);}
+        .btn-tutti-eventi{display:inline-block;padding:14px 36px;border-radius:50px;
+            background:var(--colore-2-primario);color:var(--white-pure);font-weight:700;font-size:.95rem;
+            text-transform:uppercase;letter-spacing:1px;border:2px solid var(--colore-2-primario);
+            transition:all .3s ease;box-shadow:0 4px 15px rgba(192,57,43,.3);}
+        .btn-tutti-eventi:hover{background:transparent;color:var(--colore-2-primario);transform:translateY(-2px);}
+        @media(min-width:1000px){.ev-card{width:calc((100% - 40px)/3);}}
+        @media(min-width:600px) and (max-width:999px){.ev-card{width:calc((100% - 20px)/2);}}
+        @media(max-width:599px){.ev-card{width:100%;}.eventi-carousel-wrapper{padding:0 44px;}}
 </style>
 
         <div class="menu-grid" id="menu-grid">
@@ -1002,28 +949,20 @@
 
 
     
-    <!-- ===== ANTEPRIMA EVENTI (generata da eventi-data.js) ===== -->
     <section class="eventi-preview-section reveal-section" id="eventi-preview">
         <div class="eventi-preview-header">
             <span class="eventi-small-label">📅 Ogni Settimana</span>
             <h2>I Prossimi Eventi</h2>
             <p class="ep-sub">Serate speciali, musica dal vivo, degustazioni e cene a tema ti aspettano al Lago.</p>
         </div>
-
         <div class="eventi-carousel-wrapper">
-            <!-- Maschera: solo questa ha overflow:hidden -->
             <div class="ev-track-mask">
-                <div class="eventi-carousel-track" id="eventiTrack">
-                    <!-- Card generate da JS tramite eventi-data.js -->
-                </div>
+                <div class="eventi-carousel-track" id="eventiTrack"></div>
             </div>
-            <!-- Frecce fuori dalla maschera, dentro il wrapper position:relative -->
-            <button class="ev-prev" id="evPrev" aria-label="Precedente">&#8592;</button>
-            <button class="ev-next" id="evNext" aria-label="Successivo">&#8594;</button>
+            <button class="ev-prev" id="evPrev">&#8592;</button>
+            <button class="ev-next" id="evNext">&#8594;</button>
         </div>
-
         <div class="ev-dots" id="evDots"></div>
-
         <div style="text-align:center;margin-top:40px;">
             <a href="eventi.html" class="btn-tutti-eventi">Vedi Tutti gli Eventi &rarr;</a>
         </div>
@@ -1085,15 +1024,14 @@
 
     <script src="eventi-data.js"></script>
     <script>
-    (function() {
-        const accMap = { musica:'ev-acc-musica', degusta:'ev-acc-degusta', cena:'ev-acc-cena', speciale:'ev-acc-speciale', aperitivo:'ev-acc-aperitivo' };
-        const catMap = { musica:'ev-cat-musica', degusta:'ev-cat-degusta', cena:'ev-cat-cena', speciale:'ev-cat-speciale', aperitivo:'ev-cat-aperitivo' };
-
-        function buildCards() {
-            const track = document.getElementById('eventiTrack');
-            if (!track || typeof EVENTI === 'undefined') return;
-
-            track.innerHTML = EVENTI.map(ev => `
+    /* ── CAROSELLO EVENTI ── */
+    (function(){
+        const accMap={musica:'ev-acc-musica',degusta:'ev-acc-degusta',cena:'ev-acc-cena',speciale:'ev-acc-speciale',aperitivo:'ev-acc-aperitivo'};
+        const catMap={musica:'ev-cat-musica',degusta:'ev-cat-degusta',cena:'ev-cat-cena',speciale:'ev-cat-speciale',aperitivo:'ev-cat-aperitivo'};
+        function buildCards(){
+            const track=document.getElementById('eventiTrack');
+            if(!track||typeof EVENTI==='undefined') return;
+            track.innerHTML=EVENTI.map(ev=>`
                 <div class="ev-card" data-cat="${ev.categoria}">
                     <div class="ev-card-accent ${accMap[ev.categoria]}"></div>
                     <div class="ev-card-date">
@@ -1105,72 +1043,65 @@
                         <span class="ev-cat ${catMap[ev.categoria]}">${ev.catLabel}</span>
                         <h3>${ev.titolo}</h3>
                         <p>${ev.desc}</p>
-                        <div class="ev-meta">
-                            <span>🕗 ${ev.ora}</span>
-                            <span>👥 ${ev.posti}</span>
-                        </div>
+                        <div class="ev-meta"><span>🕗 ${ev.ora}</span><span>👥 ${ev.posti}</span></div>
                     </div>
-                </div>
-            `).join('');
-
+                </div>`).join('');
             initCarousel();
         }
-
-        function initCarousel() {
-            const track    = document.getElementById('eventiTrack');
-            const mask     = track.parentElement;          /* ev-track-mask */
-            const dotsWrap = document.getElementById('evDots');
-            const prevBtn  = document.getElementById('evPrev');
-            const nextBtn  = document.getElementById('evNext');
-            const cards    = Array.from(track.querySelectorAll('.ev-card'));
-            let current    = 0;
-
-            function getVisible() {
-                const w = window.innerWidth;
-                return w >= 1000 ? 3 : w >= 600 ? 2 : 1;
-            }
-            function totalPages() { return Math.max(1, Math.ceil(cards.length / getVisible())); }
-            function gap() { return 20; }
-
-            function buildDots() {
-                dotsWrap.innerHTML = '';
-                for (let i = 0; i < totalPages(); i++) {
-                    const d = document.createElement('button');
-                    d.className = 'ev-dot' + (i === current ? ' active' : '');
-                    d.addEventListener('click', () => goTo(i));
+        function initCarousel(){
+            const track=document.getElementById('eventiTrack');
+            const mask=track.parentElement;
+            const dotsWrap=document.getElementById('evDots');
+            const prevBtn=document.getElementById('evPrev');
+            const nextBtn=document.getElementById('evNext');
+            const cards=Array.from(track.querySelectorAll('.ev-card'));
+            let current=0;
+            function getVis(){const w=window.innerWidth;return w>=1000?3:w>=600?2:1;}
+            function pages(){return Math.max(1,Math.ceil(cards.length/getVis()));}
+            function buildDots(){
+                dotsWrap.innerHTML='';
+                for(let i=0;i<pages();i++){
+                    const d=document.createElement('button');
+                    d.className='ev-dot'+(i===current?' active':'');
+                    d.addEventListener('click',()=>goTo(i));
                     dotsWrap.appendChild(d);
                 }
             }
-
-            function goTo(page) {
-                const pages = totalPages();
-                current = (page + pages) % pages;
-                /* Usa la larghezza della mask (senza padding del wrapper) */
-                const maskW   = mask.offsetWidth;
-                const vis     = getVisible();
-                const cardW   = (maskW - gap() * (vis - 1)) / vis;
-                const offset  = current * (cardW + gap()) * vis;
-                track.style.transform = `translateX(-${offset}px)`;
+            function goTo(page){
+                current=(page+pages())%pages();
+                const vis=getVis();
+                const cardW=(mask.offsetWidth-20*(vis-1))/vis;
+                track.style.transform=`translateX(-${current*vis*(cardW+20)}px)`;
                 buildDots();
             }
-
-            prevBtn.addEventListener('click', () => goTo(current - 1));
-            nextBtn.addEventListener('click', () => goTo(current + 1));
-
-            let autoInt = setInterval(() => goTo(current + 1), 4000);
-            track.addEventListener('mouseenter', () => clearInterval(autoInt));
-            track.addEventListener('mouseleave', () => { autoInt = setInterval(() => goTo(current + 1), 4000); });
-
-            window.addEventListener('resize', () => {
-                current = 0;
-                track.style.transform = 'translateX(0)';
-                buildDots();
-            });
-
+            prevBtn.addEventListener('click',()=>goTo(current-1));
+            nextBtn.addEventListener('click',()=>goTo(current+1));
+            let auto=setInterval(()=>goTo(current+1),4000);
+            track.addEventListener('mouseenter',()=>clearInterval(auto));
+            track.addEventListener('mouseleave',()=>{auto=setInterval(()=>goTo(current+1),4000);});
+            window.addEventListener('resize',()=>{current=0;track.style.transform='translateX(0)';buildDots();});
             buildDots();
         }
+        document.addEventListener('DOMContentLoaded',buildCards);
+    })();
 
-        document.addEventListener('DOMContentLoaded', buildCards);
+    /* ── SCROLLSPY ── */
+    (function(){
+        const sectionIds=['home','chi-siamo','recensioni','menu','eventi-preview','dove-siamo'];
+        const navLinks=document.querySelectorAll('.nav-links li a');
+        function setActive(id){
+            navLinks.forEach(a=>{
+                a.classList.remove('nav-active');
+                const href=a.getAttribute('href');
+                if(href==='#'+id||href.endsWith('#'+id)) a.classList.add('nav-active');
+            });
+        }
+        const obs=new IntersectionObserver(entries=>{
+            entries.forEach(e=>{ if(e.isIntersecting) setActive(e.target.id); });
+        },{rootMargin:'-50% 0px -45% 0px',threshold:0});
+        document.addEventListener('DOMContentLoaded',()=>{
+            sectionIds.forEach(id=>{ const el=document.getElementById(id); if(el) obs.observe(el); });
+        });
     })();
     </script>
 </body>
