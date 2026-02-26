@@ -99,11 +99,63 @@
 
         .nav-back { background: #faedea; padding: 10px; text-align: center; font-size: 0.9rem; }
         .nav-back a { color: var(--colore-2-primario); font-weight: 600; }
+        /* Cambia TUTTI i @media (max-width: 768px) in: */
+        @media (max-width: 1024px) {
+            html { font-size: 16px; }
+            .top-navbar { padding: 0 20px; }
+            
+            .hamburger { 
+                display: block; 
+                background: none; border: none; 
+                color: var(--colore-2-primario); 
+                font-size: 2rem; cursor: pointer; 
+            }
+            
+            .nav-links { 
+                position: fixed; top: 0; right: 0; 
+                height: 100vh; width: 80%; /* un po' più stretto su tablet */
+                background-color: var(--white-pure); 
+                display: flex; flex-direction: column; 
+                align-items: center; justify-content: center; 
+                gap: 30px; transform: translateX(100%); 
+                transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+                box-shadow: -5px 0 25px rgba(0,0,0,0.1); 
+                z-index: 4000; 
+            }
+            
+            .nav-links.show { transform: translateX(0); }
+            
+            .nav-links li { 
+                width: 80%; text-align: center; padding: 15px 0; 
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05); 
+                opacity: 0; transform: translateY(20px); 
+                transition: opacity 0.4s ease, transform 0.4s ease; 
+            }
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.3rem; color: var(--colore-2-primario); }
+            .nav-links.show li { opacity: 1; transform: translateY(0); }
+            
+            /* Tutti i transition-delay rimangono uguali */
+            .nav-links.show li:nth-of-type(1) { transition-delay: 0.15s; }
+            .nav-links.show li:nth-of-type(2) { transition-delay: 0.25s; }
+            .nav-links.show li:nth-of-type(3) { transition-delay: 0.35s; }
+            .nav-links.show li:nth-of-type(4) { transition-delay: 0.45s; }
+            .nav-links.show li:nth-of-type(5) { transition-delay: 0.55s; }
+            .nav-links.show li:nth-of-type(6) { transition-delay: 0.65s; }
+            .nav-links.show li:nth-of-type(7) { transition-delay: 0.75s; }
+            
+            .close-x { 
+                display: block; position: absolute; top: 25px; right: 25px; 
+                background: none; border: none; color: var(--colore-3-testo); 
+                font-size: 2.5rem; line-height: 1; cursor: pointer; 
+            }
+        }
+
 
         /* --- HERO --- */
         .hero {
             background: linear-gradient(rgba(253, 250, 248, 0.3), rgba(183, 110, 121, 0.6)), url('https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-position: center; color: var(--white-pure); text-align: center; padding: 140px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background-size: cover; background-position: center; color: var(--white-pure); text-align: center; padding: 140px 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; background-attachment: fixed; 
         }
         .hero h1 { font-size: 3.5rem; color: var(--white-pure); margin-bottom: 20px; text-shadow: 1px 1px 10px rgba(0,0,0,0.2); }
         .hero p { font-size: 1.3rem; margin-bottom: 40px; max-width: 700px; font-weight: 400; text-shadow: 1px 1px 5px rgba(0,0,0,0.3); }
@@ -212,11 +264,8 @@
         <ul id="nav-links" class="nav-links">
             <button class="close-x" onclick="chiudiMenu()">✕</button>
             
-            <li><a href="#home" onclick="chiudiMenu()">Home</a></li>
             <li><a href="#chi-siamo" onclick="chiudiMenu()">Il Centro</a></li>
-            <li><a href="#recensioni" onclick="chiudiMenu()">Recensioni</a></li>
             <li><a href="#servizi" onclick="chiudiMenu()">Trattamenti</a></li>
-            <li><a href="#voucher" onclick="chiudiMenu()">Voucher</a></li>
             <li><a href="#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
             
             <li>
@@ -226,7 +275,6 @@
             </li>
         </ul>
     </nav>
-
     <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
 
 <script>
@@ -239,7 +287,7 @@
     }
 
     function chiudiMenu() {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
             toggleMenu(); 
         }
     }
