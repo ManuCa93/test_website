@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="La storia del Ristorante Al Lago di Varese e il team di cucina che porta in tavola la tradizione ogni giorno.">
+  <title>La Nostra Storia – Ristorante Al Lago Varese</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---- VARIABILI ---- */
+    :root {
+      --colore-1-sfondo: #f8f9fa;
+      --colore-2-primario: #c0392b;
+      --colore-3-testo: #2c3e50;
+      --colore-4-dettagli: #d4ac0d;
+      --white-pure: #ffffff;
+      --nav-height: 60px;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+    body {
+      margin: 0; padding: 0;
+      padding-top: var(--nav-height);
+      width: 100%; overflow-x: hidden;
+      font-family: Inter, sans-serif;
+      line-height: 1.6;
+      color: var(--colore-3-testo);
+      background-color: var(--colore-1-sfondo);
+    }
+    h1, h2, h3 { font-family: Merriweather, serif; color: var(--colore-3-testo); }
+    a { text-decoration: none; }
+    section { padding: 60px 20px; }
+
+    /* ---- REVEAL ---- */
+    .reveal-section { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    .reveal-visible { opacity: 1; transform: translateY(0); }
+
+
+    /* --- NAVIGATION BAR --- */
+        .top-navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: var(--colore-2-primario);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 3000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .nav-brand {
+            color: var(--white-pure);
+            font-family: 'Merriweather', serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* =========================================
+           STILE DESKTOP
+           ========================================= */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center; /* Allinea verticalmente */
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: var(--white-pure);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links li a:hover { color: var(--colore-4-dettagli); }
+
+        /* --- BOTTONE PRENOTA --- */
+        .nav-book-btn {
+            background-color: var(--colore-4-dettagli) !important; /* Oro */
+            color: var(--colore-3-testo) !important; /* Scuro */
+            padding: 10px 24px;
+            border-radius: 50px; 
+            font-weight: 700 !important;
+            font-size: 0.85rem !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid transparent;
+        }
+        .nav-book-btn:hover {
+            background-color: var(--white-pure) !important;
+            color: var(--colore-4-dettagli) !important;
+            border-color: var(--white-pure) !important;
+            transform: translateY(-2px);
+        }
+        
+        .hamburger, .close-x { display: none; }
+
+         /* =========================================
+           STILE MOBILE & ANIMAZIONI MENU
+           ========================================= */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 1.8rem;
+                cursor: pointer;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 80%;
+                background-color: var(--colore-2-primario);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+                transform: translateX(100%);
+                transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+                z-index: 4000;
+            }
+
+            .nav-links.show { transform: translateX(0); }
+
+            .nav-links li {
+                width: 80%;
+                text-align: center;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                
+                /* ANIMAZIONE INIZIALE NASCOSTA */
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.5rem; }
+
+            /* QUANDO IL MENU È APERTO, LE VOCI COMPAIONO */
+            .nav-links.show li {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* RITARDI A CASCATA (Stagger effect) */
+            .nav-links.show li:nth-of-type(1) { transition-delay: 0.15s; }
+            .nav-links.show li:nth-of-type(2) { transition-delay: 0.25s; }
+            .nav-links.show li:nth-of-type(3) { transition-delay: 0.35s; }
+            .nav-links.show li:nth-of-type(4) { transition-delay: 0.45s; }
+            .nav-links.show li:nth-of-type(5) { transition-delay: 0.55s; }
+            .nav-links.show li:nth-of-type(6) { transition-delay: 0.65s; }
+
+            .close-x {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 2.5rem;
+                line-height: 1;
+                cursor: pointer;
+            }
+        }
+
+        /* --- OVERLAY SCURO --- */
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 3500; 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s;
+            backdrop-filter: blur(3px);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease 0.1s, visibility 0s 0s;
+        }
+
+        /* --- ALTRI STILI --- */
+        .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
+        .nav-back a { color: #666; font-weight: 600; }
+        /* --- STILE CAROSELLO PRINCIPALE --- */
+        .carousel-wrapper { position: relative; width: 100%; margin: auto; }
+        .carousel-container { max-width: 1000px; position: relative; margin: auto; overflow: hidden; border-radius: 15px; border: 5px solid var(--white-pure); outline: 1px solid #ddd; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .carousel-slide { display: none; height: 400px; }
+        .fade { animation-name: fade; animation-duration: 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .prev-btn, .next-btn { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: var(--white-pure); font-weight: bold; font-size: 18px; transition: 0.6s ease; background-color: rgba(0,0,0,0.3); border: none; user-select: none; }
+        .next-btn { right: 0; border-radius: 3px 0 0 3px; }
+        .prev-btn { left: 0; border-radius: 0 3px 3px 0; }
+        .prev-btn:hover, .next-btn:hover { background-color: rgba(0,0,0,0.8); }
+        .carousel-dots-container { text-align: center; padding-top: 15px; }
+        .dot { cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb; border-radius: 50%; display: inline-block; transition: background-color 0.6s ease; }
+        .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
+
+        /* --- CAROSELLO MENU IBRIDO --- */
+        .menu-carousel { margin-top: 25px; }
+        @media (max-width: 768px) {
+            .menu-carousel .carousel-container { border: none; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border-radius: 15px;}
+            .menu-carousel .carousel-slide { height: 250px; }
+            .menu-carousel .prev-btn, .menu-carousel .next-btn { padding: 10px; font-size: 14px; }
+        }
+        @media (min-width: 769px) {
+            .menu-carousel .carousel-container { display: flex; gap: 20px; box-shadow: none; border: none; outline: none; overflow: visible; }
+            .menu-carousel .carousel-slide { display: block !important; flex: 1; height: 220px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.4s ease; opacity: 1 !important; animation: none !important; }
+            .menu-carousel .carousel-slide img { border-radius: 12px; }
+            .menu-carousel .carousel-slide:hover { transform: scale(1.03); }
+            .menu-carousel .prev-btn, .menu-carousel .next-btn, .menu-carousel .carousel-dots-container { display: none !important; }
+        }
+
+        /* ---- NAVBAR AGGIORNATA ---- */
+        .top-navbar { padding: 0 24px; }
+        .nav-brand { font-size: 1.1rem; white-space: nowrap; flex-shrink: 0; }
+        .nav-links { gap: 4px; }
+        .nav-links li a {
+        font-size: 0.82rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+        white-space: nowrap;
+        }
+        .nav-links li a:hover { background: rgba(255,255,255,0.08); }
+        .nav-sep {
+        width: 1px; height: 18px;
+        background: rgba(255,255,255,0.3);
+        margin: 0 4px;
+        flex-shrink: 0;
+        list-style: none;
+        }
+        /* Dropdown Chi Siamo */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > a::after { content: " ▾"; font-size: 0.65rem; opacity: 0.7; }
+        .nav-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--colore-2-primario);
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        min-width: 190px;
+        z-index: 5000;
+        overflow: hidden;
+        padding: 12px 0;
+        margin-top: 0;
+        }
+        .nav-dropdown-menu li { width: 100%; border-bottom: none !important; opacity: 1 !important; transform: none !important; }
+        .nav-dropdown-menu li a {
+        display: block;
+        padding: 10px 20px;
+        font-size: 0.83rem;
+        border-radius: 0;
+        background: none !important;
+        white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover { background: rgba(255,255,255,0.12) !important; color: var(--colore-4-dettagli); }
+        .nav-dropdown:hover .nav-dropdown-menu,
+        .nav-dropdown:focus-within .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu { padding-top: 12px; }
+        .nav-book-btn { padding: 9px 20px !important; font-size: 0.8rem !important; white-space: nowrap; flex-shrink: 0; }
+        @media (max-width: 900px) {
+        .nav-sep { display: none; }
+        .hamburger { display: block; }
+        .nav-links { position: fixed; top: 0; right: 0; height: 100vh; width: 80%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transform: translateX(100%); z-index: 4000; }
+        .nav-links.show { transform: translateX(0); }
+        .nav-links li { width: 80%; text-align: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .nav-links li:last-child { border-bottom: none; }
+        .nav-links li a:not(.nav-book-btn) { font-size: 1.2rem; padding: 6px 0; border-radius: 0; background: none !important; }
+        .nav-dropdown > a::after { content: none; }
+        .nav-dropdown-menu { display: block !important; position: static; transform: none; box-shadow: none; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 4px 0; min-width: unset; margin-top: 8px; }
+        .nav-dropdown-menu li { border-bottom: none !important; padding: 0; }
+        .nav-dropdown-menu li a { font-size: 0.95rem !important; padding: 8px 16px !important; }
+        .close-x { display: block; position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--white-pure); font-size: 2.2rem; cursor: pointer; line-height: 1; }
+        }
+        @media (min-width: 901px) {
+        .hamburger { display: none; }
+        .close-x { display: none; }
+        }
+
+
+    /* ---- HERO ---- */
+    .page-hero {
+      position: relative;
+      background-image: linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.58)),
+        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--white-pure);
+      text-align: center;
+      padding: 120px 20px 90px;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--colore-4-dettagli);
+      color: var(--colore-3-testo);
+      font-weight: 700; font-size: 0.82rem;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 6px 20px; border-radius: 50px;
+      margin-bottom: 22px;
+    }
+    .page-hero h1 { font-size: 2.8rem; color: var(--white-pure); margin-bottom: 14px; }
+    .page-hero p { font-size: 1.1rem; max-width: 620px; opacity: 0.9; line-height: 1.7; }
+    .hero-nav-pills {
+      display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; justify-content: center;
+    }
+    .hero-pill {
+      padding: 10px 28px; border-radius: 50px; font-weight: 700;
+      font-size: 0.88rem; text-transform: uppercase; letter-spacing: 1px;
+      transition: all 0.3s; border: 2px solid rgba(255,255,255,0.7);
+      color: var(--white-pure);
+    }
+    .hero-pill:hover { background: rgba(255,255,255,0.15); }
+    .hero-pill.active-pill { background: var(--colore-4-dettagli); border-color: var(--colore-4-dettagli); color: var(--colore-3-testo); }
+
+    /* ---- INTRO BANNER ---- */
+    .intro-banner { background: var(--white-pure); text-align: center; }
+    .intro-banner h2 { color: var(--colore-2-primario); margin-bottom: 15px; font-size: 2rem; }
+    .intro-banner p { max-width: 720px; margin: 0 auto; color: #555; font-size: 1.05rem; line-height: 1.75; }
+
+    /* ---- TIMELINE ---- */
+    .timeline-section {
+      background: var(--colore-1-sfondo);
+      padding: 70px 20px;
+    }
+    .timeline-section .section-label {
+      text-align: center;
+      display: inline-block;
+      background: var(--colore-2-primario);
+      color: var(--white-pure);
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px;
+      padding: 5px 18px; border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .timeline-section h2 { text-align: center; font-size: 2.1rem; margin-bottom: 10px; }
+    .timeline-section .sub { text-align: center; color: #666; max-width: 620px; margin: 0 auto 55px; font-size: 1rem; }
+    .timeline-wrapper {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    /* linea verticale centrale */
+    .timeline-wrapper::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--colore-2-primario), var(--colore-4-dettagli));
+      border-radius: 3px;
+    }
+    .tl-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+      margin-bottom: 48px;
+      position: relative;
+    }
+    .tl-item:nth-child(odd) { flex-direction: row; }
+    .tl-item:nth-child(even) { flex-direction: row-reverse; }
+    .tl-card {
+      flex: 1;
+      background: var(--white-pure);
+      border-radius: 16px;
+      padding: 28px 30px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tl-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.11); }
+    .tl-item:nth-child(odd) .tl-card { border-left: 5px solid var(--colore-2-primario); }
+    .tl-item:nth-child(even) .tl-card { border-right: 5px solid var(--colore-4-dettagli); }
+    .tl-year {
+      font-family: Merriweather, serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--colore-2-primario);
+      margin-bottom: 6px;
+    }
+    .tl-item:nth-child(even) .tl-year { color: var(--colore-4-dettagli); }
+    .tl-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .tl-card p { font-size: 0.95rem; color: #555; line-height: 1.7; }
+    /* pallino centrale */
+    .tl-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--colore-2-primario);
+      border: 3px solid var(--white-pure);
+      box-shadow: 0 0 0 3px var(--colore-2-primario);
+      position: absolute;
+      left: 50%; top: 28px;
+      transform: translateX(-50%);
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .tl-spacer { flex: 1; }
+
+    @media (max-width: 700px) {
+      .timeline-wrapper::before { left: 18px; }
+      .tl-item, .tl-item:nth-child(even) { flex-direction: column; padding-left: 48px; }
+      .tl-dot { left: 18px; top: 14px; }
+      .tl-item:nth-child(odd) .tl-card, .tl-item:nth-child(even) .tl-card {
+        border-left: 5px solid var(--colore-2-primario);
+        border-right: none;
+      }
+      .tl-spacer { display: none; }
+    }
+
+    /* ---- VALORI ---- */
+    .valori-section { background: var(--white-pure); text-align: center; }
+    .valori-section h2 { color: var(--colore-2-primario); margin-bottom: 10px; font-size: 2rem; }
+    .valori-section .sub { color: #666; max-width: 600px; margin: 0 auto 45px; }
+    .valori-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .valore-card {
+      background: var(--colore-1-sfondo);
+      border-radius: 16px; padding: 34px 24px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+    .valore-card:hover { transform: translateY(-7px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+    .valore-icon { font-size: 2.6rem; margin-bottom: 16px; display: block; }
+    .valore-card h3 { font-size: 1.1rem; color: var(--colore-2-primario); margin-bottom: 10px; }
+    .valore-card p { font-size: 0.92rem; color: #666; line-height: 1.65; }
+
+    /* ---- CITAZIONE ---- */
+    .quote-section {
+      background: linear-gradient(135deg, rgba(192,57,43,0.92) 0%, #8b1a12 60%, var(--colore-3-testo) 100%);
+      color: var(--white-pure);
+      text-align: center;
+      padding: 70px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-section::before {
+      content: '"';
+      position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      font-size: 18rem; font-family: Merriweather, serif;
+      color: rgba(255,255,255,0.05); line-height: 1; pointer-events: none;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-style: italic;
+      max-width: 760px; margin: 0 auto 20px;
+      line-height: 1.6; position: relative; z-index: 1;
+    }
+    .quote-author { font-size: 0.9rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 2px; }
+
+    /* ---- LE MANI IN PASTA ---- */
+    .mani-intro { background: var(--colore-1-sfondo); text-align: center; }
+    .mani-intro h2 { color: var(--colore-2-primario); font-size: 2.2rem; margin-bottom: 12px; }
+    .mani-intro .sub { color: #666; max-width: 660px; margin: 0 auto; font-size: 1.05rem; line-height: 1.75; }
+    .mani-intro .section-label {
+      display: inline-block;
+      background: var(--colore-2-primario); color: var(--white-pure);
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      padding: 5px 18px; border-radius: 50px; margin-bottom: 14px;
+    }
+
+    /* ---- CARDS STAFF ---- */
+    .staff-section { background: var(--white-pure); padding: 70px 20px; }
+    .staff-section h2 { text-align: center; font-size: 2.1rem; margin-bottom: 8px; }
+    .staff-section .sub { text-align: center; color: #666; max-width: 600px; margin: 0 auto 50px; font-size: 1rem; }
+    .staff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px; max-width: 1200px; margin: 0 auto;
+    }
+    .staff-card {
+      background: var(--colore-1-sfondo);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      transition: transform 0.35s, box-shadow 0.35s;
+    }
+    .staff-card:hover { transform: translateY(-10px); box-shadow: 0 18px 40px rgba(0,0,0,0.13); }
+    .staff-img-wrapper { position: relative; height: 240px; overflow: hidden; }
+    .staff-img-wrapper img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .staff-card:hover .staff-img-wrapper img { transform: scale(1.06); }
+    .staff-role-badge {
+      position: absolute; bottom: 14px; left: 14px;
+      background: var(--colore-2-primario); color: var(--white-pure);
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 5px 14px; border-radius: 50px;
+    }
+    .staff-body { padding: 26px 28px 30px; }
+    .staff-body h3 { font-size: 1.25rem; margin-bottom: 6px; }
+    .staff-years {
+      font-size: 0.8rem; color: var(--colore-4-dettagli); font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px;
+    }
+    .staff-body p { font-size: 0.93rem; color: #555; line-height: 1.7; margin-bottom: 16px; }
+    .staff-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .staff-tag {
+      display: inline-block; padding: 4px 12px; border-radius: 50px;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      background: rgba(192,57,43,0.1); color: var(--colore-2-primario);
+    }
+    .staff-tag.gold { background: rgba(212,172,13,0.15); color: #a07800; }
+
+    /* ---- FILOSOFIA CUCINA ---- */
+    .filosofia-section {
+      background: var(--colore-1-sfondo);
+      padding: 70px 20px;
+    }
+    .filosofia-section .section-label {
+      text-align: center; display: block;
+      background: var(--colore-2-primario); color: var(--white-pure);
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      padding: 5px 18px; border-radius: 50px;
+      width: fit-content; margin: 0 auto 14px;
+    }
+    .filosofia-section h2 { text-align: center; font-size: 2.1rem; margin-bottom: 10px; }
+    .filosofia-section .sub { text-align: center; color: #666; max-width: 620px; margin: 0 auto 50px; }
+    .filosofia-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .filosofia-card {
+      background: var(--white-pure);
+      border-radius: 16px; padding: 32px 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--colore-4-dettagli);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .filosofia-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .filo-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+    .filosofia-card h3 { font-size: 1.1rem; color: var(--colore-2-primario); margin-bottom: 12px; }
+    .filosofia-card p { font-size: 0.93rem; color: #555; line-height: 1.7; }
+
+    /* ---- CTA ---- */
+    .cta-section {
+      background: rgba(192,57,43,0.93);
+      color: var(--white-pure);
+      text-align: center;
+      padding: 70px 20px;
+    }
+    .cta-section h2 { color: var(--colore-4-dettagli); font-size: 2rem; margin-bottom: 14px; }
+    .cta-section p { max-width: 600px; margin: 0 auto 36px; font-size: 1.05rem; opacity: 0.9; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero {
+      padding: 15px 32px; border-radius: 50px; font-weight: bold;
+      text-transform: uppercase; letter-spacing: 1px;
+      transition: all 0.3s ease; display: inline-block;
+      border: 2px solid transparent; font-size: 0.9rem;
+    }
+    .btn-primary { background: var(--colore-4-dettagli); color: var(--colore-3-testo); }
+    .btn-primary:hover { background: var(--white-pure); color: var(--colore-4-dettagli); }
+    .btn-outline-w { border-color: var(--white-pure); color: var(--white-pure); }
+    .btn-outline-w:hover { background: rgba(255,255,255,0.15); }
+
+    /* ---- FOOTER ---- */
+    .main-footer {
+      background-color: var(--colore-2-primario);
+      color: var(--white-pure);
+      width: 100%; padding: 60px 20px 120px;
+    }
+    .footer-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; text-align: center; }
+    .footer-col { flex: 1; min-width: 280px; max-width: 400px; }
+    .footer-col h3 { color: var(--colore-4-dettagli); font-size: 1.2rem; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-col p { margin-bottom: 10px; font-size: 1rem; line-height: 1.8; }
+    .footer-col a { color: var(--white-pure); transition: opacity 0.3s; }
+    .footer-col a:hover { opacity: 0.7; text-decoration: underline; }
+    .footer-legal { margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; text-align: center; opacity: 0.8; max-width: 1200px; margin-left: auto; margin-right: auto; }
+
+    /* ---- FLOATING ---- */
+    .floating-actions {
+      position: fixed; bottom: 30px; left: 0; right: 0;
+      display: flex; justify-content: space-between; padding: 0 25px;
+      z-index: 2000; transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .floating-actions.is-hidden { opacity: 0; transform: translateY(100px); pointer-events: none; }
+    .float-circle {
+      width: 65px; height: 65px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--white-pure); font-size: 0.7rem; font-weight: bold;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3); text-align: center;
+      animation: pulse 2s infinite;
+    }
+    .float-circle span { font-size: 1.6rem; margin-bottom: 2px; }
+    .bg-delivery { background-color: var(--colore-4-dettagli); }
+    .bg-call { background-color: var(--colore-2-primario); }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+    /* ---- BACK TO TOP ---- */
+    #backToTop {
+      display: none; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+      z-index: 2500; border: none; outline: none;
+      background-color: var(--colore-3-testo); color: var(--white-pure);
+      cursor: pointer; padding: 10px 18px; border-radius: 50px;
+      font-size: 18px; font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: opacity 0.3s;
+    }
+    #backToTop:hover { background-color: var(--colore-2-primario); }
+
+    @media (max-width: 600px) {
+      .page-hero h1 { font-size: 2rem; }
+      .tl-year { font-size: 1.5rem; }
+      .quote-text { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="top-navbar">
+    <a href="demo-ristorante.html" class="nav-brand">Ristorante Al Lago</a>
+    <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+    <ul id="nav-links" class="nav-links">
+        <button class="close-x" onclick="chiudiMenu()">&#10005;</button>
+        <li><a href="demo-ristorante.html#home" onclick="chiudiMenu()">Home</a></li>
+        <li class="nav-dropdown">
+        <a href="storia.html" onclick="chiudiMenu()">Chi Siamo</a>
+        <ul class="nav-dropdown-menu">
+            <li><a href="storia.html#la-nostra-storia" onclick="chiudiMenu()">La Nostra Storia</a></li>
+            <li><a href="storia.html#mani-in-pasta" onclick="chiudiMenu()">Le Mani in Pasta</a></li>
+        </ul>
+        </li>
+        <li class="nav-sep"></li>
+        <li class="nav-dropdown">
+        <a href="demo-ristorante.html#menu" onclick="chiudiMenu()">Portate</a>
+        <ul class="nav-dropdown-menu">
+            <li><a href="demo-ristorante.html#menu" onclick="chiudiMenu()">Menù</a></li>
+            <li><a href="eventi.html" onclick="chiudiMenu()">Eventi</a></li>
+            <li><a href="provenienza.html" onclick="chiudiMenu()">La Filiera</a></li>
+        </ul>
+        </li>
+        <li class="nav-sep"></li>
+        <li><a href="demo-ristorante.html#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
+        <li class="nav-sep"></li>
+        <li><a href="https://www.thefork.it" target="_blank" class="nav-book-btn">Prenota Tavolo</a></li>
+    </ul>
+</nav>
+<div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
+<!-- NAV BACK -->
+<div class="nav-back"><a href="demo-ristorante.html">← Torna alla Home</a></div>
+
+<!-- HERO -->
+<header class="page-hero">
+  <span class="hero-badge">Dal 1985</span>
+  <h1>La Nostra Storia</h1>
+  <p>Un sogno nato tra le prealpi varesine e le acque del lago. Quarant'anni di passione, famiglia e sapori autentici.</p>
+  <div class="hero-nav-pills">
+    <a href="#la-nostra-storia" class="hero-pill active-pill">La Storia</a>
+    <a href="#mani-in-pasta" class="hero-pill">Le Mani in Pasta</a>
+    <a href="provenienza.html" class="hero-pill">La Filiera</a>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="intro-banner reveal-section">
+  <h2>Una Famiglia, un Ristorante</h2>
+  <p>Il Ristorante Al Lago è molto più di un luogo dove mangiare: è il risultato di quattro decenni di scelte quotidiane, di ingredienti selezionati con cura, di ricette custodite e tramandate, di un amore incondizionato per il territorio varesino e per le persone che ogni giorno siedono ai nostri tavoli.</p>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="la-nostra-storia">
+  <div style="text-align:center; margin-bottom: 55px;">
+    <span class="section-label">La Nostra Storia</span>
+    <h2>Quarant'anni di Tradizione</h2>
+    <p class="sub">Ogni capitolo scritto con passione, dal primo piatto all'oggi.</p>
+  </div>
+  <div class="timeline-wrapper">
+
+    <div class="tl-item reveal-section">
+      <div class="tl-card">
+        <div class="tl-year">1985</div>
+        <h3>Il Primo Fuoco</h3>
+        <p>Giovanni Rossi, cuoco autodidatta cresciuto tra le campagne di Brinzio, apre una piccola trattoria in riva al Lago di Varese. Pochi tavoli, un menù scritto a mano ogni mattina, ingredienti comprati al mercato di Varese all'alba. Il nome è già tutto: <em>Al Lago</em>.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+    <div class="tl-item reveal-section">
+      <div class="tl-spacer"></div>
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">1991</div>
+        <h3>Entra la Famiglia</h3>
+        <p>La figlia di Giovanni, Carla, torna da Milano con la sua laurea in economia alberghiera e decide di investire nel sogno di famiglia. Arrivano i primi accordi con i pescatori del Lago Verbano e con gli allevatori della Valle Olona: nasce la filiera corta che ancora oggi è il cuore del ristorante.</p>
+      </div>
+    </div>
+
+    <div class="tl-item reveal-section">
+      <div class="tl-card">
+        <div class="tl-year">1998</div>
+        <h3>Il Forno a Legna</h3>
+        <p>Viene installato il forno a legna fatto costruire su misura da un artigiano di Cannobio. Marco Verga, giovane pizzaiolo di Napoli, porta la tradizione dell'impasto a lunga maturazione. Le pizze del Al Lago diventano famose in tutta la provincia: la <em>Varesina</em> con salame prealpino e formaggella diventa subito un simbolo.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+    <div class="tl-item reveal-section">
+      <div class="tl-spacer"></div>
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2005</div>
+        <h3>La Ristrutturazione</h3>
+        <p>Il locale raddoppia: si apre la terrazza sul lago, capace di ospitare fino a 80 coperti nelle serate estive. La cucina viene completamente rinnovata, con attrezzature professionali che permettono di espandere il menù. Il risotto al pesce persico, già piatto storico, diventa ufficialmente il piatto firma del ristorante.</p>
+      </div>
+    </div>
+
+    <div class="tl-item reveal-section">
+      <div class="tl-card">
+        <div class="tl-year">2012</div>
+        <h3>Marco in Cucina</h3>
+        <p>Marco Rossi, nipote di Giovanni, torna da tre anni di formazione tra Lione e Barcellona. Porta con sé tecniche moderne, idee nuove e una visione chiara: esaltare i prodotti locali con metodi contemporanei, senza tradire l'identità del luogo. Insieme a Carla ridisegnano il menù stagionale.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+    <div class="tl-item reveal-section">
+      <div class="tl-spacer"></div>
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2019</div>
+        <h3>Riconoscimenti e Progetti</h3>
+        <p>Il Gambero Rosso inserisce Al Lago nella guida <em>Ristoranti d'Italia</em>, premiando l'impegno per la filiera corta. Nasce il progetto <em>"Trasparenza in Tavola"</em>: ogni piatto del menù ha una scheda ingredienti con i produttori. Una scelta coraggiosa, che crea un legame diretto di fiducia con gli ospiti.</p>
+      </div>
+    </div>
+
+    <div class="tl-item reveal-section">
+      <div class="tl-card">
+        <div class="tl-year">2025</div>
+        <h3>Oggi: Tradizione e Futuro</h3>
+        <p>Quarant'anni dopo il primo fuoco, Al Lago è ancora lo stesso: una famiglia che cucina per le persone. Abbiamo aggiunto le serate eventi, il servizio di delivery per portare i sapori del lago a casa, e continuiamo ogni giorno a svegliarci presto per scegliere il meglio dal mercato. Il sogno di Giovanni è vivo.</p>
+      </div>
+      <div class="tl-dot"></div>
+      <div class="tl-spacer"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VALORI -->
+<section class="valori-section reveal-section">
+  <h2>I Nostri Valori</h2>
+  <p class="sub" style="color:#666; max-width:620px; margin: 0 auto 45px; font-size:1rem;">Quello in cui crediamo, ogni giorno, da quarant'anni.</p>
+  <div class="valori-grid">
+    <div class="valore-card">
+      <span class="valore-icon">🌿</span>
+      <h3>Km Zero</h3>
+      <p>Oltre l'80% degli ingredienti proviene da produttori locali entro 80 km. Pesci dal Lago Verbano, verdure dagli orti varesini, carni dalla Valle Olona.</p>
+    </div>
+    <div class="valore-card">
+      <span class="valore-icon">👨‍👩‍👧‍👦</span>
+      <h3>Famiglia</h3>
+      <p>Siamo un'impresa di famiglia da tre generazioni. Ogni decisione è presa tenendo a mente il rispetto per chi lavora con noi e per chi viene a trovarci.</p>
+    </div>
+    <div class="valore-card">
+      <span class="valore-icon">🔬</span>
+      <h3>Trasparenza</h3>
+      <p>Sappiamo il nome del pescatore che ha pescato il persico di stamattina. E lo scriviamo nel menù. La nostra filiera è pubblica, consultabile piatto per piatto.</p>
+    </div>
+    <div class="valore-card">
+      <span class="valore-icon">🍕</span>
+      <h3>Artigianalità</h3>
+      <p>Nessun prodotto industriale. La pasta è tirata a mano ogni mattina, il pane arriva dal forno Dal Lago all'alba, i dolci sono preparati in cucina da noi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CITAZIONE -->
+<section class="quote-section reveal-section">
+  <p class="quote-text">"Cucinare è un atto d'amore. Non si fa per i premi o le guide, si fa perché vuoi che chi mangia si senta bene, come a casa propria."</p>
+  <p class="quote-author">— Giovanni Rossi, fondatore · 1985</p>
+</section>
+
+<!-- ========== LE MANI IN PASTA ========== -->
+
+<section class="mani-intro reveal-section" id="mani-in-pasta" style="padding-bottom: 30px;">
+  <span class="section-label">Le Mani in Pasta</span>
+  <h2>Le Persone Dietro ai Piatti</h2>
+  <p class="sub">Non usiamo la parola "staff": sono artigiani, appassionati, custodi di un sapere che si tramanda in cucina ogni giorno. Qui li presentiamo davvero.</p>
+</section>
+
+<!-- CARDS STAFF -->
+<section class="staff-section">
+  <div class="staff-grid">
+
+    <!-- Marco Rossi -->
+    <div class="staff-card reveal-section">
+      <div class="staff-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Marco Rossi - Executive Chef">
+        <span class="staff-role-badge">Executive Chef</span>
+      </div>
+      <div class="staff-body">
+        <h3>Marco Rossi</h3>
+        <p class="staff-years">In cucina dal 2012 · 3ª generazione</p>
+        <p>Nipote del fondatore Giovanni, Marco ha lasciato un futuro in finanza per seguire la vocazione della cucina. Tre anni di formazione a Lione e Barcellona, poi il ritorno definitivo a Varese. La sua filosofia è semplice: <em>ingrediente perfetto, tecnica pulita, niente fronzoli</em>. Ogni stagione ridisegna personalmente il menù visitando i produttori locali.</p>
+        <div class="staff-tags">
+          <span class="staff-tag">Risotti</span>
+          <span class="staff-tag">Pesce di Lago</span>
+          <span class="staff-tag gold">Menù Stagionale</span>
+          <span class="staff-tag">Cucina Creativa</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sara Bianchi -->
+    <div class="staff-card reveal-section">
+      <div class="staff-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sara Bianchi - Responsabile di Sala">
+        <span class="staff-role-badge">Responsabile di Sala</span>
+      </div>
+      <div class="staff-body">
+        <h3>Sara Bianchi</h3>
+        <p class="staff-years">Con noi dal 2016 · 9 anni</p>
+        <p>Sara è entrata come cameriera mentre studiava comunicazione all'Università dell'Insubria, e non è più andata via. Oggi coordina tutta la sala con un'attenzione quasi ossessiva ai dettagli: sa il nome dei clienti abituali, i loro gusti, le allergie. Crede che un grande ristorante si riconosca dall'accoglienza, prima ancora che dal cibo.</p>
+        <div class="staff-tags">
+          <span class="staff-tag">Accoglienza</span>
+          <span class="staff-tag">Abbinamenti Vino</span>
+          <span class="staff-tag gold">Gestione Sala</span>
+          <span class="staff-tag">Formazione Staff</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Luca Verga -->
+    <div class="staff-card reveal-section">
+      <div class="staff-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Luca Verga - Mastro Pizzaiolo">
+        <span class="staff-role-badge">Mastro Pizzaiolo</span>
+      </div>
+      <div class="staff-body">
+        <h3>Luca Verga</h3>
+        <p class="staff-years">Con noi dal 2004 · 22 anni</p>
+        <p>Luca è arrivato giovanissimo da Salerno, segnalato da un vecchio amico di Marco senior. Ha portato con sé la cultura dell'impasto napoletano — maturazione lenta, biga, lievito madre — e l'ha contaminata con gli ingredienti delle prealpi. Il risultato è una pizza che sa di Napoli nell'impasto e di Varese nel condimento. Non lavorerà mai altrove.</p>
+        <div class="staff-tags">
+          <span class="staff-tag">Impasto a Lunga Maturazione</span>
+          <span class="staff-tag gold">Forno a Legna</span>
+          <span class="staff-tag">Lievito Madre</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Giulia Ferraro -->
+    <div class="staff-card reveal-section">
+      <div class="staff-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Giulia Ferraro - Pastry Chef">
+        <span class="staff-role-badge">Pastry Chef</span>
+      </div>
+      <div class="staff-body">
+        <h3>Giulia Ferraro</h3>
+        <p class="staff-years">Con noi dal 2020 · 5 anni</p>
+        <p>Pasticciera di formazione (ALMA, Colorno), Giulia si è innamorata dei dolci tradizionali varesini durante uno stage e non è più tornata a Milano. Ogni mattina prepara le panne cotte, i tiramisù, i tortini al cioccolato. La sua regola è ferrea: nessun dolce prefabbricato, nessun semilavorato industriale. Se una ricetta non si riesce a fare bene freschi ogni giorno, viene tolta dal menù.</p>
+        <div class="staff-tags">
+          <span class="staff-tag">Pasticceria Artigianale</span>
+          <span class="staff-tag gold">Dolci della Casa</span>
+          <span class="staff-tag">Ricette Tradizionali</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roberto Cova -->
+    <div class="staff-card reveal-section">
+      <div class="staff-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Roberto Cova - Sommelier">
+        <span class="staff-role-badge">Sommelier</span>
+      </div>
+      <div class="staff-body">
+        <h3>Roberto Cova</h3>
+        <p class="staff-years">Con noi dal 2018 · 7 anni</p>
+        <p>Roberto è AIS di terzo livello e ha lavorato per anni in Franciacorta prima di scegliere Al Lago. Gestisce una carta vini di oltre 80 etichette, con focus su Lombardia, Piemonte e Veneto. La sua specialità è trovare l'abbinamento inaspettato: un Timorasso con il risotto al persico, una Bonarda frizzante con la pizza. Non vi imporrà mai una scelta costosa se una bottiglia a 18 euro è quella giusta.</p>
+        <div class="staff-tags">
+          <span class="staff-tag gold">AIS 3° Livello</span>
+          <span class="staff-tag">Vini Lombardi</span>
+          <span class="staff-tag">Abbinamenti Cibo-Vino</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carla Rossi -->
+    <div class="staff-card reveal-section">
+      <div class="staff-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Carla Rossi - Direzione">
+        <span class="staff-role-badge">Direzione</span>
+      </div>
+      <div class="staff-body">
+        <h3>Carla Rossi</h3>
+        <p class="staff-years">Dal 1991 · 35 anni · Figlia del fondatore</p>
+        <p>Carla è il motore silenzioso del ristorante. Gestisce i rapporti con i fornitori — molti dei quali sono diventati amici di famiglia — coordina lo staff, prende le decisioni difficili. È lei che ogni lunedì mattina incontra i produttori per pianificare la settimana, che verifica ogni acquisto, che conosce il nome di ogni pescatore che porta il pesce. <em>"Un ristorante è fatto di persone"</em>, dice sempre.</p>
+        <div class="staff-tags">
+          <span class="staff-tag gold">Gestione Fornitori</span>
+          <span class="staff-tag">Filiera Corta</span>
+          <span class="staff-tag">Direzione Operativa</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FILOSOFIA CUCINA -->
+<section class="filosofia-section reveal-section">
+  <span class="section-label">Come Lavoriamo</span>
+  <h2>La Nostra Filosofia di Cucina</h2>
+  <p class="sub">Non è un manifesto, è una routine quotidiana.</p>
+  <div class="filosofia-grid">
+    <div class="filosofia-card">
+      <span class="filo-icon">🌅</span>
+      <h3>Il Mercato all'Alba</h3>
+      <p>Ogni mattina Marco o Carla sono al mercato di Varese alle 6:30. Non per abitudine, ma perché solo vedendo il prodotto dal vivo si capisce cosa cucinare quel giorno. Il menù è scritto dopo il mercato, non prima.</p>
+    </div>
+    <div class="filosofia-card">
+      <span class="filo-icon">🐟</span>
+      <h3>Il Pescato del Giorno</h3>
+      <p>La Cooperativa Pescatori del Lago Verbano porta il pesce fresco ogni mattina entro le 7:30. Persico, lavarello, tinca: in base alla pescata cambia il menù del giorno. Se il lago non ha dato abbastanza, quella portata non si fa.</p>
+    </div>
+    <div class="filosofia-card">
+      <span class="filo-icon">🍞</span>
+      <h3>Pasta e Pane Ogni Giorno</h3>
+      <p>Giulia e Marco iniziano a lavorare la pasta fresca alle 8:00. Tagliolini, pappardelle, gnocchi: ogni formato tirato a mano, ogni giorno. Il pane arriva dal Forno Artigianale Dal Lago alle 9:00, sfornato da mezz'ora.</p>
+    </div>
+    <div class="filosofia-card">
+      <span class="filo-icon">🔥</span>
+      <h3>Il Forno di Luca</h3>
+      <p>L'impasto delle pizze viene preparato 48 ore prima da Luca. A mezzogiorno il forno a legna raggiunge la temperatura. Ogni pizza viene stesa e infornata al momento dell'ordine: nessuna precottura, nessun compromesso.</p>
+    </div>
+    <div class="filosofia-card">
+      <span class="filo-icon">🍷</span>
+      <h3>L'Abbinamento di Roberto</h3>
+      <p>Roberto studia ogni nuovo piatto di Marco per trovare l'abbinamento ideale. Non parte dal prezzo, parte dal gusto. La carta vini cambia ogni semestre per seguire le stagioni dei vignaioli, esattamente come fa la cucina.</p>
+    </div>
+    <div class="filosofia-card">
+      <span class="filo-icon">💬</span>
+      <h3>Il Feedback della Sala</h3>
+      <p>Ogni settimana cucina e sala si riuniscono: Sara riporta i commenti degli ospiti, Marco ascolta. Alcune delle migliori modifiche al menù sono venute da una critica costruttiva raccolta da Sara a un tavolo del sabato sera.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal-section">
+  <h2>Vieni a Conoscerci di Persona</h2>
+  <p>La storia e le persone si capiscono meglio seduti a un tavolo, con un piatto davanti. Ti aspettiamo.</p>
+  <div class="cta-btns">
+    <a href="https://www.thefork.it" target="_blank" class="btn-hero btn-primary">Prenota un Tavolo</a>
+    <a href="demo-ristorante.html#menu" class="btn-hero btn-outline-w">Sfoglia il Menù</a>
+    <a href="provenienza.html" class="btn-hero btn-outline-w">La Nostra Filiera</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="main-footer reveal-section">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h3>Contatti Rapidi</h3>
+      <p>Telefono: <a href="tel:+390332000000" style="color:white">0332 00.00.00</a></p>
+      <p>WhatsApp: <a href="https://wa.me/393330000000" style="color:white">333 00.00.000</a></p>
+      <p>Email: info@ristoranteallago.demo</p>
+    </div>
+    <div class="footer-col">
+      <h3>Orari di Apertura</h3>
+      <p>Lun – Ven: 12:00–14:30 / 19:00–23:00</p>
+      <p>Sab – Dom: 12:00–15:00 / 18:30–23:30</p>
+      <p><em>Chiuso il Martedì</em></p>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <p>© 2026 Ristorante Al Lago S.r.l. – Tutti i diritti riservati</p>
+    <p><a href="#" style="color:white">Privacy Policy</a> &nbsp;|&nbsp; <a href="#" style="color:white">Cookie Policy</a></p>
+  </div>
+</footer>
+
+<!-- FLOATING ACTIONS -->
+<div id="action-buttons" class="floating-actions">
+  <a href="delivery.html" class="float-circle bg-delivery"><span>🛵</span></a>
+  <a href="tel:+390332000000" class="float-circle bg-call"><span>📞</span></a>
+</div>
+<button onclick="topFunction()" id="backToTop" title="Torna su">▲</button>
+
+<script>
+  /* ---- NAVBAR ---- */
+  function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('show');
+    document.getElementById('menu-overlay').classList.toggle('active');
+  }
+  function chiudiMenu() {
+    if (window.innerWidth <= 900) {
+      document.getElementById('nav-links').classList.remove('show');
+      document.getElementById('menu-overlay').classList.remove('active');
+    }
+  }
+
+  /* ---- REVEAL ---- */
+  document.addEventListener('DOMContentLoaded', function () {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('reveal-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal-section').forEach(s => obs.observe(s));
+  });
+
+  /* ---- SCROLL: back-to-top + floating hide ---- */
+  let lastST = 0;
+  window.addEventListener('scroll', function () {
+    const st = window.pageYOffset;
+    const btnTop = document.getElementById('backToTop');
+    const btnActions = document.getElementById('action-buttons');
+    if (st > 100 && st > lastST) { btnActions.classList.add('is-hidden'); }
+    else { btnActions.classList.remove('is-hidden'); }
+    btnTop.style.display = st > 300 ? 'block' : 'none';
+    lastST = st <= 0 ? 0 : st;
+  });
+  function topFunction() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+</script>
+</body>
+</html>

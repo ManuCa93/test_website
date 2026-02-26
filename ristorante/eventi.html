@@ -27,49 +27,275 @@
         .reveal-section { opacity:0; transform:translateY(40px); transition:all 0.9s cubic-bezier(0.25,0.8,0.25,1); }
         .reveal-visible  { opacity:1; transform:translateY(0); }
 
-        /* NAVBAR */
-        .top-navbar { position:fixed; top:0; left:0; width:100%; height:var(--nav-height);
-            background-color:var(--colore-2-primario); display:flex; justify-content:space-between;
-            align-items:center; padding:0 20px; z-index:3000;
-            box-shadow:0 2px 10px rgba(0,0,0,0.2); border-radius:0 0 20px 20px; }
-        .nav-brand { color:var(--white-pure); font-family:'Merriweather',serif; font-weight:bold; font-size:1.2rem; }
-        .nav-links { list-style:none; display:flex; align-items:center; gap:25px; margin:0; padding:0; }
-        .nav-links li a { color:var(--white-pure); font-weight:600; font-size:0.95rem; transition:color 0.3s; text-transform:uppercase; }
-        .nav-links li a:hover { color:var(--colore-4-dettagli); }
-        .nav-links li a.active-page { color:var(--colore-4-dettagli); border-bottom:2px solid var(--colore-4-dettagli); padding-bottom:2px; }
-        .nav-book-btn { background-color:var(--colore-4-dettagli) !important; color:var(--colore-3-testo) !important;
-            padding:10px 24px; border-radius:50px; font-weight:700 !important; font-size:0.85rem !important;
-            box-shadow:0 4px 10px rgba(0,0,0,0.15); transition:all 0.3s ease;
-            text-transform:uppercase; letter-spacing:1px; border:2px solid transparent; }
-        .nav-book-btn:hover { background-color:var(--white-pure) !important; color:var(--colore-4-dettagli) !important;
-            border-color:var(--white-pure) !important; transform:translateY(-2px); }
-        .hamburger,.close-x { display:none; }
-        @media (max-width:768px) {
-            .hamburger { display:block; background:none; border:none; color:var(--white-pure); font-size:1.8rem; cursor:pointer; }
-            .nav-links { position:fixed; top:0; right:0; height:100vh; width:80%; background-color:var(--colore-2-primario);
-                flex-direction:column; align-items:center; justify-content:center; gap:30px;
-                transform:translateX(100%); transition:transform 0.5s cubic-bezier(0.77,0,0.175,1);
-                box-shadow:-5px 0 25px rgba(0,0,0,0.3); z-index:4000; }
-            .nav-links.show { transform:translateX(0); }
-            .nav-links li { width:80%; text-align:center; padding:15px 0;
-                border-bottom:1px solid rgba(255,255,255,0.2);
-                opacity:0; transform:translateY(20px); transition:opacity 0.4s ease, transform 0.4s ease; }
-            .nav-links li:last-child { border-bottom:none; }
-            .nav-links li a { font-size:1.5rem; }
-            .nav-links.show li { opacity:1; transform:translateY(0); }
-            .nav-links.show li:nth-of-type(1){transition-delay:0.15s}
-            .nav-links.show li:nth-of-type(2){transition-delay:0.25s}
-            .nav-links.show li:nth-of-type(3){transition-delay:0.35s}
-            .nav-links.show li:nth-of-type(4){transition-delay:0.45s}
-            .nav-links.show li:nth-of-type(5){transition-delay:0.55s}
-            .nav-links.show li:nth-of-type(6){transition-delay:0.65s}
-            .close-x { display:block; position:absolute; top:25px; right:25px;
-                background:none; border:none; color:var(--white-pure); font-size:2.5rem; cursor:pointer; }
+
+
+
+            /* --- NAVIGATION BAR --- */
+        .top-navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: var(--colore-2-primario);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 3000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
         }
-        .menu-overlay { position:fixed; top:0; left:0; width:20%; height:100%;
-            background-color:rgba(0,0,0,0.6); z-index:3500; opacity:0; visibility:hidden;
-            transition:opacity 0.3s ease 0.1s, visibility 0s 0.4s; backdrop-filter:blur(3px); }
-        .menu-overlay.active { opacity:1; visibility:visible; transition:opacity 0.5s ease 0.1s, visibility 0s 0s; }
+
+        .nav-brand {
+            color: var(--white-pure);
+            font-family: 'Merriweather', serif;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* =========================================
+           STILE DESKTOP
+           ========================================= */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center; /* Allinea verticalmente */
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: var(--white-pure);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links li a:hover { color: var(--colore-4-dettagli); }
+
+        /* --- BOTTONE PRENOTA --- */
+        .nav-book-btn {
+            background-color: var(--colore-4-dettagli) !important; /* Oro */
+            color: var(--colore-3-testo) !important; /* Scuro */
+            padding: 10px 24px;
+            border-radius: 50px; 
+            font-weight: 700 !important;
+            font-size: 0.85rem !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid transparent;
+        }
+        .nav-book-btn:hover {
+            background-color: var(--white-pure) !important;
+            color: var(--colore-4-dettagli) !important;
+            border-color: var(--white-pure) !important;
+            transform: translateY(-2px);
+        }
+        
+        .hamburger, .close-x { display: none; }
+
+         /* =========================================
+           STILE MOBILE & ANIMAZIONI MENU
+           ========================================= */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 1.8rem;
+                cursor: pointer;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 80%;
+                background-color: var(--colore-2-primario);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 30px;
+                transform: translateX(100%);
+                transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+                z-index: 4000;
+            }
+
+            .nav-links.show { transform: translateX(0); }
+
+            .nav-links li {
+                width: 80%;
+                text-align: center;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                
+                /* ANIMAZIONE INIZIALE NASCOSTA */
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+
+            .nav-links li:last-child { border-bottom: none; }
+            .nav-links li a { font-size: 1.5rem; }
+
+            /* QUANDO IL MENU È APERTO, LE VOCI COMPAIONO */
+            .nav-links.show li {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* RITARDI A CASCATA (Stagger effect) */
+            .nav-links.show li:nth-of-type(1) { transition-delay: 0.15s; }
+            .nav-links.show li:nth-of-type(2) { transition-delay: 0.25s; }
+            .nav-links.show li:nth-of-type(3) { transition-delay: 0.35s; }
+            .nav-links.show li:nth-of-type(4) { transition-delay: 0.45s; }
+            .nav-links.show li:nth-of-type(5) { transition-delay: 0.55s; }
+            .nav-links.show li:nth-of-type(6) { transition-delay: 0.65s; }
+
+            .close-x {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 25px;
+                background: none;
+                border: none;
+                color: var(--white-pure);
+                font-size: 2.5rem;
+                line-height: 1;
+                cursor: pointer;
+            }
+        }
+
+        /* --- OVERLAY SCURO --- */
+        .menu-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 3500; 
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease 0.1s, visibility 0s 0.4s;
+            backdrop-filter: blur(3px);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease 0.1s, visibility 0s 0s;
+        }
+
+        /* --- ALTRI STILI --- */
+        .nav-back { background: #eee; padding: 10px; text-align: center; font-size: 0.8rem; }
+        .nav-back a { color: #666; font-weight: 600; }
+        /* --- STILE CAROSELLO PRINCIPALE --- */
+        .carousel-wrapper { position: relative; width: 100%; margin: auto; }
+        .carousel-container { max-width: 1000px; position: relative; margin: auto; overflow: hidden; border-radius: 15px; border: 5px solid var(--white-pure); outline: 1px solid #ddd; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .carousel-slide { display: none; height: 400px; }
+        .fade { animation-name: fade; animation-duration: 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .prev-btn, .next-btn { cursor: pointer; position: absolute; top: 50%; width: auto; padding: 16px; margin-top: -22px; color: var(--white-pure); font-weight: bold; font-size: 18px; transition: 0.6s ease; background-color: rgba(0,0,0,0.3); border: none; user-select: none; }
+        .next-btn { right: 0; border-radius: 3px 0 0 3px; }
+        .prev-btn { left: 0; border-radius: 0 3px 3px 0; }
+        .prev-btn:hover, .next-btn:hover { background-color: rgba(0,0,0,0.8); }
+        .carousel-dots-container { text-align: center; padding-top: 15px; }
+        .dot { cursor: pointer; height: 12px; width: 12px; margin: 0 4px; background-color: #bbb; border-radius: 50%; display: inline-block; transition: background-color 0.6s ease; }
+        .dot.active, .dot:hover { background-color: var(--colore-2-primario); }
+
+        /* --- CAROSELLO MENU IBRIDO --- */
+        .menu-carousel { margin-top: 25px; }
+        @media (max-width: 768px) {
+            .menu-carousel .carousel-container { border: none; outline: none; box-shadow: 0 8px 20px rgba(0,0,0,0.08); border-radius: 15px;}
+            .menu-carousel .carousel-slide { height: 250px; }
+            .menu-carousel .prev-btn, .menu-carousel .next-btn { padding: 10px; font-size: 14px; }
+        }
+        @media (min-width: 769px) {
+            .menu-carousel .carousel-container { display: flex; gap: 20px; box-shadow: none; border: none; outline: none; overflow: visible; }
+            .menu-carousel .carousel-slide { display: block !important; flex: 1; height: 220px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.4s ease; opacity: 1 !important; animation: none !important; }
+            .menu-carousel .carousel-slide img { border-radius: 12px; }
+            .menu-carousel .carousel-slide:hover { transform: scale(1.03); }
+            .menu-carousel .prev-btn, .menu-carousel .next-btn, .menu-carousel .carousel-dots-container { display: none !important; }
+        }
+
+        /* ---- NAVBAR AGGIORNATA ---- */
+        .top-navbar { padding: 0 24px; }
+        .nav-brand { font-size: 1.1rem; white-space: nowrap; flex-shrink: 0; }
+        .nav-links { gap: 4px; }
+        .nav-links li a {
+        font-size: 0.82rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+        white-space: nowrap;
+        }
+        .nav-links li a:hover { background: rgba(255,255,255,0.08); }
+        .nav-sep {
+        width: 1px; height: 18px;
+        background: rgba(255,255,255,0.3);
+        margin: 0 4px;
+        flex-shrink: 0;
+        list-style: none;
+        }
+        /* Dropdown Chi Siamo */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown > a::after { content: " ▾"; font-size: 0.65rem; opacity: 0.7; }
+        .nav-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--colore-2-primario);
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        min-width: 190px;
+        z-index: 5000;
+        overflow: hidden;
+        padding: 12px 0;
+        margin-top: 0;
+        }
+        .nav-dropdown-menu li { width: 100%; border-bottom: none !important; opacity: 1 !important; transform: none !important; }
+        .nav-dropdown-menu li a {
+        display: block;
+        padding: 10px 20px;
+        font-size: 0.83rem;
+        border-radius: 0;
+        background: none !important;
+        white-space: nowrap;
+        }
+        .nav-dropdown-menu li a:hover { background: rgba(255,255,255,0.12) !important; color: var(--colore-4-dettagli); }
+        .nav-dropdown:hover .nav-dropdown-menu,
+        .nav-dropdown:focus-within .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu { padding-top: 12px; }
+        .nav-book-btn { padding: 9px 20px !important; font-size: 0.8rem !important; white-space: nowrap; flex-shrink: 0; }
+        @media (max-width: 900px) {
+        .nav-sep { display: none; }
+        .hamburger { display: block; }
+        .nav-links { position: fixed; top: 0; right: 0; height: 100vh; width: 80%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transform: translateX(100%); z-index: 4000; }
+        .nav-links.show { transform: translateX(0); }
+        .nav-links li { width: 80%; text-align: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .nav-links li:last-child { border-bottom: none; }
+        .nav-links li a:not(.nav-book-btn) { font-size: 1.2rem; padding: 6px 0; border-radius: 0; background: none !important; }
+        .nav-dropdown > a::after { content: none; }
+        .nav-dropdown-menu { display: block !important; position: static; transform: none; box-shadow: none; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 4px 0; min-width: unset; margin-top: 8px; }
+        .nav-dropdown-menu li { border-bottom: none !important; padding: 0; }
+        .nav-dropdown-menu li a { font-size: 0.95rem !important; padding: 8px 16px !important; }
+        .close-x { display: block; position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--white-pure); font-size: 2.2rem; cursor: pointer; line-height: 1; }
+        }
+        @media (min-width: 901px) {
+        .hamburger { display: none; }
+        .close-x { display: none; }
+        }
+
+
 
         /* HERO */
         .hero-eventi { position:relative;
@@ -196,24 +422,40 @@
             .evento-titolo { font-size:1.05rem; }
             .evento-body { padding:16px 16px; }
         }
-    </style>
+
+  </style>
 </head>
 <body>
 
     <nav class="top-navbar">
         <a href="demo-ristorante.html" class="nav-brand">Ristorante Al Lago</a>
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <button class="hamburger" onclick="toggleMenu()">&#9776;</button>
         <ul id="nav-links" class="nav-links">
-            <button class="close-x" onclick="chiudiMenu()">✕</button>
-            <li><a href="demo-ristorante.html#home"       onclick="chiudiMenu()">Home</a></li>
-            <li><a href="demo-ristorante.html#chi-siamo"  onclick="chiudiMenu()">Chi Siamo</a></li>
-            <li><a href="demo-ristorante.html#menu"       onclick="chiudiMenu()">Menù</a></li>
-            <li><a href="eventi.html" class="active-page" onclick="chiudiMenu()">Eventi</a></li>
+            <button class="close-x" onclick="chiudiMenu()">&#10005;</button>
+            <li><a href="demo-ristorante.html#home" onclick="chiudiMenu()">Home</a></li>
+            <li class="nav-dropdown">
+            <a href="storia.html" onclick="chiudiMenu()">Chi Siamo</a>
+            <ul class="nav-dropdown-menu">
+                <li><a href="storia.html#la-nostra-storia" onclick="chiudiMenu()">La Nostra Storia</a></li>
+                <li><a href="storia.html#mani-in-pasta" onclick="chiudiMenu()">Le Mani in Pasta</a></li>
+            </ul>
+            </li>
+            <li class="nav-sep"></li>
+            <li class="nav-dropdown">
+            <a href="demo-ristorante.html#menu" onclick="chiudiMenu()">Portate</a>
+            <ul class="nav-dropdown-menu">
+                <li><a href="demo-ristorante.html#menu" onclick="chiudiMenu()">Menù</a></li>
+                <li><a href="eventi.html" onclick="chiudiMenu()">Eventi</a></li>
+                <li><a href="provenienza.html" onclick="chiudiMenu()">La Filiera</a></li>
+            </ul>
+            </li>
+            <li class="nav-sep"></li>
             <li><a href="demo-ristorante.html#dove-siamo" onclick="chiudiMenu()">Dove Siamo</a></li>
-            <li><a href="https://www.thefork.it/" target="_blank" class="nav-book-btn">Prenota Tavolo</a></li>
+            <li class="nav-sep"></li>
+            <li><a href="https://www.thefork.it" target="_blank" class="nav-book-btn">Prenota Tavolo</a></li>
         </ul>
     </nav>
-    <div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
+<div id="menu-overlay" class="menu-overlay" onclick="toggleMenu()"></div>
 
     <section class="hero-eventi">
         <span class="hero-badge">📅 Calendario Settimanale</span>
@@ -287,7 +529,7 @@
             document.getElementById('nav-links').classList.toggle('show');
             document.getElementById('menu-overlay').classList.toggle('active');
         }
-        function chiudiMenu() { if (window.innerWidth <= 768) toggleMenu(); }
+        function chiudiMenu() { if (window.innerWidth <= 900) toggleMenu(); }
 
         /* -------- RENDER CALENDARIO DA DATI -------- */
         function renderCalendario(lista) {
