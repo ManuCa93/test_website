@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- VARIABILI COLORI --- */
         :root {
             --rosso-primario: #D62828;
             --arancione-vivido: #F77F00;
@@ -18,7 +17,6 @@
             --gradiente: linear-gradient(135deg, var(--rosso-primario), var(--arancione-vivido));
         }
 
-        /* --- RESET E BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
@@ -29,7 +27,6 @@
             padding-bottom: 80px;
         }
 
-        /* --- TIPOGRAFIA ED EFFETTI --- */
         .text-gradient {
             background: var(--gradiente);
             -webkit-background-clip: text;
@@ -38,7 +35,6 @@
         h1, h2, h3 { font-weight: 800; line-height: 1.2; }
         a { text-decoration: none; }
 
-        /* --- HEADER E NAVIGAZIONE --- */
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 5%;
@@ -47,19 +43,15 @@
             position: sticky; top: 0; z-index: 2000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
-        
-        /* Logo cliccabile */
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--testo-scuro); letter-spacing: -1px; }
         .logo span { color: var(--rosso-primario); }
         .logo:hover { opacity: 0.9; }
 
-        /* Container del menù */
         .nav-menu { display: flex; align-items: center; }
         .nav-links { list-style: none; display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; }
         .nav-links li a.nav-link { color: var(--testo-scuro); font-weight: 600; font-size: 1rem; transition: color 0.3s ease; }
         .nav-links li a.nav-link:hover { color: var(--rosso-primario); }
 
-        /* Icona Hamburger (Nascosta su Desktop) */
         .hamburger {
             display: none; cursor: pointer; border: none; background: transparent;
             flex-direction: column; gap: 5px; z-index: 2000; padding: 5px;
@@ -69,7 +61,6 @@
             border-radius: 5px; transition: all 0.3s ease;
         }
 
-        /* --- BOTTONI --- */
         .btn {
             display: inline-block; padding: 14px 28px; border-radius: 50px;
             font-weight: 600; text-align: center; transition: all 0.3s ease;
@@ -86,19 +77,16 @@
         }
         .btn-cta-small:hover { background: var(--rosso-primario); color: var(--bianco-puro); }
 
-        /* --- SEZIONI GENERALI --- */
         section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
         .section-header p { color: var(--testo-grigio); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
 
-        /* --- HERO SECTION --- */
         .hero { text-align: center; padding: 120px 5% 80px; }
         .hero h1 { font-size: 3.5rem; margin-bottom: 25px; }
         .hero p { font-size: 1.25rem; color: var(--testo-grigio); max-width: 700px; margin: 0 auto 40px; }
         .hero-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
 
-        /* --- GRIGLIE E CARD --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; align-items: stretch; }
         .card {
             background: var(--bianco-puro); padding: 40px 30px;
@@ -120,25 +108,22 @@
         .btn-demo { color: var(--arancione-vivido); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
         .btn-demo:hover { color: var(--rosso-primario); }
 
-        /* --- PREZZI --- */
         .pricing-card { 
             text-align: center; 
             padding: 50px 30px; 
-            overflow: visible; /* Fix per non tagliare il badge */
+            overflow: visible;
         }
-        .pricing-card::before { display: none; } /* Rimuovo la barra in alto per i prezzi */
-        
+        .pricing-card::before { display: none; }
         .pricing-card.popular { 
             border: 2px solid var(--arancione-vivido); 
             position: relative; 
-            margin-top: 15px; /* Spazio extra in alto per il badge */
+            margin-top: 15px;
         }
-        
         .badge {
             position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
             background: var(--gradiente); color: var(--bianco-puro);
             padding: 6px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
-            white-space: nowrap; /* Evita che il testo vada a capo */
+            white-space: nowrap;
             box-shadow: 0 4px 10px rgba(247, 127, 0, 0.3);
         }
         .price { font-size: 3rem; font-weight: 800; color: var(--rosso-primario); margin: 20px 0; }
@@ -147,7 +132,92 @@
         .features li { margin-bottom: 10px; padding-left: 25px; position: relative; color: var(--testo-grigio); }
         .features li::before { content: '✓'; position: absolute; left: 0; color: var(--arancione-vivido); font-weight: bold; }
 
-        /* --- FOOTER STICKY (WHATSAPP) --- */
+        /* --- BOX INTRO PREZZI --- */
+        .pricing-intro-box {
+            margin-bottom: 40px;
+            padding: 30px 40px;
+            background: white;
+            border-left: 4px solid var(--arancione-vivido);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .pricing-intro-box .pib-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        .pricing-intro-box .pib-text h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--testo-scuro);
+            margin-bottom: 5px;
+        }
+        .pricing-intro-box .pib-text p {
+            font-size: 0.92rem;
+            color: var(--testo-grigio);
+            margin-bottom: 0;
+        }
+
+        /* --- DOMINIO INFO BOX --- */
+        .domain-info-box {
+            margin-top: 40px;
+            background: linear-gradient(135deg, rgba(214, 40, 40, 0.04), rgba(247, 127, 0, 0.06));
+            border: 1px solid rgba(247, 127, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .domain-info-box .domain-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+        .domain-info-box .domain-text {
+            flex: 1;
+            min-width: 200px;
+        }
+        .domain-info-box .domain-text h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--testo-scuro);
+            margin-bottom: 6px;
+        }
+        .domain-info-box .domain-text p {
+            font-size: 0.92rem;
+            color: var(--testo-grigio);
+            margin-bottom: 0;
+        }
+        .domain-info-box .domain-price-tag {
+            background: var(--bianco-puro);
+            border: 2px solid var(--arancione-vivido);
+            border-radius: 15px;
+            padding: 15px 25px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .domain-info-box .domain-price-tag .dp-label {
+            font-size: 0.75rem;
+            color: var(--testo-grigio);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .domain-info-box .domain-price-tag .dp-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--arancione-vivido);
+            line-height: 1.1;
+        }
+        .domain-info-box .domain-price-tag .dp-sub {
+            font-size: 0.78rem;
+            color: var(--testo-grigio);
+        }
+
         .sticky-footer {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background: var(--bianco-puro); padding: 15px;
@@ -160,19 +230,14 @@
         }
         .btn-whatsapp:hover { transform: scale(1.05); }
 
-        /* --- CLASSI ANIMAZIONI JS --- */
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
 
-        /* --- RESPONSIVE MOBILE E MENU --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.1rem; }
             section { padding: 60px 5%; }
-            
-            /* Attivazione Hamburger Menu */
             .hamburger { display: flex; }
-            
             .nav-menu {
                 position: absolute; top: 100%; left: 0; width: 100%;
                 background: var(--bianco-puro); box-shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -184,14 +249,15 @@
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); 
                 padding: 30px 0;
             }
-            
             .nav-links { flex-direction: column; gap: 20px; width: 100%; }
             .nav-links li { text-align: center; width: 100%; }
             .nav-links li a.nav-link { display: block; padding: 10px; font-size: 1.2rem; }
-            
             .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .hamburger.active span:nth-child(2) { opacity: 0; }
             .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .domain-info-box { flex-direction: column; text-align: center; padding: 25px 20px; }
+            .domain-info-box .domain-price-tag { width: 100%; }
+            .pricing-intro-box { flex-direction: column; padding: 25px 20px; }
         }
     </style>
 </head>
@@ -281,11 +347,26 @@
             <h2>Piani e Investimento</h2>
             <p>Scegli la soluzione più adatta alle tue esigenze. Prezzi promozionali per il lancio del mio portfolio a Varese.</p>
         </div>
+
+        <!-- BOX INTRO PREZZI — spostato prima della griglia -->
+        <div class="pricing-intro-box animate-on-scroll">
+            <div class="pib-icon">💡</div>
+            <div class="pib-text">
+                <h4>Questi sono pacchetti di riferimento, non prezzi fissi</h4>
+                <p>
+                    I pacchetti mostrati sono <strong>punti di riferimento</strong> per darti un'idea chiara del budget necessario — 
+                    il prezzo finale dipenderà dalle funzionalità che sceglierai. 
+                    Ogni progetto viene costruito su misura: puoi partire da un pacchetto base e aggiungere solo ciò che ti serve, 
+                    come recensioni Google, mappa interattiva o form di contatto, <strong>con piccoli supplementi concordati insieme</strong>. 
+                    Contattami per un <strong>preventivo gratuito e senza impegno</strong>: in pochi minuti troveremo la soluzione giusta per la tua attività.
+                </p>
+            </div>
+        </div>
         
         <div class="grid">
             <div class="card pricing-card animate-on-scroll">
                 <h3>Starter Pack</h3>
-                <div class="price" style="text-decoration: line-through; font-size: 1.2rem; color: var(--testo-grigio); margin-bottom: 0;">€449</div>
+                <div class="price" style="text-decoration: line-through; font-size: 1.2rem; color: var(--testo-grigio); margin-bottom: 0;">€399</div>
                 <div class="price" style="margin-top: 0;">€349<span>/una tantum</span></div>
                 <p style="color: var(--testo-grigio); margin-bottom: 20px;">Essenziale per piccole attività locali o siti vetrina semplici.</p>
                 <ul class="features">
@@ -300,8 +381,8 @@
             <div class="card pricing-card popular animate-on-scroll">
                 <span class="badge">Consigliato</span>
                 <h3>Business Plus</h3>
-                <div class="price" style="text-decoration: line-through; font-size: 1.2rem; color: var(--testo-grigio); margin-bottom: 0;">€649</div>
-                <div class="price" style="margin-top: 0;">€549<span>/una tantum</span></div>
+                <div class="price" style="text-decoration: line-through; font-size: 1.2rem; color: var(--testo-grigio); margin-bottom: 0;">€699</div>
+                <div class="price" style="margin-top: 0;">€599<span>/una tantum</span></div>
                 <p style="color: var(--testo-grigio); margin-bottom: 10px;">Per attività che vogliono mostrare prodotti e servizi.</p>
                 <p style="font-size: 0.85rem; color: var(--arancione-vivido); font-weight: 600; margin-bottom: 15px;">
                     ⭐ Gli esempi mostrati sopra (Ristorante, Meccanico, Estetista) fanno parte di questo pacchetto.
@@ -331,36 +412,44 @@
             </div>
         </div>
 
+        <!-- BOX DOMINIO -->
+        <div class="domain-info-box animate-on-scroll">
+            <div class="domain-icon">🌐</div>
+            <div class="domain-text">
+                <h4>Registrazione del dominio — non inclusa nei pacchetti</h4>
+                <p>
+                    Il nome del sito web (es. <em>tuaattività.it</em>) va registrato e rinnovato periodicamente: 
+                    <strong>non si acquista per sempre</strong>, funziona come un affitto annuale. 
+                    Il costo è separato da quello dello sviluppo del sito e dipende dall'estensione scelta (.it, .com, ecc.). 
+                    Posso occuparmene io direttamente oppure puoi registrarlo in autonomia su qualsiasi provider.
+                </p>
+            </div>
+            <div class="domain-price-tag">
+                <div class="dp-label">Costo indicativo</div>
+                <div class="dp-value">~€25–30</div>
+                <div class="dp-sub">per 2 anni (.it o .com)</div>
+            </div>
+        </div>
+
         <div style="margin-top: 50px; text-align: center;" class="animate-on-scroll">
-    <h3>Supporto Post-Lancio</h3>
-    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
-        <div style="background: white; padding: 20px; border-radius: 15px; border: 1px solid #eee; min-width: 250px;">
-            <p>Abbonamento Mensile</p>
-            <div style="font-size: 1.5rem; font-weight: bold; color: var(--rosso-primario);">€30</div>
-            <p style="font-size: 0.8rem; color: #777;">Aggiornamenti testi e prezzi costanti</p>
-        </div>
-        <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid var(--arancione-vivido); min-width: 250px;">
-            <p>Abbonamento Annuale</p>
-            <div style="font-size: 1.5rem; font-weight: bold; color: var(--arancione-vivido);">€250</div>
-            <p style="font-size: 0.8rem; color: #777;"><strong>Sconto 30%</strong> + Gestione Hosting</p>
-        </div>
-    </div>
+            <h3>Supporto Post-Lancio</h3>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                <div style="background: white; padding: 20px; border-radius: 15px; border: 1px solid #eee; min-width: 250px;">
+                    <p>Abbonamento Mensile</p>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: var(--rosso-primario);">€60</div>
+                    <p style="font-size: 0.8rem; color: #777;">Aggiornamenti testi e prezzi costanti</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid var(--arancione-vivido); min-width: 250px;">
+                    <p>Abbonamento Annuale</p>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: var(--arancione-vivido);">€600</div>
+                    <p style="font-size: 0.8rem; color: #777;"><strong>Sconto 30%</strong> + Gestione Hosting</p>
+                </div>
+            </div>
 
-    <!-- AGGIUNGI QUESTO -->
-    <p style="margin-top: 25px; font-size: 0.95rem; color: #777;">
-        🛡️ <strong>Ogni sito include 12 mesi di supporto gratuito</strong> per malfunzionamenti tecnici, 
-        bug e problemi di visualizzazione — senza costi aggiuntivi.
-    </p>
-
-</div>
-
-
-        <div style="margin-top: 60px; text-align: center; padding: 40px; background: white; border: 1px dashed var(--testo-grigio); border-radius: 20px;" class="animate-on-scroll">
-            <h3 style="margin-bottom: 10px;">Ogni progetto è unico</h3>
-            <p style="color: var(--testo-grigio); max-width: 700px; margin: 0 auto 20px;">
-                I prezzi indicati sono <strong>basi di riferimento</strong>. Se hai bisogno di funzionalità avanzate, e-commerce o multilingua, contattami per un <strong>preventivo personalizzato</strong> gratuito.
+            <p style="margin-top: 25px; font-size: 0.95rem; color: #777;">
+                🛡️ <strong>Ogni sito include 12 mesi di supporto gratuito</strong> per malfunzionamenti tecnici, 
+                bug e problemi di visualizzazione — senza costi aggiuntivi.
             </p>
-            <a href="https://wa.me/39123456789" class="btn btn-primary">Richiedi Preventivo Su Misura</a>
         </div>
     </section>
 
